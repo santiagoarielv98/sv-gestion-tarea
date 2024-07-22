@@ -24,6 +24,8 @@ jobs:
           envkey_VITE_APP_ID: ${{ secrets.VITE_APP_ID }}
           envkey_VITE_MEASUREMENT_ID: ${{ secrets.VITE_MEASUREMENT_ID }}
           file_name: .env
+          fail_on_empty: false
+          sort_keys: false
       - name: Checkout
         uses: actions/checkout@v4
       - name: Set up Node
