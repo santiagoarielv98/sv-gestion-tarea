@@ -1,14 +1,14 @@
-import { useMemo } from "react"
-import { useAppDispatch, useAppSelector } from "./app/hooks"
-import { selectColorMode, toggleColorMode } from "./features/themes/themeSlice"
-import { createTheme, ThemeProvider } from "@mui/material/styles"
-import GlobalStyles from "@mui/material/GlobalStyles"
 import CssBaseline from "@mui/material/CssBaseline"
-import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
+import GlobalStyles from "@mui/material/GlobalStyles"
+import { createTheme, ThemeProvider } from "@mui/material/styles"
+import { useMemo } from "react"
+import { useAppSelector } from "./app/hooks"
+import { selectColorMode } from "./features/themes/themeSlice"
+import AppLayout from "./layouts/AppLayout"
+
+// import InboxIcon from '@mui/icons-material/MoveToInbox';
 
 const App = () => {
-  const dispatch = useAppDispatch()
   const colorMode = useAppSelector(selectColorMode)
   const theme = useMemo(
     () =>
@@ -39,24 +39,7 @@ const App = () => {
       />
       <CssBaseline />
       <ThemeProvider theme={theme}>
-        <Box
-          sx={{
-            bgcolor: "background.default",
-            color: "text.primary",
-            height: "100%",
-          }}
-        >
-          <Button
-            aria-label="Toggle dark mode"
-            onClick={() => dispatch(toggleColorMode())}
-            style={{
-              backgroundColor: colorMode === "dark" ? "#282c34" : "#fff",
-              color: colorMode === "dark" ? "#fff" : "#282c34",
-            }}
-          >
-            {colorMode === "dark" ? "🌞" : "🌜"}
-          </Button>
-        </Box>
+        <AppLayout />
       </ThemeProvider>
     </>
   )
