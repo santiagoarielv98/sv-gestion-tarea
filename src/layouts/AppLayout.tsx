@@ -6,14 +6,15 @@ import Box from "@mui/material/Box"
 import { useTheme } from "@mui/material/styles"
 import Toolbar from "@mui/material/Toolbar"
 
+import Page from "../pages"
+import Drawer from "./components/Drawer"
 import Header from "./components/Header"
 import Main from "./components/Main"
-import Drawer from "./components/Drawer"
 
 export default function AppLayout() {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down("md"))
-  const [open, setOpen] = React.useState(true)
+  const [open, setOpen] = React.useState(!isMobile)
 
   const handleDrawerClose = () => {
     setOpen(false)
@@ -44,8 +45,7 @@ export default function AppLayout() {
       <Drawer open={open} onClose={handleDrawerClose} />
       <Main open={open}>
         <Toolbar />
-        asd
-        {/* children */}
+        <Page />
       </Main>
     </Box>
   )
