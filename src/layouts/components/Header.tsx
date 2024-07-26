@@ -15,7 +15,10 @@ export default function Header(props: HeaderProps) {
     <AppBar
       position="fixed"
       sx={{
-        zIndex: theme => theme.zIndex.drawer + 1,
+        zIndex: theme => ({
+          md: theme.zIndex.drawer + 1,
+          xs: theme.zIndex.appBar,
+        }),
       }}
     >
       <Toolbar>

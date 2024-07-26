@@ -35,7 +35,6 @@ function Drawer(props: DrawerProps) {
         <MenuItems />
       </MuiDrawer>
       <MuiDrawer
-        variant="persistent"
         sx={{
           display: { xs: "none", md: "block" },
           "& .MuiDrawer-paper": {

@@ -1,115 +1,99 @@
-import React from "react"
+import { HashtagNode, $isHashtagNode } from "@lexical/hashtag"
+import { LexicalComposer } from "@lexical/react/LexicalComposer"
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext"
+import { ContentEditable } from "@lexical/react/LexicalContentEditable"
+import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary"
+import { HashtagPlugin } from "@lexical/react/LexicalHashtagPlugin"
+import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin"
+import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin"
+import { PlainTextPlugin } from "@lexical/react/LexicalPlainTextPlugin"
+import { Box, Typography } from "@mui/material"
+import {
+  $getRoot,
+  $getSelection,
+  COMMAND_PRIORITY_EDITOR,
+  INSERT_TAB_COMMAND,
+  type EditorState,
+} from "lexical"
+import { useEffect } from "react"
+// When the editor changes, you can get notified via the
+// LexicalOnChangePlugin!
+function onChange(editorState: EditorState) {
+  editorState.read(() => {
+    // Read the contents of the EditorState here.
+    const root = $getRoot()
+    const selection = $getSelection()
+    const isHashtag = $isHashtagNode(root)
+    console.log("onChange", isHashtag)
 
-import ListItemText from "@mui/material/ListItemText"
-import MenuItem from "@mui/material/MenuItem"
-import MenuList from "@mui/material/MenuList"
-import Paper from "@mui/material/Paper"
-import Popper from "@mui/material/Popper"
-import Typography from "@mui/material/Typography"
-
-const suggestions = ["#tag1", "#tag2", "#tag3", "#tag4", "#tag5"]
-
-function Page() {
-  const divRef = React.useRef<HTMLDivElement>(null)
-  const [text, setText] = React.useState<string>("")
-  const [element, setElement] = React.useState<HTMLElement | null>(null)
-  const [tag, setTag] = React.useState<string>("")
-
-  const handleInput = (event: React.FormEvent<HTMLDivElement>) => {
-    console.log(event.currentTarget.textContent)
-    console.log(event.currentTarget.innerHTML)
-
-    const value = event.currentTarget.textContent!
-    const lastWord = value.split(/(\s+)/).pop()!
-
-    if (lastWord.startsWith("#")) {
-      setTag(lastWord)
-      setElement(divRef.current!)
-    } else {
-      setTag("")
-      setElement(null)
-    }
-
-    setText(value)
-
-    /* mover cursor al final */
-    const range = document.createRange()
-    const selection = window.getSelection()
-    if (selection) {
-      range.selectNodeContents(divRef.current!)
-      range.collapse(false)
-      selection.removeAllRanges()
-      selection.addRange(range)
-    }
-  }
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (
-      event.key === "Backspace" &&
-      event.currentTarget.innerText.trim() === ""
-    ) {
-      event.preventDefault()
-    }
-  }
-
-  const handleAddTag = (event: React.MouseEvent<HTMLLIElement>) => {
-    const value = event.currentTarget.innerText
-    const index = text.lastIndexOf(tag)
-
-    setText(
-      text.slice(0, index) +
-        `<span style="color: blue">${value}</span>` +
-        " ",
-    )
-    setElement(null)
-
-    divRef.current!.focus()
-  }
-
-  return (
-    <div>
-      <div
-        ref={divRef}
-        onInput={handleInput}
-        onKeyDown={handleKeyDown}
-        contentEditable
-        suppressContentEditableWarning={true}
-      >
-        <Typography
-          data-placeholder={text.length === 0 ? "Type something..." : ""}
-          sx={{
-            ...(text.trim() === "" && {
-              "&::before": {
-                content: "attr(data-placeholder)",
-                color: "text.secondary",
-                float: "left",
-                height: 0,
-                pointerEvents: "none",
-              },
-            }),
-          }}
-          dangerouslySetInnerHTML={{ __html: text.length > 0 ? text : "<br/>" }}
-        />
-      </div>
-      <Popper
-        open={Boolean(element)}
-        anchorEl={divRef.current}
-        placement="bottom-start"
-      >
-        <Paper sx={{ width: 320 }}>
-          <MenuList dense>
-            {suggestions
-              .filter(suggestion => suggestion.startsWith(tag))
-              .map((suggestion, index) => (
-                <MenuItem key={index} onClick={handleAddTag}>
-                  <ListItemText inset>{suggestion}</ListItemText>
-                </MenuItem>
-              ))}
-          </MenuList>
-        </Paper>
-      </Popper>
-    </div>
-  )
+    // console.log(root, selection)
+  })
 }
 
-export default Page
+// Lexical React plugins are React components, which makes them
+// highly composable. Furthermore, you can lazy load plugins if
+// desired, so you don't pay the cost for plugins until you
+// actually use them.
+function MyCustomAutoFocusPlugin() {
+  const [editor] = useLexicalComposerContext()
+
+  useEffect(() => {
+    // Focus the editor when the effect fires!
+    editor.focus()
+
+    return editor.registerCommand<string>(
+      INSERT_TAB_COMMAND,
+      payload => {
+        console.log("Tab inserted!", payload)
+        // const isHashtag = $isHashtagNode(payload)
+        return true
+      },
+      COMMAND_PRIORITY_EDITOR,
+    )
+  }, [editor])
+
+  return null
+}
+
+function onError(error: unknown) {
+  console.error(error)
+}
+
+export default function Editor() {
+  return (
+    <Box sx={{ position: "relative" }}>
+      <LexicalComposer
+        initialConfig={{
+          namespace: "MyEditor",
+          onError,
+          nodes: [HashtagNode],
+        }}
+      >
+        <PlainTextPlugin
+          contentEditable={
+            <Typography variant="h1" component={ContentEditable} />
+          }
+          placeholder={
+            <Typography
+              variant="h1"
+              sx={{
+                color: "grey.500",
+                position: "absolute",
+                top: 0,
+                left: 0,
+                pointerEvents: "none",
+              }}
+            >
+              Start typing...
+            </Typography>
+          }
+          ErrorBoundary={LexicalErrorBoundary}
+        />
+        <HashtagPlugin />
+        <OnChangePlugin onChange={onChange} />
+        <HistoryPlugin />
+        <MyCustomAutoFocusPlugin />
+      </LexicalComposer>
+    </Box>
+  )
+}
