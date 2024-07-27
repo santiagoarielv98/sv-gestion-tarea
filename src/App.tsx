@@ -3,8 +3,8 @@ import GlobalStyles from "@mui/material/GlobalStyles"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { useMemo } from "react"
 import { RouterProvider } from "react-router-dom"
-import { useAppSelector } from "./app/hooks"
-import { selectColorMode } from "./features/themes/themeSlice"
+import { useAppSelector } from "./redux/hooks"
+import { selectColorMode } from "./redux/theme/themeSlice"
 import { routes } from "./routes"
 
 const App = () => {

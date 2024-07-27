@@ -2,8 +2,8 @@ import React from "react"
 import { createRoot } from "react-dom/client"
 import { Provider } from "react-redux"
 import App from "./App"
-import { store } from "./app/store"
-import "./app/firebase"
+import { store } from "./redux/store"
+import "./firebase"
 
 const container = document.getElementById("root")
 
