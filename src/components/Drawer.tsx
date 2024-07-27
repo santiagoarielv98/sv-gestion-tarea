@@ -2,7 +2,7 @@ import Box from "@mui/material/Box"
 import MuiDrawer from "@mui/material/Drawer"
 
 import MenuItems from "./MenuItems"
-import { drawerWidth } from "../config"
+import { drawerWidth } from "../constants/config"
 
 export interface DrawerProps {
   open: boolean

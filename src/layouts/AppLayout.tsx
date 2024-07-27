@@ -7,9 +7,9 @@ import { useTheme } from "@mui/material/styles"
 import Toolbar from "@mui/material/Toolbar"
 
 import { Outlet } from "react-router-dom"
-import Drawer from "./components/Drawer"
-import Header from "./components/Header"
-import Main from "./components/Main"
+import Drawer from "../components/Drawer"
+import Header from "../components/Header"
+import Main from "../components/Main"
 
 export default function AppLayout() {
   const theme = useTheme()
