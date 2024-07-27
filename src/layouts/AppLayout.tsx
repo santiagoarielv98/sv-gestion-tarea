@@ -6,7 +6,7 @@ import Box from "@mui/material/Box"
 import { useTheme } from "@mui/material/styles"
 import Toolbar from "@mui/material/Toolbar"
 
-import Page from "../pages"
+import { Outlet } from "react-router-dom"
 import Drawer from "./components/Drawer"
 import Header from "./components/Header"
 import Main from "./components/Main"
@@ -45,7 +45,7 @@ export default function AppLayout() {
       <Drawer open={open} onClose={handleDrawerClose} />
       <Main open={open}>
         <Toolbar />
-        <Page />
+        <Outlet />
       </Main>
     </Box>
   )

@@ -2,11 +2,10 @@ import CssBaseline from "@mui/material/CssBaseline"
 import GlobalStyles from "@mui/material/GlobalStyles"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { useMemo } from "react"
+import { RouterProvider } from "react-router-dom"
 import { useAppSelector } from "./app/hooks"
 import { selectColorMode } from "./features/themes/themeSlice"
-import AppLayout from "./layouts/AppLayout"
-
-// import InboxIcon from '@mui/icons-material/MoveToInbox';
+import { routes } from "./routes"
 
 const App = () => {
   const colorMode = useAppSelector(selectColorMode)
@@ -39,7 +38,7 @@ const App = () => {
       />
       <CssBaseline />
       <ThemeProvider theme={theme}>
-        <AppLayout />
+        <RouterProvider router={routes} />
       </ThemeProvider>
     </>
   )
