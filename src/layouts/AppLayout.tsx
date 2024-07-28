@@ -11,6 +11,7 @@ import Drawer from "../components/Drawer"
 import Header from "../components/Header"
 import Main from "../components/Main"
 import useThemeSettings from "../hooks/useTheme"
+import Modal from "../components/Modal"
 
 export default function AppLayout() {
   const theme = useTheme()
@@ -40,6 +41,7 @@ export default function AppLayout() {
       <Main open={open}>
         <Toolbar />
         <Outlet />
+        <Modal />
       </Main>
     </Box>
   )
