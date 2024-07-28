@@ -1,9 +1,12 @@
+import { useMemo } from "react"
+import { RouterProvider } from "react-router-dom"
+
+import { useAppSelector } from "./redux/hooks"
+
 import CssBaseline from "@mui/material/CssBaseline"
 import GlobalStyles from "@mui/material/GlobalStyles"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
-import { useMemo } from "react"
-import { RouterProvider } from "react-router-dom"
-import { useAppSelector } from "./redux/hooks"
+
 import { selectColorMode } from "./redux/theme/themeSlice"
 import { routes } from "./routes"
 
@@ -20,7 +23,7 @@ const App = () => {
   )
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <GlobalStyles
         styles={{
           ":root": {
@@ -37,10 +40,8 @@ const App = () => {
         }}
       />
       <CssBaseline />
-      <ThemeProvider theme={theme}>
-        <RouterProvider router={routes} />
-      </ThemeProvider>
-    </>
+      <RouterProvider router={routes} />
+    </ThemeProvider>
   )
 }
 

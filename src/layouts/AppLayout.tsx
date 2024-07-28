@@ -3,34 +3,27 @@ import * as React from "react"
 import useMediaQuery from "@mui/material/useMediaQuery"
 
 import Box from "@mui/material/Box"
-import { useTheme } from "@mui/material/styles"
+import { useTheme as useMuiTheme } from "@mui/material/styles"
 import Toolbar from "@mui/material/Toolbar"
 
 import { Outlet } from "react-router-dom"
 import Drawer from "../components/Drawer"
 import Header from "../components/Header"
 import Main from "../components/Main"
+import useTheme from "../hooks/useTheme"
 
 export default function AppLayout() {
-  const theme = useTheme()
+  const theme = useMuiTheme()
+  const { open, setDrawer } = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down("md"))
-  const [open, setOpen] = React.useState(!isMobile)
-
-  const handleDrawerClose = () => {
-    setOpen(false)
-  }
-
-  const handleDrawerToggle = () => {
-    setOpen(!open)
-  }
 
   React.useEffect(() => {
     if (isMobile) {
-      setOpen(false)
+      setDrawer(false)
     } else {
-      setOpen(true)
+      setDrawer(true)
     }
-  }, [isMobile])
+  }, [isMobile, setDrawer])
 
   return (
     <Box
@@ -41,8 +34,8 @@ export default function AppLayout() {
         color: "text.primary",
       }}
     >
-      <Header onDrawerToggle={handleDrawerToggle} />
-      <Drawer open={open} onClose={handleDrawerClose} />
+      <Header />
+      <Drawer />
       <Main open={open}>
         <Toolbar />
         <Outlet />

@@ -1,16 +1,13 @@
 import Box from "@mui/material/Box"
 import MuiDrawer from "@mui/material/Drawer"
 
-import MenuItems from "./MenuItems"
 import { drawerWidth } from "../constants/config"
+import useTheme from "../hooks/useTheme"
+import MenuItems from "./MenuItems"
 
-export interface DrawerProps {
-  open: boolean
-  onClose?: () => void
-}
+function Drawer() {
+  const { open, setDrawer } = useTheme()
 
-function Drawer(props: DrawerProps) {
-  const { open, onClose } = props
   return (
     <Box
       component="nav"
@@ -20,7 +17,7 @@ function Drawer(props: DrawerProps) {
       <MuiDrawer
         variant="temporary"
         open={open}
-        onClose={onClose}
+        onClose={() => setDrawer(false)}
         ModalProps={{
           keepMounted: true,
         }}

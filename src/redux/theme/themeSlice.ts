@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
 export enum ColorMode {
   Light = "light",
@@ -7,23 +7,23 @@ export enum ColorMode {
 
 export interface ThemeState {
   colorMode: ColorMode
+  drawerOpen?: boolean
 }
 
 const initialState: ThemeState = {
   colorMode: (() => {
-    if (typeof window !== "undefined") {
-      const persistedColorMode = localStorage.getItem("colorMode")
-      if (persistedColorMode) {
-        return persistedColorMode === ColorMode.Dark
-          ? ColorMode.Dark
-          : ColorMode.Light
-      }
+    const persistedColorMode = localStorage.getItem("colorMode")
+    if (persistedColorMode) {
+      return persistedColorMode === ColorMode.Dark
+        ? ColorMode.Dark
+        : ColorMode.Light
     }
     const prefersDarkMode = window.matchMedia(
       "(prefers-color-scheme: dark)",
     ).matches
     return prefersDarkMode ? ColorMode.Dark : ColorMode.Light
   })(),
+  drawerOpen: false,
 }
 
 export const themeSlice = createSlice({
@@ -33,17 +33,25 @@ export const themeSlice = createSlice({
     toggleColorMode: create.reducer(state => {
       let newColorMode: ColorMode =
         state.colorMode === ColorMode.Light ? ColorMode.Dark : ColorMode.Light
-      if (typeof window !== "undefined") {
-        localStorage.setItem("colorMode", newColorMode)
-      }
+      localStorage.setItem("colorMode", newColorMode)
       state.colorMode = newColorMode
+    }),
+    toggleDrawer: create.reducer(state => {
+      console.log("toggleDrawer")
+      state.drawerOpen = !state.drawerOpen
+    }),
+    setDrawerOpen: create.reducer((state, action: PayloadAction<boolean>) => {
+      console.log("setDrawerOpen")
+      state.drawerOpen = action.payload
     }),
   }),
   selectors: {
     selectColorMode: state => state.colorMode,
+    selectDrawerOpen: state => state.drawerOpen,
   },
 })
 
-export const { toggleColorMode } = themeSlice.actions
+export const { toggleColorMode, toggleDrawer, setDrawerOpen } =
+  themeSlice.actions
 
-export const { selectColorMode } = themeSlice.selectors
+export const { selectColorMode, selectDrawerOpen } = themeSlice.selectors

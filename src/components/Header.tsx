@@ -4,13 +4,11 @@ import Toolbar from "@mui/material/Toolbar"
 import Typography from "@mui/material/Typography"
 
 import { MenuOutlined as MenuIcon } from "@ant-design/icons"
+import useTheme from "../hooks/useTheme"
 
-export interface HeaderProps {
-  onDrawerToggle?: () => void
-}
+export default function Header() {
+  const { toggleDrawerOpen } = useTheme()
 
-export default function Header(props: HeaderProps) {
-  const { onDrawerToggle } = props
   return (
     <AppBar
       position="fixed"
@@ -26,7 +24,7 @@ export default function Header(props: HeaderProps) {
           color="inherit"
           aria-label="open drawer"
           edge="start"
-          onClick={onDrawerToggle}
+          onClick={toggleDrawerOpen}
         >
           <MenuIcon />
         </IconButton>
