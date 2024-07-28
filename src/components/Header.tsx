@@ -4,10 +4,10 @@ import Toolbar from "@mui/material/Toolbar"
 import Typography from "@mui/material/Typography"
 
 import { MenuOutlined as MenuIcon } from "@ant-design/icons"
-import useTheme from "../hooks/useTheme"
+import useThemeSettings from "../hooks/useTheme"
 
 export default function Header() {
-  const { toggleDrawerOpen } = useTheme()
+  const { toggleDrawerOpen } = useThemeSettings()
 
   return (
     <AppBar

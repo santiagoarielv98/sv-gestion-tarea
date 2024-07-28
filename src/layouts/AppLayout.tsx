@@ -3,18 +3,19 @@ import * as React from "react"
 import useMediaQuery from "@mui/material/useMediaQuery"
 
 import Box from "@mui/material/Box"
-import { useTheme as useMuiTheme } from "@mui/material/styles"
+import { useTheme } from "@mui/material/styles"
 import Toolbar from "@mui/material/Toolbar"
 
 import { Outlet } from "react-router-dom"
 import Drawer from "../components/Drawer"
 import Header from "../components/Header"
 import Main from "../components/Main"
-import useTheme from "../hooks/useTheme"
+import useThemeSettings from "../hooks/useTheme"
 
 export default function AppLayout() {
-  const theme = useMuiTheme()
-  const { open, setDrawer } = useTheme()
+  const theme = useTheme()
+  const { open, setDrawer } = useThemeSettings()
+
   const isMobile = useMediaQuery(theme.breakpoints.down("md"))
 
   React.useEffect(() => {

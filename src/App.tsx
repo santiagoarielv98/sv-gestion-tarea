@@ -1,17 +1,16 @@
 import { useMemo } from "react"
 import { RouterProvider } from "react-router-dom"
 
-import { useAppSelector } from "./redux/hooks"
-
 import CssBaseline from "@mui/material/CssBaseline"
 import GlobalStyles from "@mui/material/GlobalStyles"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 
-import { selectColorMode } from "./redux/theme/themeSlice"
+import useThemeSettings from "./hooks/useTheme"
 import { routes } from "./routes"
 
 const App = () => {
-  const colorMode = useAppSelector(selectColorMode)
+  const { colorMode } = useThemeSettings()
+
   const theme = useMemo(
     () =>
       createTheme({

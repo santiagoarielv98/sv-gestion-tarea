@@ -10,19 +10,10 @@ export interface ThemeState {
   drawerOpen?: boolean
 }
 
+const COLOR_MODE_KEY = "colorMode"
+
 const initialState: ThemeState = {
-  colorMode: (() => {
-    const persistedColorMode = localStorage.getItem("colorMode")
-    if (persistedColorMode) {
-      return persistedColorMode === ColorMode.Dark
-        ? ColorMode.Dark
-        : ColorMode.Light
-    }
-    const prefersDarkMode = window.matchMedia(
-      "(prefers-color-scheme: dark)",
-    ).matches
-    return prefersDarkMode ? ColorMode.Dark : ColorMode.Light
-  })(),
+  colorMode: getInitialColorMode(),
   drawerOpen: false,
 }
 
@@ -33,15 +24,13 @@ export const themeSlice = createSlice({
     toggleColorMode: create.reducer(state => {
       let newColorMode: ColorMode =
         state.colorMode === ColorMode.Light ? ColorMode.Dark : ColorMode.Light
-      localStorage.setItem("colorMode", newColorMode)
+      localStorage.setItem(COLOR_MODE_KEY, newColorMode)
       state.colorMode = newColorMode
     }),
     toggleDrawer: create.reducer(state => {
-      console.log("toggleDrawer")
       state.drawerOpen = !state.drawerOpen
     }),
     setDrawerOpen: create.reducer((state, action: PayloadAction<boolean>) => {
-      console.log("setDrawerOpen")
       state.drawerOpen = action.payload
     }),
   }),
@@ -55,3 +44,16 @@ export const { toggleColorMode, toggleDrawer, setDrawerOpen } =
   themeSlice.actions
 
 export const { selectColorMode, selectDrawerOpen } = themeSlice.selectors
+
+function getInitialColorMode() {
+  const persistedColorMode = localStorage.getItem(COLOR_MODE_KEY)
+  if (persistedColorMode) {
+    return persistedColorMode === ColorMode.Dark
+      ? ColorMode.Dark
+      : ColorMode.Light
+  }
+  const prefersDarkMode = window.matchMedia(
+    "(prefers-color-scheme: dark)",
+  ).matches
+  return prefersDarkMode ? ColorMode.Dark : ColorMode.Light
+}
