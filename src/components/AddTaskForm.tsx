@@ -18,8 +18,17 @@ import TextField from "@mui/material/TextField"
 import { DateTimePicker } from "@mui/x-date-pickers"
 import { useFormik } from "formik"
 import _ from "lodash"
-import moment from "moment"
+import moment, { type Moment } from "moment"
 import * as Yup from "yup"
+import { createTask } from "../services/tasks"
+
+export interface TaskFormValues {
+  title: string
+  description?: string
+  dueDate: Moment
+  labels?: string[]
+  priority: "low" | "medium" | "high"
+}
 
 const validationSchema = Yup.object({
   title: Yup.string().required("Title is required"),
@@ -30,18 +39,19 @@ const validationSchema = Yup.object({
 })
 
 function AddTaskForm() {
-  const [open, setOpen] = React.useState(true)
+  const [open, setOpen] = React.useState(false)
   const [openDialog, setOpenDialog] = React.useState(false)
-  const formik = useFormik({
+  const formik = useFormik<TaskFormValues>({
     initialValues: {
       title: "",
       description: "",
-      dueDate: moment().startOf("day").format("YYYY-MM-DD HH:mm"),
+      dueDate: moment().startOf("day"),
       labels: [],
       priority: "medium",
     },
     validationSchema,
-    onSubmit: values => {
+    onSubmit: async values => {
+      createTask(values)
       setOpen(false)
       formik.resetForm()
     },
@@ -51,7 +61,10 @@ function AddTaskForm() {
     setOpen(true)
   }
   const handleClose = async () => {
-    if (_.isEqual(formik.values, formik.initialValues)) {
+    const { dueDate, ...values } = formik.values
+    const { dueDate: initialDueDate, ...initialValues } = formik.initialValues
+
+    if (_.isEqual(values, initialValues) && dueDate.isSame(initialDueDate)) {
       setOpen(false)
     } else {
       setOpenDialog(true)
@@ -116,8 +129,8 @@ function AddTaskForm() {
                 <DateTimePicker
                   name="dueDate"
                   label="Due Date"
-                  minDate={moment()}
-                  value={moment(formik.values.dueDate)}
+                  minDate={moment().startOf("day")}
+                  value={formik.values.dueDate}
                   onChange={d => {
                     formik.setFieldValue("dueDate", d)
                   }}
@@ -149,6 +162,11 @@ function AddTaskForm() {
                 </FormControl>
               </Grid>
             </Grid>
+            <input
+              type="submit"
+              hidden
+              disabled={!formik.isValid || !formik.dirty}
+            />
           </form>
         </DialogContent>
         <DialogActions>
