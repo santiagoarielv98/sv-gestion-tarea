@@ -14,7 +14,7 @@ const COLOR_MODE_KEY = "colorMode"
 
 const initialState: SettingState = {
   colorMode: getInitialColorMode(),
-  drawerOpen: false,
+  drawerOpen: getInitialDrawerOpen(),
 }
 
 export const settingSlice = createSlice({
@@ -56,4 +56,9 @@ function getInitialColorMode() {
     "(prefers-color-scheme: dark)",
   ).matches
   return prefersDarkMode ? ColorMode.Dark : ColorMode.Light
+}
+
+function getInitialDrawerOpen() {
+  const matches = window.matchMedia("(min-width: 600px)").matches
+  return matches
 }
