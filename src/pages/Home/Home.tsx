@@ -14,21 +14,24 @@ import Dialog from "@mui/material/Dialog"
 import DialogContent from "@mui/material/DialogContent"
 import DialogActions from "@mui/material/DialogActions"
 import Button from "@mui/material/Button"
+import EditTaskForm from "../../components/EditTaskForm"
+import moment from "moment"
 
 export default function Home() {
   const [data, setData] = React.useState<CreateTask[]>([])
-  const [open, setOpen] = React.useState(false)
+  const [openDelete, setOpenDelete] = React.useState(false)
   const [selectedTask, setSelectedTask] = React.useState<CreateTask | null>(
     null,
   )
+  const [openEdit, setOpenEdit] = React.useState(false)
 
   const handleOpen = (task: CreateTask) => {
-    setOpen(true)
+    setOpenDelete(true)
     setSelectedTask(task)
   }
 
   const handleClose = () => {
-    setOpen(false)
+    setOpenDelete(false)
     setSelectedTask(null)
   }
 
@@ -39,6 +42,16 @@ export default function Home() {
     }
   }
 
+  const handleEdit = (task: CreateTask) => {
+    setSelectedTask(task)
+    setOpenEdit(true)
+  }
+
+  const handleCloseEdit = () => {
+    setOpenEdit(false)
+    setSelectedTask(null)
+  }
+
   React.useEffect(() => {
     const unsub = onSnapshot(taskCollection, snapshot => {
       const tasks: CreateTask[] = []
@@ -47,6 +60,7 @@ export default function Home() {
         tasks.push({
           id: doc.id,
           ...doc.data(),
+          dueDate: moment(doc.data().dueDate.toDate()),
         } as CreateTask),
       )
       setData(tasks)
@@ -71,11 +85,15 @@ export default function Home() {
               </IconButton>
             }
           >
-            <ListItemText primary={task.title} secondary={task.description} />
+            <ListItemText
+              primary={task.title}
+              secondary={task.description}
+              onClick={() => handleEdit(task)}
+            />
           </ListItem>
         ))}
       </List>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={openDelete} onClose={handleClose}>
         <DialogContent>
           <h1>{selectedTask?.title}</h1>
           <p>{selectedTask?.description}</p>
@@ -85,6 +103,13 @@ export default function Home() {
           <Button onClick={handleDelete}>Delete</Button>
         </DialogActions>
       </Dialog>
+      {selectedTask && (
+        <EditTaskForm
+          task={selectedTask}
+          open={openEdit}
+          onClose={handleCloseEdit}
+        />
+      )}
     </div>
   )
 }

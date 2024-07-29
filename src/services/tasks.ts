@@ -28,7 +28,8 @@ export async function createTask(task: CreateTask) {
 
 export async function updateTask(taskId: string, task: Partial<CreateTask>) {
   const taskDoc = doc(db, "tasks", taskId)
-  await updateDoc(taskDoc, task)
+  const dueDate = task.dueDate?.toDate()
+  await updateDoc(taskDoc, { ...task, dueDate })
 }
 
 export async function getTasks() {
