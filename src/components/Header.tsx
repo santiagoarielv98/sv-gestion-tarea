@@ -7,11 +7,8 @@ import { MenuOutlined as MenuIcon } from "@ant-design/icons"
 import useSettings from "../hooks/useTheme"
 import AddTaskForm from "./AddTaskForm"
 
-
-
 export default function Header() {
   const { toggleDrawerOpen } = useSettings()
-  
 
   return (
     <AppBar
