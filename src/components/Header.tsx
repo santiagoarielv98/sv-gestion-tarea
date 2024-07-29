@@ -5,9 +5,13 @@ import Typography from "@mui/material/Typography"
 
 import { MenuOutlined as MenuIcon } from "@ant-design/icons"
 import useSettings from "../hooks/useTheme"
+import AddTaskForm from "./AddTaskForm"
+
+
 
 export default function Header() {
   const { toggleDrawerOpen } = useSettings()
+  
 
   return (
     <AppBar
@@ -28,6 +32,7 @@ export default function Header() {
         >
           <MenuIcon />
         </IconButton>
+        <AddTaskForm />
         <Typography variant="h6" noWrap component="div">
           Responsive drawer
         </Typography>
