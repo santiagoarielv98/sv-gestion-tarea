@@ -5,11 +5,11 @@ import CssBaseline from "@mui/material/CssBaseline"
 import GlobalStyles from "@mui/material/GlobalStyles"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 
-import useThemeSettings from "./hooks/useTheme"
+import useSettings from "./hooks/useTheme"
 import { routes } from "./routes"
 
 const App = () => {
-  const { colorMode } = useThemeSettings()
+  const { colorMode } = useSettings()
 
   const theme = useMemo(
     () =>

@@ -4,14 +4,10 @@ import Toolbar from "@mui/material/Toolbar"
 import Typography from "@mui/material/Typography"
 
 import { MenuOutlined as MenuIcon } from "@ant-design/icons"
-import useThemeSettings from "../hooks/useTheme"
-import Button from "@mui/material/Button"
-import { useAppDispatch } from "../redux/hooks"
-import { openModal } from "../redux/modal/modalSlice"
+import useSettings from "../hooks/useTheme"
 
 export default function Header() {
-  const dispatch = useAppDispatch()
-  const { toggleDrawerOpen } = useThemeSettings()
+  const { toggleDrawerOpen } = useSettings()
 
   return (
     <AppBar
@@ -32,7 +28,6 @@ export default function Header() {
         >
           <MenuIcon />
         </IconButton>
-        <Button onClick={() => dispatch(openModal("addTask"))}>Add Task</Button>
         <Typography variant="h6" noWrap component="div">
           Responsive drawer
         </Typography>

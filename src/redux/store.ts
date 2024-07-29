@@ -2,10 +2,9 @@ import type { Action, ThunkAction } from "@reduxjs/toolkit"
 import { combineSlices, configureStore } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/query"
 
-import { themeSlice } from "./theme/themeSlice"
-import { modalSlice } from "./modal/modalSlice"
+import { settingSlice } from "./settings/settingSlice"
 
-const rootReducer = combineSlices(themeSlice, modalSlice)
+const rootReducer = combineSlices(settingSlice)
 
 export type RootState = ReturnType<typeof rootReducer>
 

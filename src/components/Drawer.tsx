@@ -2,11 +2,11 @@ import Box from "@mui/material/Box"
 import MuiDrawer from "@mui/material/Drawer"
 
 import { drawerWidth } from "../constants/config"
-import useThemeSettings from "../hooks/useTheme"
+import useSettings from "../hooks/useTheme"
 import MenuItems from "./MenuItems"
 
 function Drawer() {
-  const { open, setDrawer } = useThemeSettings()
+  const { open, setDrawer } = useSettings()
 
   return (
     <Box

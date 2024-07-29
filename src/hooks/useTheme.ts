@@ -6,9 +6,9 @@ import {
   setDrawerOpen,
   toggleColorMode,
   toggleDrawer,
-} from "../redux/theme/themeSlice"
+} from "../redux/settings/settingSlice"
 
-export default function useThemeSettings() {
+export default function useSettings() {
   const dispatch = useAppDispatch()
   const open = useAppSelector(selectDrawerOpen)
   const colorMode = useAppSelector(selectColorMode)

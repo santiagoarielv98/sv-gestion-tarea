@@ -10,12 +10,11 @@ import { Outlet } from "react-router-dom"
 import Drawer from "../components/Drawer"
 import Header from "../components/Header"
 import Main from "../components/Main"
-import useThemeSettings from "../hooks/useTheme"
-import Modal from "../components/Modal"
+import useSettings from "../hooks/useTheme"
 
 export default function AppLayout() {
   const theme = useTheme()
-  const { open, setDrawer } = useThemeSettings()
+  const { open, setDrawer } = useSettings()
 
   const isMobile = useMediaQuery(theme.breakpoints.down("md"))
 
@@ -41,7 +40,6 @@ export default function AppLayout() {
       <Main open={open}>
         <Toolbar />
         <Outlet />
-        <Modal />
       </Main>
     </Box>
   )

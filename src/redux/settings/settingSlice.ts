@@ -5,20 +5,20 @@ export enum ColorMode {
   Dark = "dark",
 }
 
-export interface ThemeState {
+export interface SettingState {
   colorMode: ColorMode
   drawerOpen?: boolean
 }
 
 const COLOR_MODE_KEY = "colorMode"
 
-const initialState: ThemeState = {
+const initialState: SettingState = {
   colorMode: getInitialColorMode(),
   drawerOpen: false,
 }
 
-export const themeSlice = createSlice({
-  name: "theme",
+export const settingSlice = createSlice({
+  name: "settingSlice",
   initialState,
   reducers: create => ({
     toggleColorMode: create.reducer(state => {
@@ -41,9 +41,9 @@ export const themeSlice = createSlice({
 })
 
 export const { toggleColorMode, toggleDrawer, setDrawerOpen } =
-  themeSlice.actions
+  settingSlice.actions
 
-export const { selectColorMode, selectDrawerOpen } = themeSlice.selectors
+export const { selectColorMode, selectDrawerOpen } = settingSlice.selectors
 
 function getInitialColorMode() {
   const persistedColorMode = localStorage.getItem(COLOR_MODE_KEY)
