@@ -33,7 +33,13 @@ export async function createTask(task: CreateTask) {
   const dueDate = task.dueDate.toDate()
   const isCompleted = false
   const labels = task.labels?.filter(label => label.id).map(label => label.id)
-  await addDoc(taskCollection, { ...task, isCompleted, dueDate, labels })
+  await addDoc(taskCollection, {
+    ...task,
+    isCompleted,
+    dueDate,
+    labels,
+    createdBy: user.uid,
+  })
 }
 
 export async function updateTask(taskId: string, task: Partial<CreateTask>) {

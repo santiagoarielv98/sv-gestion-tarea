@@ -175,7 +175,7 @@ const TaskForm = ({ formik }: { formik?: FormikProps<TaskFormValues> }) => {
             renderOption={(props, option) => {
               const { key, ...optionProps } = props
               return (
-                <li key={key} {...optionProps}>
+                <li key={option.id} {...optionProps}>
                   {option.name}
                 </li>
               )

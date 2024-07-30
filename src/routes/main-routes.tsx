@@ -1,14 +1,21 @@
 import type { RouteObject } from "react-router-dom"
 import AppLayout from "../layouts/AppLayout"
+import ProtectedRoute from "../layouts/ProtectedRoute"
 import Home from "../pages/Home/Home"
 
 export const mainRoutes: RouteObject = {
   path: "/",
-  element: <AppLayout />,
+  element: <ProtectedRoute />,
   children: [
     {
       path: "/",
-      element: <Home />,
+      element: <AppLayout />,
+      children: [
+        {
+          path: "/",
+          element: <Home />,
+        },
+      ],
     },
   ],
 }

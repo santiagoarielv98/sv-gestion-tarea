@@ -1,25 +1,32 @@
-import { getDocs, onSnapshot } from "firebase/firestore"
+import { DeleteFilled, EditFilled } from "@ant-design/icons"
+import Button from "@mui/material/Button"
+import Checkbox from "@mui/material/Checkbox"
+import Dialog from "@mui/material/Dialog"
+import DialogActions from "@mui/material/DialogActions"
+import DialogContent from "@mui/material/DialogContent"
+import IconButton from "@mui/material/IconButton"
+import List from "@mui/material/List"
+import ListItem from "@mui/material/ListItem"
+import ListItemIcon from "@mui/material/ListItemIcon"
+import ListItemText from "@mui/material/ListItemText"
+import {
+  collection,
+  onSnapshot,
+  query,
+  type Unsubscribe,
+  where,
+} from "firebase/firestore"
+import moment from "moment"
 import React from "react"
+import EditTaskForm from "../../components/EditTaskForm"
+import { auth, db } from "../../firebase"
+import { type Label, labelCollection } from "../../services/label"
 import {
   type CreateTask,
   deleteTask,
   taskCollection,
   toggleTaskCompletion,
 } from "../../services/tasks"
-import List from "@mui/material/List"
-import ListItem from "@mui/material/ListItem"
-import IconButton from "@mui/material/IconButton"
-import ListItemText from "@mui/material/ListItemText"
-import { DeleteFilled, EditFilled } from "@ant-design/icons"
-import Dialog from "@mui/material/Dialog"
-import DialogContent from "@mui/material/DialogContent"
-import DialogActions from "@mui/material/DialogActions"
-import Button from "@mui/material/Button"
-import EditTaskForm from "../../components/EditTaskForm"
-import moment from "moment"
-import ListItemIcon from "@mui/material/ListItemIcon"
-import Checkbox from "@mui/material/Checkbox"
-import { type Label, labelCollection } from "../../services/label"
 
 export default function Home() {
   const [data, setData] = React.useState<CreateTask[]>([])
@@ -58,37 +65,55 @@ export default function Home() {
   }
 
   React.useEffect(() => {
-    const unsubscribeLabels = onSnapshot(labelCollection, snapshot => {
-      const labels: Label[] = []
+    let unsubscribeLabels: Unsubscribe
 
-      snapshot.forEach(doc =>
-        labels.push({ id: doc.id, ...doc.data() } as Label),
-      )
-      setLabels(labels)
+    auth.onAuthStateChanged(user => {
+      if (!user) {
+        return
+      }
+      const q = query(labelCollection, where("userId", "==", user.uid))
+      unsubscribeLabels = onSnapshot(q, snapshot => {
+        const labels: Label[] = []
+
+        snapshot.forEach(doc =>
+          labels.push({ id: doc.id, ...doc.data() } as Label),
+        )
+        setLabels(labels)
+      })
     })
 
     return () => {
-      unsubscribeLabels()
+      unsubscribeLabels?.()
     }
   }, [])
 
   React.useEffect(() => {
-    const unsubscribeTasks = onSnapshot(taskCollection, snapshot => {
-      const tasks: CreateTask[] = []
+    let unsubscribeTasks: Unsubscribe
+    auth.onAuthStateChanged(user => {
+      if (!user) {
+        return
+      }
+      const q = query(taskCollection, where("userId", "==", user.uid))
 
-      snapshot.forEach(doc =>
-        tasks.push({
-          id: doc.id,
-          ...doc.data(),
-          dueDate: moment(doc.data().dueDate.toDate()),
-          labels: labels.filter(label => doc.data().labels?.includes(label.id)),
-        } as CreateTask),
-      )
-      setData(tasks)
+      unsubscribeTasks = onSnapshot(q, snapshot => {
+        const tasks: CreateTask[] = []
+
+        snapshot.forEach(doc =>
+          tasks.push({
+            id: doc.id,
+            ...doc.data(),
+            dueDate: moment(doc.data().dueDate.toDate()),
+            labels: labels.filter(label =>
+              doc.data().labels?.includes(label.id),
+            ),
+          } as CreateTask),
+        )
+        setData(tasks)
+      })
     })
 
     return () => {
-      unsubscribeTasks()
+      unsubscribeTasks?.()
     }
   }, [labels])
 
