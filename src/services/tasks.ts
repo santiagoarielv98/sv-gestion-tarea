@@ -3,6 +3,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   onSnapshot,
   updateDoc,
@@ -17,13 +18,15 @@ export interface CreateTask {
   dueDate: Moment
   labels?: string[]
   priority: "low" | "medium" | "high"
+  isCompleted?: boolean
 }
 
 export const taskCollection = collection(db, "tasks")
 
 export async function createTask(task: CreateTask) {
   const dueDate = task.dueDate.toDate()
-  await addDoc(taskCollection, { ...task, dueDate })
+  const isCompleted = false
+  await addDoc(taskCollection, { ...task, isCompleted, dueDate })
 }
 
 export async function updateTask(taskId: string, task: Partial<CreateTask>) {
@@ -40,4 +43,10 @@ export async function getTasks() {
 
 export async function deleteTask(taskId: string) {
   await deleteDoc(doc(db, "tasks", taskId))
+}
+
+export async function toggleTaskCompletion(taskId: string) {
+  const taskDoc = doc(db, "tasks", taskId)
+  const task = await getDoc(taskDoc)
+  await updateDoc(taskDoc, { isCompleted: !task.data()!.isCompleted })
 }
