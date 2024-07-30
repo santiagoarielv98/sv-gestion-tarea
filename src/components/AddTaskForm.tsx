@@ -14,13 +14,14 @@ import moment, { type Moment } from "moment"
 import * as Yup from "yup"
 import { createTask } from "../services/tasks"
 import TaskForm from "./TaskForm"
+import type { Label } from "../services/label"
 
 export interface TaskFormValues {
   id?: string
   title: string
   description?: string
   dueDate: Moment
-  labels?: string[]
+  labels?: Label[]
   priority: "low" | "medium" | "high"
 }
 

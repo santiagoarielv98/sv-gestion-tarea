@@ -1,4 +1,4 @@
-import { onSnapshot } from "firebase/firestore"
+import { getDocs, onSnapshot } from "firebase/firestore"
 import React from "react"
 import {
   type CreateTask,
@@ -19,9 +19,11 @@ import EditTaskForm from "../../components/EditTaskForm"
 import moment from "moment"
 import ListItemIcon from "@mui/material/ListItemIcon"
 import Checkbox from "@mui/material/Checkbox"
+import { type Label, labelCollection } from "../../services/label"
 
 export default function Home() {
   const [data, setData] = React.useState<CreateTask[]>([])
+  const [labels, setLabels] = React.useState<Label[]>([])
   const [openDelete, setOpenDelete] = React.useState(false)
   const [selectedTask, setSelectedTask] = React.useState<CreateTask | null>(
     null,
@@ -56,7 +58,22 @@ export default function Home() {
   }
 
   React.useEffect(() => {
-    const unsub = onSnapshot(taskCollection, snapshot => {
+    const unsubscribeLabels = onSnapshot(labelCollection, snapshot => {
+      const labels: Label[] = []
+
+      snapshot.forEach(doc =>
+        labels.push({ id: doc.id, ...doc.data() } as Label),
+      )
+      setLabels(labels)
+    })
+
+    return () => {
+      unsubscribeLabels()
+    }
+  }, [])
+
+  React.useEffect(() => {
+    const unsubscribeTasks = onSnapshot(taskCollection, snapshot => {
       const tasks: CreateTask[] = []
 
       snapshot.forEach(doc =>
@@ -64,13 +81,16 @@ export default function Home() {
           id: doc.id,
           ...doc.data(),
           dueDate: moment(doc.data().dueDate.toDate()),
+          labels: labels.filter(label => doc.data().labels?.includes(label.id)),
         } as CreateTask),
       )
       setData(tasks)
     })
 
-    return () => unsub()
-  }, [])
+    return () => {
+      unsubscribeTasks()
+    }
+  }, [labels])
 
   return (
     <div>

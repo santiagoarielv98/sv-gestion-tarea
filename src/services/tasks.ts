@@ -5,18 +5,18 @@ import {
   doc,
   getDoc,
   getDocs,
-  onSnapshot,
   updateDoc,
 } from "firebase/firestore"
 import { db } from "../firebase"
 import type { Moment } from "moment"
+import type { Label } from "./label"
 
 export interface CreateTask {
   id?: string
   title: string
   description?: string
   dueDate: Moment
-  labels?: string[]
+  labels?: Label[]
   priority: "low" | "medium" | "high"
   isCompleted?: boolean
 }
@@ -26,13 +26,15 @@ export const taskCollection = collection(db, "tasks")
 export async function createTask(task: CreateTask) {
   const dueDate = task.dueDate.toDate()
   const isCompleted = false
-  await addDoc(taskCollection, { ...task, isCompleted, dueDate })
+  const labels = task.labels?.filter(label => label.id).map(label => label.id)
+  await addDoc(taskCollection, { ...task, isCompleted, dueDate, labels })
 }
 
 export async function updateTask(taskId: string, task: Partial<CreateTask>) {
   const taskDoc = doc(db, "tasks", taskId)
   const dueDate = task.dueDate?.toDate()
-  await updateDoc(taskDoc, { ...task, dueDate })
+  const labels = task.labels?.filter(label => label.id).map(label => label.id)
+  await updateDoc(taskDoc, { ...task, labels, dueDate })
 }
 
 export async function getTasks() {
