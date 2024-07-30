@@ -3,8 +3,9 @@ import { combineSlices, configureStore } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/query"
 
 import { settingSlice } from "./settings/settingSlice"
+import { authSlice } from "./auth/authSlice"
 
-const rootReducer = combineSlices(settingSlice)
+const rootReducer = combineSlices(settingSlice, authSlice)
 
 export type RootState = ReturnType<typeof rootReducer>
 
