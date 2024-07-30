@@ -1,20 +1,20 @@
 import { useMemo } from "react"
-import { RouterProvider, useNavigate } from "react-router-dom"
+import { RouterProvider } from "react-router-dom"
 
 import CssBaseline from "@mui/material/CssBaseline"
 import GlobalStyles from "@mui/material/GlobalStyles"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 
-import useSettings from "./hooks/useTheme"
-import { routes } from "./routes"
-import { auth } from "./firebase"
 import React from "react"
-import { type User } from "firebase/auth"
+import { auth } from "./firebase"
+import useSettings from "./hooks/useTheme"
+import { setStatus, setUser } from "./redux/auth/authSlice"
+import { useAppDispatch } from "./redux/hooks"
+import { routes } from "./routes"
 
 const App = () => {
-  const [user, setUser] = React.useState<User | null>(null)
+  const dispatch = useAppDispatch()
   const { colorMode } = useSettings()
-  // const navigate = useNavigate()
 
   const theme = useMemo(
     () =>
@@ -27,18 +27,16 @@ const App = () => {
   )
 
   React.useEffect(() => {
-    const unsub = auth.onAuthStateChanged(user => {
-      if (user) {
-        setUser(user)
-      } else {
-        // navigate("/login")
-        setUser(null)
-      }
+    dispatch(setStatus("loading"))
+    const authUnsubscribe = auth.onAuthStateChanged(user => {
+      const _user = user ? { email: user.email!, uid: user.uid } : null
+      dispatch(setUser(_user))
+      dispatch(setStatus("succeeded"))
     })
     return () => {
-      unsub()
+      authUnsubscribe()
     }
-  }, [])
+  }, [dispatch])
 
   return (
     <ThemeProvider theme={theme}>

@@ -1,6 +1,10 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
-import { type User } from "firebase/auth"
 import { login, logout, register } from "./authThunks"
+
+export type User = {
+  uid: string
+  email: string
+}
 
 export type AuthState = {
   user: User | null
@@ -19,6 +23,12 @@ export const authSlice = createSlice({
     setUser: (state, action: PayloadAction<User | null>) => {
       state.user = action.payload
     },
+    setStatus: (
+      state,
+      action: PayloadAction<"idle" | "loading" | "succeeded" | "failed">,
+    ) => {
+      state.status = action.payload
+    },
   },
   extraReducers: builder => {
     builder.addCase(login.pending, state => {
@@ -26,7 +36,10 @@ export const authSlice = createSlice({
     })
     builder.addCase(login.fulfilled, (state, action) => {
       state.status = "succeeded"
-      state.user = action.payload
+      state.user = {
+        uid: action.payload.uid,
+        email: action.payload.email!,
+      }
     })
     builder.addCase(login.rejected, state => {
       state.status = "failed"
@@ -36,7 +49,10 @@ export const authSlice = createSlice({
     })
     builder.addCase(register.fulfilled, (state, action) => {
       state.status = "succeeded"
-      state.user = action.payload
+      state.user = {
+        uid: action.payload.uid,
+        email: action.payload.email!,
+      }
     })
     builder.addCase(register.rejected, state => {
       state.status = "failed"
@@ -56,9 +72,11 @@ export const authSlice = createSlice({
   selectors: {
     selectUser: state => state.user,
     selectIsLoggedIn: state => state.user !== null,
+    selectStatus: state => state.status,
   },
 })
 
-export const { setUser } = authSlice.actions
+export const { setUser, setStatus } = authSlice.actions
 
-export const { selectUser, selectIsLoggedIn } = authSlice.selectors
+export const { selectUser, selectIsLoggedIn, selectStatus } =
+  authSlice.selectors

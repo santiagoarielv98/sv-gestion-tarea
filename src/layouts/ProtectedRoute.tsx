@@ -1,29 +1,18 @@
-import type { User } from "firebase/auth"
-import React from "react"
-import { Outlet, useNavigate } from "react-router-dom"
-import { auth } from "../firebase"
+import { Navigate, Outlet } from "react-router-dom"
+import { selectStatus, selectUser } from "../redux/auth/authSlice"
+import { useAppSelector } from "../redux/hooks"
 
 export default function ProtectedRoute() {
-  const [user, setUser] = React.useState<User | null>(null)
-  const navigate = useNavigate()
+  const user = useAppSelector(selectUser)
+  const status = useAppSelector(selectStatus)
+  
+  if (["loading", "idle"].includes(status)) {
+    return <div>Loading...</div>
+  }
 
-  React.useEffect(() => {
-    const unsub = auth.onAuthStateChanged(user => {
-      if (user) {
-        setUser(user)
-      } else {
-        navigate("/login")
-        setUser(null)
-      }
-    })
-    return () => {
-      unsub()
-    }
-  }, [navigate])
-
-  React.useEffect(() => {
-    console.log("User", user)
-  }, [user])
+  if (!user) {
+    return <Navigate to="/login" />
+  }
 
   return <Outlet />
 }
