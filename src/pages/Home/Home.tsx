@@ -1,3 +1,4 @@
+import Form from "../../components/Form"
 import {
   selectUserState,
   signIn,
@@ -44,6 +45,7 @@ function Home() {
           <pre>{JSON.stringify(user, null, 2)}</pre>
         )}
       </div>
+      <Form />
     </div>
   )
 }

@@ -8,7 +8,7 @@ import { setLoading, setUser } from "./redux/auth/authSlice"
 import { useAppDispatch } from "./redux/hooks"
 import { routes } from "./routes"
 
-const App = () => {
+function App() {
   const dispatch = useAppDispatch()
 
   React.useEffect(() => {
