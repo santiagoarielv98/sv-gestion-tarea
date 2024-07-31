@@ -1,5 +1,9 @@
 import { createBrowserRouter } from "react-router-dom"
-import { authRoutes } from "./auth-routes"
-import { mainRoutes } from "./main-routes"
+import Home from "../pages/Home/Home"
 
-export const routes = createBrowserRouter([mainRoutes, authRoutes])
+export const routes = createBrowserRouter([
+  {
+    path: "",
+    element: <Home />,
+  },
+])
