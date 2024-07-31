@@ -126,3 +126,14 @@ export const authSlice = createSlice({
 export const { setUser, setLoading } = authSlice.actions
 
 export const { selectUserState } = authSlice.selectors
+
+/* export async function authenticateUser(user: User | null, dispatch: Dispatch) {
+  if (user) {
+    // const userDoc = await getDoc(doc(db, "users", user.uid))
+
+    // if (userDoc.exists()) {
+    dispatch(setUser({ id: user.uid, email: user.email! }))
+    // }
+  }
+  dispatch(setLoading(false))
+} */

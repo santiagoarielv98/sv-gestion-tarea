@@ -82,8 +82,6 @@ const taskConverter: FirestoreDataConverter<TaskCreate, TaskDb> = {
   },
 }
 
-// crud operations
-
 export const getTaskById = createAsyncThunk(
   "tasks/getTaskById",
   async (id: string, { rejectWithValue }) => {
@@ -169,9 +167,6 @@ export const taskSlice = createSlice({
       .addCase(addTask.fulfilled, (state, action) => {
         state.loading = false
       })
-      .addCase(addTask.rejected, state => {
-        state.loading = false
-      })
       .addCase(updateTask.pending, state => {
         state.loading = true
       })
@@ -179,17 +174,10 @@ export const taskSlice = createSlice({
         state.loading = false
         state.currentTask = null
       })
-      .addCase(updateTask.rejected, state => {
-        state.loading = false
-      })
       .addCase(deleteTask.pending, state => {
         state.loading = true
       })
       .addCase(deleteTask.fulfilled, (state, action) => {
-        state.loading = false
-        // state.tasks = state.tasks.filter(task => task.id !== action.payload)
-      })
-      .addCase(deleteTask.rejected, state => {
         state.loading = false
       })
       .addCase(getTaskById.pending, state => {
