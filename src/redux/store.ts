@@ -1,16 +1,9 @@
 import type { Action, ThunkAction } from "@reduxjs/toolkit"
-import { combineSlices, configureStore, createSlice } from "@reduxjs/toolkit"
+import { combineSlices, configureStore } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/query"
+import { authSlice } from "./auth/authSlice"
 
-const initialSlice = createSlice({
-  name: "initial",
-  initialState: {
-    loading: false,
-  },
-  reducers: {},
-})
-
-const rootReducer = combineSlices(initialSlice)
+const rootReducer = combineSlices(authSlice)
 
 export type RootState = ReturnType<typeof rootReducer>
 
