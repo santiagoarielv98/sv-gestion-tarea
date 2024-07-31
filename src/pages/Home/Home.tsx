@@ -1,5 +1,5 @@
 import {
-  selectUser,
+  selectUserState,
   signIn,
   signOutUser,
   signUp,
@@ -7,7 +7,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../../redux/hooks"
 
 const credentials = {
-  email: "test@test.com",
+  email: "fw3grb@test.com",
   password: "test1234",
 }
 
@@ -24,7 +24,7 @@ const generateCredentials = () => {
 
 function Home() {
   const dispatch = useAppDispatch()
-  const user = useAppSelector(selectUser)
+  const { user, loading } = useAppSelector(selectUserState)
 
   return (
     <div>
@@ -38,7 +38,11 @@ function Home() {
       <button onClick={() => dispatch(signIn(credentials))}>Sign in</button>
 
       <div>
-        <pre>{JSON.stringify(user, null, 2)}</pre>
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <pre>{JSON.stringify(user, null, 2)}</pre>
+        )}
       </div>
     </div>
   )

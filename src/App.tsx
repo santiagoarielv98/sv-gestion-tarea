@@ -1,9 +1,10 @@
 import { RouterProvider } from "react-router-dom"
 
 import { onAuthStateChanged } from "firebase/auth"
+import { doc, getDoc } from "firebase/firestore"
 import React from "react"
-import { auth } from "./firebase"
-import { setUser } from "./redux/auth/authSlice"
+import { auth, db } from "./firebase"
+import { setLoading, setUser } from "./redux/auth/authSlice"
 import { useAppDispatch } from "./redux/hooks"
 import { routes } from "./routes"
 
@@ -11,13 +12,22 @@ const App = () => {
   const dispatch = useAppDispatch()
 
   React.useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
-      console.log("entrando...")
+    dispatch(setLoading(true))
+    const unsubscribe = onAuthStateChanged(auth, async user => {
       if (user) {
-        dispatch(setUser({ id: user.uid, email: user.email! }))
+        const userDoc = await getDoc(doc(db, "users", user.uid))
+        console.log("user 1", userDoc.data())
+        if (userDoc.exists()) {
+          dispatch(setUser({ id: user.uid, email: user.email! }))
+        } else {
+          dispatch(setUser(null))
+        }
       } else {
         dispatch(setUser(null))
       }
+      console.log("user 2")
+
+      dispatch(setLoading(false))
     })
 
     return () => {
