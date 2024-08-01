@@ -3,6 +3,7 @@ import { selectUserState } from "../../redux/auth/authSlice"
 import { signIn, signOutUser, signUp } from "../../redux/auth/authThunk"
 import { useAppDispatch, useAppSelector } from "../../redux/hooks"
 import { selectLabelState } from "../../redux/labels/labelSlice"
+import { selectTaskState } from "../../redux/tasks/taskSlice"
 
 const credentials = {
   email: "5ewm2w@test.com",
@@ -24,6 +25,7 @@ function Home() {
   const dispatch = useAppDispatch()
   const { user, loading } = useAppSelector(selectUserState)
   const { labels } = useAppSelector(selectLabelState)
+  const {tasks} = useAppSelector(selectTaskState)
 
   return (
     <div>
@@ -41,6 +43,8 @@ function Home() {
         )}
       </div>
       <TaskForm />
+      <pre>{JSON.stringify(tasks, null, 2)}</pre>
+
       <pre>{JSON.stringify(labels, null, 2)}</pre>
     </div>
   )

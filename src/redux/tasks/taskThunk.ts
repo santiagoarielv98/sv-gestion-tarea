@@ -44,7 +44,7 @@ export const taskConverter = {
     return {
       title: task.title,
       description: task.description || "",
-      completed: task.completed,
+      completed: task.completed || false,
       labels: task.labels || [],
       dueDate: task.dueDate
         ? Timestamp.fromDate(new Date(task.dueDate as string))
@@ -87,7 +87,7 @@ export const getTaskById = createAsyncThunk(
   },
 )
 
-export type AddTask = Omit<Task, "userId">
+export type AddTask = Omit<Task, "userId" | "id">
 
 export const addTask = createAsyncThunk(
   "tasks/addTask",

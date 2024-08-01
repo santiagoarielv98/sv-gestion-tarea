@@ -4,7 +4,7 @@ import React from "react"
 import { useAppDispatch, useAppSelector } from "../redux/hooks"
 import { selectLabelState } from "../redux/labels/labelSlice"
 import { addLabel, type Label } from "../redux/labels/labelThunk"
-
+import { FormikContext } from "./TaskForm"
 interface ExtendedLabel extends Label {
   inputValue?: string
 }
@@ -16,16 +16,16 @@ function isMatchingLabelName(value: string) {
 }
 
 function LabelAutoComplete() {
+  const formik = React.useContext(FormikContext)
   const dispatch = useAppDispatch()
   const { labels, loading } = useAppSelector(selectLabelState)
-  const [value, setValue] = React.useState<Label[]>([])
 
   const handleChange = async (
     _event: React.SyntheticEvent,
     newValue: (Label | string)[],
   ) => {
     if (newValue.length === 0) {
-      setValue([])
+      setLabels([])
       return
     }
 
@@ -38,21 +38,25 @@ function LabelAutoComplete() {
         isMatchingLabelName(newLabel),
       )
       if (foundLabel) {
-        setValue([...(newValue as Label[]), foundLabel])
+        setLabels([...(newValue as Label[]), foundLabel])
         return
       }
 
       newLabel = await dispatch(addLabel({ title: newLabel })).unwrap()
     }
 
-    setValue([...(newValue as Label[]), newLabel])
+    setLabels([...(newValue as Label[]), newLabel])
+  }
+
+  function setLabels(labels: Label[]) {
+    formik.setFieldValue("labels", labels)
   }
 
   return (
     <Autocomplete
       autoFocus
       freeSolo
-      value={value}
+      value={formik.values.labels}
       onChange={handleChange}
       multiple
       id="labels"
@@ -71,7 +75,7 @@ function LabelAutoComplete() {
       filterOptions={(options, params) => {
         const filtered = filter(options, params)
         const isExisting =
-          value.some(isMatchingLabelName(params.inputValue)) ||
+          formik.values.labels.some(isMatchingLabelName(params.inputValue)) ||
           labels.some(isMatchingLabelName(params.inputValue))
         if (params.inputValue !== "" && !isExisting) {
           filtered.push({

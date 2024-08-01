@@ -3,7 +3,6 @@ import { selectTaskState, setCurrentTask } from "../redux/tasks/taskSlice"
 import {
   addTask,
   deleteTask,
-  type ITask,
   type Task,
   updateTask,
 } from "../redux/tasks/taskThunk"
@@ -30,7 +29,7 @@ function Form() {
     dispatch(deleteTask(id))
   }
 
-  const handleSelect = (task: ITask) => {
+  const handleSelect = (task: Task) => {
     dispatch(setCurrentTask(task))
   }
 

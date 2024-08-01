@@ -5,20 +5,14 @@ import Grid from "@mui/material/Grid"
 import MenuItem from "@mui/material/MenuItem"
 import Select from "@mui/material/Select"
 import TextField from "@mui/material/TextField"
-import { useFormik } from "formik"
+import { type FormikHelpers, type FormikState, useFormik } from "formik"
+import React from "react"
 import * as Yup from "yup"
 import LabelAutoComplete from "./LabelAutoComplete"
-/* 
-export interface ITask {
-  id: string
-  title: string
-  description?: string
-  completed: boolean -> default false
-  labels: string[] -> default []
-  dueDate: Date -> default now
-  priority: number -> default 1
-}
-*/
+import { useAppDispatch, useAppSelector } from "../redux/hooks"
+import { addTask } from "../redux/tasks/taskThunk"
+import { selectTaskState } from "../redux/tasks/taskSlice"
+import type { Label } from "../redux/labels/labelThunk"
 
 const priorityOptions = [
   { value: 1, label: "Low" },
@@ -45,104 +39,147 @@ const validationSchema = Yup.object({
   priority: Yup.number().min(1).max(5),
 })
 
+const initialValues = {
+  title: "",
+  description: "",
+  completed: false,
+  labels: [],
+  dueDate: new Date(),
+  priority: 2,
+}
+type Values = {
+  title: string
+  description: string
+  completed: boolean
+  labels: Label[]
+  dueDate: string
+  priority: number
+}
+
+export const FormikContext = React.createContext<
+  FormikHelpers<Values> & FormikState<Values>
+>({} as any)
+
 function TaskForm() {
-  const formik = useFormik({
+  const dispatch = useAppDispatch()
+  const { loading } = useAppSelector(selectTaskState)
+  const formik = useFormik<Values>({
     initialValues: {
       title: "",
       description: "",
       completed: false,
       labels: [],
-      dueDate: new Date(),
+      dueDate: "",
       priority: 2,
     },
     validationSchema: validationSchema,
     onSubmit: values => {
-      console.log(values)
+      dispatch(
+        addTask({
+          title: values.title,
+          description: values.description,
+          completed: values.completed,
+          labels: values.labels.map(label => label.id),
+          dueDate: values.dueDate.toString(),
+        }),
+      ).then(() => {
+        formik.resetForm()
+      })
     },
   })
 
   return (
-    <Box
-      component="form"
-      noValidate
-      onSubmit={formik.handleSubmit}
-      sx={{ mt: 3, maxWidth: 400, mx: "auto" }}
-    >
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <TextField
-            required
-            // autoFocus
-            fullWidth
-            id="title"
-            name="title"
-            label="Title"
-            value={formik.values.title}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.title && Boolean(formik.errors.title)}
-            helperText={formik.touched.title && formik.errors.title}
-          />
+    <FormikContext.Provider value={formik}>
+      <Box
+        component="form"
+        noValidate
+        onSubmit={formik.handleSubmit}
+        sx={{ mt: 3, maxWidth: 400, mx: "auto" }}
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              required
+              // autoFocus
+              fullWidth
+              id="title"
+              name="title"
+              label="Title"
+              value={formik.values.title}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.title && Boolean(formik.errors.title)}
+              helperText={formik.touched.title && formik.errors.title}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              multiline
+              minRows={2}
+              maxRows={6}
+              size="small"
+              id="description"
+              name="description"
+              label="Description"
+              value={formik.values.description}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={
+                formik.touched.description && Boolean(formik.errors.description)
+              }
+              helperText={
+                formik.touched.description && formik.errors.description
+              }
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth>
+              <Select
+                id="priority"
+                name="priority"
+                value={String(formik.values.priority)}
+                onChange={e => formik.setFieldValue("priority", e.target.value)}
+              >
+                {priorityOptions.map(option => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              id="dueDate"
+              name="dueDate"
+              label="Due Date"
+              type="date"
+              value={formik.values.dueDate}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.dueDate && Boolean(formik.errors.dueDate)}
+              helperText={
+                formik.touched.dueDate && (formik.errors.dueDate as string)
+              }
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <LabelAutoComplete />
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            fullWidth
-            multiline
-            minRows={2}
-            maxRows={6}
-            size="small"
-            id="description"
-            name="description"
-            label="Description"
-            value={formik.values.description}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.description && Boolean(formik.errors.description)
-            }
-            helperText={formik.touched.description && formik.errors.description}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <FormControl fullWidth>
-            <Select
-              id="priority"
-              name="priority"
-              value={String(formik.values.priority)}
-              onChange={e => formik.setFieldValue("priority", e.target.value)}
-            >
-              {priorityOptions.map(option => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            fullWidth
-            id="dueDate"
-            name="dueDate"
-            label="Due Date"
-            type="date"
-            value={formik.values.dueDate}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.dueDate && Boolean(formik.errors.dueDate)}
-            helperText={
-              formik.touched.dueDate && (formik.errors.dueDate as string)
-            }
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <LabelAutoComplete />
-        </Grid>
-      </Grid>
-      <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-        Task
-      </Button>
-    </Box>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+          disabled={loading}
+        >
+          Task
+        </Button>
+      </Box>
+    </FormikContext.Provider>
   )
 }
 
