@@ -1,31 +1,10 @@
 import { RouterProvider } from "react-router-dom"
 
-import { onAuthStateChanged } from "firebase/auth"
-import React from "react"
-import { auth } from "./firebase"
-import { setLoading, setUser } from "./redux/auth/authSlice"
-import { useAppDispatch } from "./redux/hooks"
 import { routes } from "./routes"
+import useLoadData from "./hook/useLoadData"
 
 function App() {
-  const dispatch = useAppDispatch()
-
-  React.useEffect(() => {
-    dispatch(setLoading(true))
-    const unsubscribe = onAuthStateChanged(auth, async user => {
-      if (user) {
-        dispatch(setUser({ id: user.uid, email: user.email! }))
-      } else {
-        dispatch(setUser(null))
-      }
-      dispatch(setLoading(false))
-    })
-
-    return () => {
-      unsubscribe()
-    }
-  }, [dispatch])
-
+  useLoadData()
   return <RouterProvider router={routes} />
 }
 

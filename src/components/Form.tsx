@@ -1,37 +1,19 @@
-import type { Unsubscribe } from "firebase/auth"
-import moment from "moment"
-import React from "react"
-import { selectUserState } from "../redux/auth/authSlice"
 import { useAppDispatch, useAppSelector } from "../redux/hooks"
+import { selectTaskState, setCurrentTask } from "../redux/tasks/taskSlice"
 import {
   addTask,
   deleteTask,
-  getTasks,
   type ITask,
-  selectTaskState,
-  setCurrentTask,
-  setTasks,
+  type Task,
   updateTask,
-} from "../redux/tasks/taskSlice"
-
-/* export interface ITask {
-  id?: string
-  title: string
-  description: string
-  completed: boolean
-  labels: string[]
-  dueDate: string
-  userId: string
-} */
+} from "../redux/tasks/taskThunk"
 
 function Form() {
   const dispatch = useAppDispatch()
-  const { user } = useAppSelector(selectUserState)
   const { currentTask, tasks, loading } = useAppSelector(selectTaskState)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!user) return
     const randomNum = Math.random().toString(36).substring(7)
     dispatch(
       addTask({
@@ -39,8 +21,7 @@ function Form() {
         title: `task description ${randomNum}`,
         description: `task description ${randomNum}`,
         labels: [],
-        userId: user?.id!,
-        dueDate: moment(),
+        dueDate: new Date().toISOString(),
       }),
     )
   }
@@ -61,31 +42,21 @@ function Form() {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
 
-    const data = {
-      title: formData.get("title") as string,
-      description: formData.get("description") as string,
-      completed: Boolean(formData.get("completed")),
-      labels: (formData.get("labels") as string)
-        .split(",")
-        .filter(Boolean)
-        .map(label => label.trim()),
-      dueDate: moment(formData.get("dueDate") as string),
-    }
-    dispatch(updateTask({ ...data, id: currentTask?.id! }))
+    dispatch(
+      updateTask({
+        id: currentTask!.id!,
+        title: formData.get("title") as string,
+        description: formData.get("description") as string,
+        completed: Boolean(formData.get("completed")),
+        labels: (formData.get("labels") as string)
+          .split(",")
+          .filter(Boolean)
+          .map(label => label.trim()),
+        dueDate: formData.get("dueDate") as string,
+      }),
+    )
   }
 
-  React.useEffect(() => {
-    let unsub: Unsubscribe
-    if (user) {
-      unsub = getTasks(tasks => {
-        dispatch(setTasks(tasks))
-      })
-    }
-
-    return () => {
-      unsub?.()
-    }
-  }, [user, dispatch])
   return (
     <div>
       <div>

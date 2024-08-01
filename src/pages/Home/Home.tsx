@@ -8,7 +8,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../../redux/hooks"
 
 const credentials = {
-  email: "fw3grb@test.com",
+  email: "5ewm2w@test.com",
   password: "test1234",
 }
 
