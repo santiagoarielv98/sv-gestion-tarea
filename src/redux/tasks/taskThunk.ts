@@ -5,10 +5,10 @@ import {
   deleteDoc,
   doc,
   getDoc,
+  Timestamp,
   updateDoc,
   type QueryDocumentSnapshot,
   type SnapshotOptions,
-  Timestamp,
 } from "firebase/firestore"
 import { auth, db } from "../../firebase"
 
@@ -93,9 +93,11 @@ export const getTaskById = createAsyncThunk(
   },
 )
 
+export type AddTask = Omit<Task, "userId">
+
 export const addTask = createAsyncThunk(
   "tasks/addTask",
-  async (task: Omit<Task, "userId">, { rejectWithValue }) => {
+  async (task: AddTask, { rejectWithValue }) => {
     if (!auth.currentUser) {
       return rejectWithValue("User not found")
     }
@@ -103,12 +105,11 @@ export const addTask = createAsyncThunk(
   },
 )
 
+export type UpdateTask = Omit<Partial<Task>, "userId"> & { id: string }
+
 export const updateTask = createAsyncThunk(
   "tasks/updateTask",
-  async (
-    task: Omit<Partial<Task>, "userId"> & { id: string },
-    { rejectWithValue },
-  ) => {
+  async (task: UpdateTask, { rejectWithValue }) => {
     if (!auth.currentUser) {
       return rejectWithValue("User not found")
     }
