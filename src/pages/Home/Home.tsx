@@ -1,10 +1,6 @@
 import Form from "../../components/Form"
-import {
-  selectUserState,
-  signIn,
-  signOutUser,
-  signUp,
-} from "../../redux/auth/authSlice"
+import { selectUserState } from "../../redux/auth/authSlice"
+import { signIn, signOutUser, signUp } from "../../redux/auth/authThunk"
 import { useAppDispatch, useAppSelector } from "../../redux/hooks"
 
 const credentials = {

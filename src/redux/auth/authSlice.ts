@@ -1,27 +1,12 @@
-import {
-  createAsyncThunk,
-  createSlice,
-  type PayloadAction,
-} from "@reduxjs/toolkit"
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-} from "firebase/auth"
-import { doc, setDoc } from "firebase/firestore"
-import { auth, db } from "../../firebase"
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
+import { signIn, signOutUser, signUp } from "./authThunk"
 
-interface IUser {
+export interface IUser {
   id: string
   email: string
 }
 
-interface ICredentials {
-  email: string
-  password: string
-}
-
-interface AuthState {
+export interface AuthState {
   user: IUser | null
   loading: boolean
 }
@@ -30,49 +15,6 @@ const initialState: AuthState = {
   user: null,
   loading: false,
 }
-
-export const signIn = createAsyncThunk(
-  "auth/signIn",
-  async (user: ICredentials, { rejectWithValue }) => {
-    if (auth.currentUser) return true
-    try {
-      await signInWithEmailAndPassword(auth, user.email, user.password)
-    } catch (error) {
-      return rejectWithValue(error)
-    }
-  },
-)
-
-export const signUp = createAsyncThunk(
-  "auth/signUp",
-  async (user: ICredentials, { rejectWithValue }) => {
-    if (auth.currentUser) return true
-    try {
-      const response = await createUserWithEmailAndPassword(
-        auth,
-        user.email,
-        user.password,
-      )
-      await setDoc(doc(db, "users", response.user.uid), {
-        email: response.user.email,
-      })
-    } catch (error) {
-      return rejectWithValue(error)
-    }
-  },
-)
-
-export const signOutUser = createAsyncThunk(
-  "auth/signOut",
-  async (_, { rejectWithValue }) => {
-    if (!auth.currentUser) return true
-    try {
-      await signOut(auth)
-    } catch (error) {
-      return rejectWithValue(error)
-    }
-  },
-)
 
 export const authSlice = createSlice({
   name: "auth",
@@ -126,14 +68,3 @@ export const authSlice = createSlice({
 export const { setUser, setLoading } = authSlice.actions
 
 export const { selectUserState } = authSlice.selectors
-
-/* export async function authenticateUser(user: User | null, dispatch: Dispatch) {
-  if (user) {
-    // const userDoc = await getDoc(doc(db, "users", user.uid))
-
-    // if (userDoc.exists()) {
-    dispatch(setUser({ id: user.uid, email: user.email! }))
-    // }
-  }
-  dispatch(setLoading(false))
-} */
