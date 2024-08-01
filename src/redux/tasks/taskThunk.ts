@@ -5,9 +5,10 @@ import {
   deleteDoc,
   doc,
   getDoc,
-  Timestamp,
   updateDoc,
-  type FirestoreDataConverter,
+  type QueryDocumentSnapshot,
+  type SnapshotOptions,
+  Timestamp,
 } from "firebase/firestore"
 import { auth, db } from "../../firebase"
 
@@ -43,21 +44,23 @@ export class Task {
   }
 }
 
-export const taskConverter: FirestoreDataConverter<Task, FirestoreTask> = {
-  toFirestore: task => {
-    console.log("tofirestore", task)
+export const taskConverter = {
+  toFirestore: (task: Task) => {
     return {
       title: task.title,
-      description: task.description,
+      description: task.description || "",
       completed: task.completed,
-      labels: task.labels,
+      labels: task.labels || [],
       dueDate: task.dueDate
         ? Timestamp.fromDate(new Date(task.dueDate as string))
         : Timestamp.now(),
       userId: auth.currentUser?.uid!,
-    } as FirestoreTask
+    }
   },
-  fromFirestore: (snapshot, options) => {
+  fromFirestore: (
+    snapshot: QueryDocumentSnapshot,
+    options: SnapshotOptions,
+  ) => {
     const data = snapshot.data(options) as FirestoreTask
     return {
       id: snapshot.id,
@@ -110,9 +113,12 @@ export const updateTask = createAsyncThunk(
       return rejectWithValue("User not found")
     }
     const { id, ...taskWithoutId } = task
-    const docRef = doc(db, "tasks", id).withConverter(taskConverter)
 
-    await updateDoc(docRef, taskWithoutId)
+    const docRef = doc(db, "tasks", id)
+
+    const updatedTask = taskConverter.toFirestore(taskWithoutId as Task)
+
+    await updateDoc(docRef, updatedTask)
   },
 )
 
