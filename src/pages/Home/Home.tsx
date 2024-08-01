@@ -25,10 +25,7 @@ function Home() {
 
   return (
     <div>
-      <button
-        // disabled
-        onClick={() => dispatch(signUp(generateCredentials()))}
-      >
+      <button onClick={() => dispatch(signUp(generateCredentials()))}>
         Sign up
       </button>
       <button onClick={() => dispatch(signOutUser())}>Sign out</button>

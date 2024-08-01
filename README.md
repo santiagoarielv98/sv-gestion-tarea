@@ -1,27 +1,15 @@
-# sv-gestion-tarea
+### 1. **Aplicación de Gestión de Tareas**
 
-Uses [Vite](https://vitejs.dev/), [Vitest](https://vitest.dev/), and [React Testing Library](https://github.com/testing-library/react-testing-library) to create a modern [React](https://react.dev/) app compatible with [Create React App](https://create-react-app.dev/)
+**Descripción**: Una aplicación donde los usuarios pueden crear, editar, eliminar y organizar tareas. La aplicación debe incluir características como listas de tareas, etiquetas, recordatorios y prioridad de tareas.
 
-```sh
-npx degit reduxjs/redux-templates/packages/sv-gestion-tarea my-app
-```
+**Tecnologías**:
 
-## Goals
+- **Frontend**: React (con hooks), Redux para manejo de estado, Material-UI para la interfaz de usuario, React Router para navegación.
+- **Backend**: Node.js con Express.js para la API, MongoDB para la base de datos, Mongoose para modelado de datos.
+- **Extras**: Firebase para autenticación y notificaciones push, Jest para pruebas.
 
-- Easy migration from Create React App or Vite
-- As beginner friendly as Create React App
-- Optimized performance compared to Create React App
-- Customizable without ejecting
+**Sugerencias**:
 
-## Scripts
-
-- `dev`/`start` - start dev server and open browser
-- `build` - build for production
-- `preview` - locally preview production build
-- `test` - launch test runner
-
-## Inspiration
-
-- [Create React App](https://github.com/facebook/create-react-app/tree/main/packages/cra-template)
-- [Vite](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react)
-- [Vitest](https://github.com/vitest-dev/vitest/tree/main/examples/react-testing-lib)
+- **Componentes**: Material-UI y Formik para formularios.
+- **Paleta de colores**: Utiliza colores calmantes y productivos, como tonos de azul y verde.
+- **Herramientas**: Integración con herramientas como Slack o Trello para sincronización de tareas.
