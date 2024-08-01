@@ -1,9 +1,10 @@
 import React from "react"
 import { selectUserState, setLoading, setUser } from "../redux/auth/authSlice"
 import { useAppDispatch, useAppSelector } from "../redux/hooks"
-import { getTasks, setTasks } from "../redux/tasks/taskSlice"
+import { setTasks } from "../redux/tasks/taskSlice"
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from "../firebase"
+import { getTasks } from "../redux/tasks/taskThunk"
 
 function useLoadData() {
   const dispatch = useAppDispatch()

@@ -5,12 +5,16 @@ import {
   deleteDoc,
   doc,
   getDoc,
+  onSnapshot,
+  query,
   Timestamp,
   updateDoc,
+  where,
   type QueryDocumentSnapshot,
   type SnapshotOptions,
 } from "firebase/firestore"
 import { auth, db } from "../../firebase"
+import { TASK_COLLECTION } from "../../firebase/constants"
 
 export interface ITask {
   id: string
@@ -81,7 +85,7 @@ export const getTaskById = createAsyncThunk(
     if (!auth.currentUser) {
       return rejectWithValue("User not found")
     }
-    const docRef = doc(db, "tasks", id).withConverter(taskConverter)
+    const docRef = doc(db, TASK_COLLECTION, id).withConverter(taskConverter)
     const docSnap = await getDoc(docRef)
 
     if (docSnap.exists()) {
@@ -104,7 +108,10 @@ export const addTask = createAsyncThunk(
     if (!auth.currentUser) {
       return rejectWithValue("User not found")
     }
-    await addDoc(collection(db, "tasks").withConverter(taskConverter), task)
+    await addDoc(
+      collection(db, TASK_COLLECTION).withConverter(taskConverter),
+      task,
+    )
   },
 )
 
@@ -118,7 +125,7 @@ export const updateTask = createAsyncThunk(
     }
     const { id, ...taskWithoutId } = task
 
-    const docRef = doc(db, "tasks", id)
+    const docRef = doc(db, TASK_COLLECTION, id)
 
     const updatedTask = taskConverter.toFirestore(taskWithoutId as Task)
 
@@ -132,7 +139,26 @@ export const deleteTask = createAsyncThunk(
     if (!auth.currentUser) {
       return rejectWithValue("User not found")
     }
-    const docRef = doc(db, "tasks", id)
+    const docRef = doc(db, TASK_COLLECTION, id)
     await deleteDoc(docRef)
   },
 )
+
+export type GetTasksCallback = (tasks: ITask[]) => void
+
+export function getTasks(callback: GetTasksCallback) {
+  const q = query(
+    collection(db, TASK_COLLECTION),
+    where("userId", "==", auth.currentUser!.uid),
+  ).withConverter(taskConverter)
+
+  return onSnapshot(q, {
+    next: snapshot => {
+      const tasks: ITask[] = []
+      snapshot.forEach(doc => {
+        tasks.push({ ...doc.data(), id: doc.id })
+      })
+      callback(tasks)
+    },
+  })
+}

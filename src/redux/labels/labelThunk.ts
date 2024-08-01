@@ -13,6 +13,7 @@ import {
   where,
 } from "firebase/firestore"
 import { auth, db } from "../../firebase"
+import { LABEL_COLLECTION } from "../../firebase/constants"
 
 export interface ILabel {
   id?: string
@@ -57,7 +58,7 @@ export const getLabelById = createAsyncThunk(
     if (!auth.currentUser) {
       return rejectWithValue("User not logged in")
     }
-    const docRef = doc(db, "labels", id).withConverter(labelConverter)
+    const docRef = doc(db, LABEL_COLLECTION, id).withConverter(labelConverter)
     const docSnap = await getDoc(docRef)
 
     if (docSnap.exists()) {
@@ -81,7 +82,7 @@ export const addLabel = createAsyncThunk(
       return rejectWithValue("User not logged in")
     }
     const docRef = await addDoc(
-      collection(db, "labels").withConverter(labelConverter),
+      collection(db, LABEL_COLLECTION).withConverter(labelConverter),
       label,
     )
     return { id: docRef.id, ...label }
@@ -97,7 +98,7 @@ export const updateLabel = createAsyncThunk(
       return rejectWithValue("User not logged in")
     }
     const { id, ...labelWithoutId } = label
-    const docRef = doc(db, "labels", id)
+    const docRef = doc(db, LABEL_COLLECTION, id)
 
     await updateDoc(docRef.withConverter(labelConverter), {
       ...labelWithoutId,
@@ -111,7 +112,7 @@ export const deleteLabel = createAsyncThunk(
     if (!auth.currentUser) {
       return rejectWithValue("User not logged in")
     }
-    const docRef = doc(db, "labels", id)
+    const docRef = doc(db, LABEL_COLLECTION, id)
     await deleteDoc(docRef)
     return id
   },
@@ -121,7 +122,7 @@ export type GetLabelsCallback = (labels: ILabel[]) => void
 
 export function getLabels(callback: GetLabelsCallback) {
   const q = query(
-    collection(db, "labels"),
+    collection(db, LABEL_COLLECTION),
     where("userId", "==", auth.currentUser!.uid),
   ).withConverter(labelConverter)
 

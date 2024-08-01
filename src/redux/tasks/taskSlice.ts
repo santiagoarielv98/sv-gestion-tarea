@@ -1,12 +1,9 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
-import { collection, onSnapshot, query, where } from "firebase/firestore"
-import { auth, db } from "../../firebase"
 import {
   addTask,
   deleteTask,
   getTaskById,
   type ITask,
-  taskConverter,
   updateTask,
 } from "./taskThunk"
 
@@ -73,22 +70,3 @@ export const taskSlice = createSlice({
 export const { setTasks, setCurrentTask } = taskSlice.actions
 
 export const { selectTaskState } = taskSlice.selectors
-
-type GetTasksCallback = (tasks: ITask[]) => void
-
-export function getTasks(callback: GetTasksCallback) {
-  const q = query(
-    collection(db, "tasks"),
-    where("userId", "==", auth.currentUser!.uid),
-  ).withConverter(taskConverter)
-
-  return onSnapshot(q, {
-    next: snapshot => {
-      const tasks: ITask[] = []
-      snapshot.forEach(doc => {
-        tasks.push({ ...doc.data(), id: doc.id })
-      })
-      callback(tasks)
-    },
-  })
-}
