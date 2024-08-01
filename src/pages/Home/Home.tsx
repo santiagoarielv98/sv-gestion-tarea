@@ -1,4 +1,4 @@
-import Form from "../../components/Form"
+import TaskForm from "../../components/TaskForm"
 import { selectUserState } from "../../redux/auth/authSlice"
 import { signIn, signOutUser, signUp } from "../../redux/auth/authThunk"
 import { useAppDispatch, useAppSelector } from "../../redux/hooks"
@@ -38,7 +38,7 @@ function Home() {
           <pre>{JSON.stringify(user, null, 2)}</pre>
         )}
       </div>
-      <Form />
+      <TaskForm />
     </div>
   )
 }
