@@ -30,7 +30,6 @@ function useLoadData() {
       })
 
       return () => {
-        console.log("unsubscribing")
         taskUnsubscriber()
       }
     }

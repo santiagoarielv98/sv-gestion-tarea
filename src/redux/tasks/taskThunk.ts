@@ -78,6 +78,9 @@ export const taskConverter = {
 export const getTaskById = createAsyncThunk(
   "tasks/getTaskById",
   async (id: string, { rejectWithValue }) => {
+    if (!auth.currentUser) {
+      return rejectWithValue("User not found")
+    }
     const docRef = doc(db, "tasks", id).withConverter(taskConverter)
     const docSnap = await getDoc(docRef)
 
@@ -125,7 +128,10 @@ export const updateTask = createAsyncThunk(
 
 export const deleteTask = createAsyncThunk(
   "tasks/deleteTask",
-  async (id: string) => {
+  async (id: string, { rejectWithValue }) => {
+    if (!auth.currentUser) {
+      return rejectWithValue("User not found")
+    }
     const docRef = doc(db, "tasks", id)
     await deleteDoc(docRef)
   },
