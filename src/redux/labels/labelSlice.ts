@@ -3,14 +3,14 @@ import {
   addLabel,
   deleteLabel,
   getLabelById,
-  type ILabel,
+  type Label,
   updateLabel,
 } from "./labelThunk"
 
 // redux
 export type LabelState = {
-  labels: ILabel[]
-  currentLabel: ILabel | null
+  labels: Label[]
+  currentLabel: Label | null
   loading: boolean
 }
 
@@ -24,10 +24,10 @@ export const labelSlice = createSlice({
   name: "labels",
   initialState,
   reducers: {
-    setLabels: (state, action: PayloadAction<ILabel[]>) => {
+    setLabels: (state, action: PayloadAction<Label[]>) => {
       state.labels = action.payload
     },
-    setCurrentLabel: (state, action: PayloadAction<ILabel | null>) => {
+    setCurrentLabel: (state, action: PayloadAction<Label | null>) => {
       state.currentLabel = action.payload
     },
   },

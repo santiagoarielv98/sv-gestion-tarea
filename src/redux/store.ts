@@ -3,8 +3,9 @@ import { combineSlices, configureStore } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/query"
 import { authSlice } from "./auth/authSlice"
 import { taskSlice } from "./tasks/taskSlice"
+import { labelSlice } from "./labels/labelSlice"
 
-const combinedSliceReducer = combineSlices(authSlice, taskSlice)
+const combinedSliceReducer = combineSlices(authSlice, taskSlice, labelSlice)
 
 const rootReducer = (state: any, action: PayloadAction) => {
   if (action.type === "auth/signOut/fulfilled") {

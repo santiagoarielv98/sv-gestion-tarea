@@ -1,4 +1,3 @@
-import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import FormControl from "@mui/material/FormControl"
@@ -7,8 +6,8 @@ import MenuItem from "@mui/material/MenuItem"
 import Select from "@mui/material/Select"
 import TextField from "@mui/material/TextField"
 import { useFormik } from "formik"
-import React from "react"
 import * as Yup from "yup"
+import LabelAutoComplete from "./LabelAutoComplete"
 /* 
 export interface ITask {
   id: string
@@ -73,7 +72,7 @@ function TaskForm() {
         <Grid item xs={12}>
           <TextField
             required
-            autoFocus
+            // autoFocus
             fullWidth
             id="title"
             name="title"
@@ -137,7 +136,7 @@ function TaskForm() {
           />
         </Grid>
         <Grid item xs={12}>
-          <Labels />
+          <LabelAutoComplete />
         </Grid>
       </Grid>
       <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
@@ -148,106 +147,3 @@ function TaskForm() {
 }
 
 export default TaskForm
-
-interface Label {
-  id: string
-  name: string
-  color: string
-  inputValue?: string
-}
-
-const labels: Label[] = [
-  { id: "1", name: "Personal", color: "#FF0000" },
-  { id: "2", name: "Work", color: "#00FF00" },
-  { id: "3", name: "Shopping", color: "#0000FF" },
-]
-
-const filter = createFilterOptions<Label>()
-
-function generateRandomColor() {
-  return "#" + Math.floor(Math.random() * 16777215).toString(16)
-}
-
-function generateId() {
-  return Math.random().toString(36).substring(7)
-}
-
-function Labels() {
-  const [value, setValue] = React.useState<Label[]>([])
-
-  const handleChange = (
-    event: React.SyntheticEvent,
-    newValue: (Label | string)[],
-  ) => {
-    const strArr: string[] = []
-    const labelArr: Label[] = []
-    newValue.forEach(value => {
-      if (typeof value === "string") {
-        strArr.push(value)
-      } else {
-        labelArr.push(value)
-      }
-    })
-    const newValues = [
-      ...labelArr,
-      ...strArr.map(str => ({
-        id: generateId(),
-        name: str,
-        color: generateRandomColor(),
-      })),
-    ]
-    setValue(newValues)
-  }
-
-  return (
-    <Autocomplete
-      freeSolo
-      value={value}
-      onChange={handleChange}
-      multiple
-      id="labels"
-      options={labels}
-      getOptionLabel={option => {
-        // Value selected with enter, right from the input
-        if (typeof option === "string") {
-          return option
-        }
-        // Add "xxx" option created dynamically
-        if (option.inputValue) {
-          return option.inputValue
-        }
-        // Regular option
-        return option.name
-      }}
-      renderInput={params => (
-        <TextField {...params} label="Labels" placeholder="Labels" />
-      )}
-      filterOptions={(options, params) => {
-        const filtered = filter(options, params)
-
-        const isExisting = labels.some((label: Label) => {
-          return label.name === params.inputValue
-        })
-        if (params.inputValue !== "" && !isExisting) {
-          filtered.push({
-            id: params.inputValue,
-            name: `Add "${params.inputValue}"`,
-            color: "#000000",
-          })
-        }
-        return filtered
-      }}
-      selectOnFocus
-      clearOnBlur
-      handleHomeEndKeys
-      renderOption={(props, option) => {
-        const { key, ...optionProps } = props
-        return (
-          <li key={option.id} {...optionProps}>
-            {option.name}
-          </li>
-        )
-      }}
-    />
-  )
-}

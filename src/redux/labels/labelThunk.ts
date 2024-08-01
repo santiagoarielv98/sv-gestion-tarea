@@ -15,28 +15,19 @@ import {
 import { auth, db } from "../../firebase"
 import { LABEL_COLLECTION } from "../../firebase/constants"
 
-export interface ILabel {
-  id?: string
-  title: string
-  color: string
-  userId: string
-}
-
-class Label {
-  public userId: string
+export class Label {
   constructor(
+    public id: string,
     public title: string,
-    public color: string,
-  ) {
-    this.userId = auth.currentUser?.uid!
-  }
+    public color?: string,
+  ) {}
 }
 
 const labelConverter = {
   toFirestore: (label: Label) => {
     return {
       title: label.title,
-      color: label.color,
+      color: label.color ?? "#000000",
       userId: auth.currentUser?.uid!,
     }
   },
@@ -46,8 +37,7 @@ const labelConverter = {
   ) => {
     const data = snapshot.data(options) as Label
     return {
-      id: snapshot.id,
-      ...new Label(data.title, data.color),
+      ...new Label(snapshot.id, data.title, data.color),
     }
   },
 }
@@ -63,17 +53,14 @@ export const getLabelById = createAsyncThunk(
 
     if (docSnap.exists()) {
       const data = docSnap.data()
-      return {
-        id: docSnap.id,
-        ...data,
-      }
+      return data
     } else {
       return rejectWithValue("Label not found")
     }
   },
 )
 
-export type AddLabel = Omit<ILabel, "id">
+export type AddLabel = Omit<Label, "id">
 
 export const addLabel = createAsyncThunk(
   "labels/addLabel",
@@ -89,7 +76,7 @@ export const addLabel = createAsyncThunk(
   },
 )
 
-export type UpdateLabel = Partial<Omit<ILabel, "id">> & { id: string }
+export type UpdateLabel = Partial<Omit<Label, "id">> & { id: string }
 
 export const updateLabel = createAsyncThunk(
   "labels/updateLabel",
@@ -100,9 +87,7 @@ export const updateLabel = createAsyncThunk(
     const { id, ...labelWithoutId } = label
     const docRef = doc(db, LABEL_COLLECTION, id)
 
-    await updateDoc(docRef.withConverter(labelConverter), {
-      ...labelWithoutId,
-    })
+    await updateDoc(docRef.withConverter(labelConverter), labelWithoutId)
   },
 )
 
@@ -118,7 +103,7 @@ export const deleteLabel = createAsyncThunk(
   },
 )
 
-export type GetLabelsCallback = (labels: ILabel[]) => void
+export type GetLabelsCallback = (labels: Label[]) => void
 
 export function getLabels(callback: GetLabelsCallback) {
   const q = query(

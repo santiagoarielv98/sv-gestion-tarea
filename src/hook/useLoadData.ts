@@ -5,6 +5,8 @@ import { setTasks } from "../redux/tasks/taskSlice"
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from "../firebase"
 import { getTasks } from "../redux/tasks/taskThunk"
+import { getLabels } from "../redux/labels/labelThunk"
+import { setLabels } from "../redux/labels/labelSlice"
 
 function useLoadData() {
   const dispatch = useAppDispatch()
@@ -29,9 +31,13 @@ function useLoadData() {
       const taskUnsubscriber = getTasks(tasks => {
         dispatch(setTasks(tasks))
       })
+      const labelUnsubscriber = getLabels(labels => {
+        dispatch(setLabels(labels))
+      })
 
       return () => {
         taskUnsubscriber()
+        labelUnsubscriber()
       }
     }
   }, [user, dispatch])

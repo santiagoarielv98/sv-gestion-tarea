@@ -16,16 +16,6 @@ import {
 import { auth, db } from "../../firebase"
 import { TASK_COLLECTION } from "../../firebase/constants"
 
-export interface ITask {
-  id: string
-  title: string
-  description: string
-  completed: boolean
-  labels: string[]
-  dueDate: string
-  userId: string
-}
-
 export interface FirestoreTask {
   title: string
   description: string
@@ -38,6 +28,7 @@ export interface FirestoreTask {
 export class Task {
   public userId: string
   constructor(
+    public id: string,
     public title: string,
     public description: string,
     public completed: boolean,
@@ -67,8 +58,8 @@ export const taskConverter = {
   ) => {
     const data = snapshot.data(options) as FirestoreTask
     return {
-      id: snapshot.id,
       ...new Task(
+        snapshot.id,
         data.title,
         data.description || "",
         data.completed,
@@ -89,11 +80,7 @@ export const getTaskById = createAsyncThunk(
     const docSnap = await getDoc(docRef)
 
     if (docSnap.exists()) {
-      const data = docSnap.data()
-      return {
-        id: docSnap.id,
-        ...data,
-      }
+      return docSnap.data()
     } else {
       return rejectWithValue("Task not found")
     }
@@ -144,7 +131,7 @@ export const deleteTask = createAsyncThunk(
   },
 )
 
-export type GetTasksCallback = (tasks: ITask[]) => void
+export type GetTasksCallback = (tasks: Task[]) => void
 
 export function getTasks(callback: GetTasksCallback) {
   const q = query(
@@ -154,9 +141,9 @@ export function getTasks(callback: GetTasksCallback) {
 
   return onSnapshot(q, {
     next: snapshot => {
-      const tasks: ITask[] = []
+      const tasks: Task[] = []
       snapshot.forEach(doc => {
-        tasks.push({ ...doc.data(), id: doc.id })
+        tasks.push(doc.data())
       })
       callback(tasks)
     },

@@ -2,6 +2,7 @@ import TaskForm from "../../components/TaskForm"
 import { selectUserState } from "../../redux/auth/authSlice"
 import { signIn, signOutUser, signUp } from "../../redux/auth/authThunk"
 import { useAppDispatch, useAppSelector } from "../../redux/hooks"
+import { selectLabelState } from "../../redux/labels/labelSlice"
 
 const credentials = {
   email: "5ewm2w@test.com",
@@ -22,6 +23,7 @@ const generateCredentials = () => {
 function Home() {
   const dispatch = useAppDispatch()
   const { user, loading } = useAppSelector(selectUserState)
+  const { labels } = useAppSelector(selectLabelState)
 
   return (
     <div>
@@ -39,6 +41,7 @@ function Home() {
         )}
       </div>
       <TaskForm />
+      <pre>{JSON.stringify(labels, null, 2)}</pre>
     </div>
   )
 }
