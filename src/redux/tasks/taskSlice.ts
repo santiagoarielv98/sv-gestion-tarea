@@ -3,13 +3,13 @@ import {
   addTask,
   deleteTask,
   getTaskById,
-  type ITask,
+  type Task,
   updateTask,
 } from "./taskThunk"
 
 export type TaskState = {
-  tasks: ITask[]
-  currentTask: ITask | null
+  tasks: Task[]
+  currentTask: Task | null
   loading: boolean
 }
 
@@ -23,10 +23,10 @@ export const taskSlice = createSlice({
   name: "tasks",
   initialState,
   reducers: {
-    setTasks: (state, action: PayloadAction<ITask[]>) => {
+    setTasks: (state, action: PayloadAction<Task[]>) => {
       state.tasks = action.payload
     },
-    setCurrentTask: (state, action: PayloadAction<ITask | null>) => {
+    setCurrentTask: (state, action: PayloadAction<Task | null>) => {
       state.currentTask = action.payload
     },
   },

@@ -1,9 +1,11 @@
+import List from "@mui/material/List"
 import TaskForm from "../../components/TaskForm"
 import { selectUserState } from "../../redux/auth/authSlice"
 import { signIn, signOutUser, signUp } from "../../redux/auth/authThunk"
 import { useAppDispatch, useAppSelector } from "../../redux/hooks"
 import { selectLabelState } from "../../redux/labels/labelSlice"
 import { selectTaskState } from "../../redux/tasks/taskSlice"
+import TaskItem from "../../components/TaskItem"
 
 const credentials = {
   email: "5ewm2w@test.com",
@@ -25,7 +27,7 @@ function Home() {
   const dispatch = useAppDispatch()
   const { user, loading } = useAppSelector(selectUserState)
   const { labels } = useAppSelector(selectLabelState)
-  const {tasks} = useAppSelector(selectTaskState)
+  const { tasks } = useAppSelector(selectTaskState)
 
   return (
     <div>
@@ -43,11 +45,18 @@ function Home() {
         )}
       </div>
       <TaskForm />
-      <pre>{JSON.stringify(tasks, null, 2)}</pre>
+      <List>
+        {tasks.map(task => (
+          <TaskItem key={task.id} task={task} />
+        ))}
+      </List>
+      {/* <pre>{JSON.stringify(tasks, null, 2)}</pre> */}
 
       <pre>{JSON.stringify(labels, null, 2)}</pre>
     </div>
   )
 }
+
+
 
 export default Home

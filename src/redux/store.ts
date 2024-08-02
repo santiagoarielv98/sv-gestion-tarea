@@ -2,10 +2,16 @@ import type { Action, PayloadAction, ThunkAction } from "@reduxjs/toolkit"
 import { combineSlices, configureStore } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/query"
 import { authSlice } from "./auth/authSlice"
-import { taskSlice } from "./tasks/taskSlice"
 import { labelSlice } from "./labels/labelSlice"
+import { modalSlice } from "./modal/modalSlice"
+import { taskSlice } from "./tasks/taskSlice"
 
-const combinedSliceReducer = combineSlices(authSlice, taskSlice, labelSlice)
+const combinedSliceReducer = combineSlices(
+  authSlice,
+  taskSlice,
+  labelSlice,
+  modalSlice,
+)
 
 const rootReducer = (state: any, action: PayloadAction) => {
   if (action.type === "auth/signOut/fulfilled") {
