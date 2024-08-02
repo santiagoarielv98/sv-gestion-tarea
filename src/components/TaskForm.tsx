@@ -39,15 +39,7 @@ const validationSchema = Yup.object({
   priority: Yup.number().min(1).max(5),
 })
 
-const initialValues = {
-  title: "",
-  description: "",
-  completed: false,
-  labels: [],
-  dueDate: new Date(),
-  priority: 2,
-}
-type Values = {
+type InitialValues = {
   title: string
   description: string
   completed: boolean
@@ -56,22 +48,24 @@ type Values = {
   priority: number
 }
 
+const initialValues: InitialValues = {
+  title: "",
+  description: "",
+  completed: false,
+  labels: [],
+  dueDate: "",
+  priority: 2,
+}
+
 export const FormikContext = React.createContext<
-  FormikHelpers<Values> & FormikState<Values>
+  FormikHelpers<InitialValues> & FormikState<InitialValues>
 >({} as any)
 
 function TaskForm() {
   const dispatch = useAppDispatch()
   const { loading } = useAppSelector(selectTaskState)
-  const formik = useFormik<Values>({
-    initialValues: {
-      title: "",
-      description: "",
-      completed: false,
-      labels: [],
-      dueDate: "",
-      priority: 2,
-    },
+  const formik = useFormik<InitialValues>({
+    initialValues: initialValues,
     validationSchema: validationSchema,
     onSubmit: values => {
       dispatch(

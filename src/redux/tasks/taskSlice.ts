@@ -11,12 +11,16 @@ export type TaskState = {
   tasks: Task[]
   currentTask: Task | null
   loading: boolean
+  openModal: boolean
+  openConfirmModal: boolean
 }
 
 const initialState: TaskState = {
   tasks: [],
   currentTask: null,
   loading: false,
+  openModal: false,
+  openConfirmModal: false,
 }
 
 export const taskSlice = createSlice({
@@ -28,6 +32,12 @@ export const taskSlice = createSlice({
     },
     setCurrentTask: (state, action: PayloadAction<Task | null>) => {
       state.currentTask = action.payload
+    },
+    setModalOpen: (state, action: PayloadAction<boolean>) => {
+      state.openModal = action.payload
+    },
+    setConfirmOpen: (state, action: PayloadAction<boolean>) => {
+      state.openConfirmModal = action.payload
     },
   },
   extraReducers: builder => {
@@ -67,6 +77,7 @@ export const taskSlice = createSlice({
   },
 })
 
-export const { setTasks, setCurrentTask } = taskSlice.actions
+export const { setTasks, setCurrentTask, setConfirmOpen, setModalOpen } =
+  taskSlice.actions
 
 export const { selectTaskState } = taskSlice.selectors
