@@ -1,18 +1,30 @@
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
+import Dialog from "@mui/material/Dialog"
+import DialogActions from "@mui/material/DialogActions"
+import DialogContent from "@mui/material/DialogContent"
+import DialogContentText from "@mui/material/DialogContentText"
+import DialogTitle from "@mui/material/DialogTitle"
 import FormControl from "@mui/material/FormControl"
 import Grid from "@mui/material/Grid"
 import MenuItem from "@mui/material/MenuItem"
 import Select from "@mui/material/Select"
 import TextField from "@mui/material/TextField"
 import { type FormikHelpers, type FormikState, useFormik } from "formik"
+import _ from "lodash"
 import React from "react"
 import * as Yup from "yup"
-import LabelAutoComplete from "./LabelAutoComplete"
 import { useAppDispatch, useAppSelector } from "../redux/hooks"
-import { addTask } from "../redux/tasks/taskThunk"
-import { selectTaskState } from "../redux/tasks/taskSlice"
+import { selectLabelState } from "../redux/labels/labelSlice"
 import type { Label } from "../redux/labels/labelThunk"
+import {
+  selectModalState,
+  setModalConfirm,
+  setModalOpen,
+} from "../redux/modal/modalSlice"
+import { selectTaskState } from "../redux/tasks/taskSlice"
+import { addTask, updateTask } from "../redux/tasks/taskThunk"
+import LabelAutoComplete from "./LabelAutoComplete"
 
 const priorityOptions = [
   { value: 1, label: "Low" },
@@ -63,11 +75,31 @@ export const FormikContext = React.createContext<
 
 function TaskForm() {
   const dispatch = useAppDispatch()
-  const { loading } = useAppSelector(selectTaskState)
-  const formik = useFormik<InitialValues>({
-    initialValues: initialValues,
-    validationSchema: validationSchema,
-    onSubmit: values => {
+  const { loading, currentTask } = useAppSelector(selectTaskState)
+  const { labels } = useAppSelector(selectLabelState)
+  const { modalOpen, modalConfirm } = useAppSelector(selectModalState)
+
+  const defaultValues: InitialValues = currentTask?.id
+    ? {
+        ...currentTask,
+        labels: labels.filter(label => currentTask.labels.includes(label.id)),
+      }
+    : initialValues
+
+  const handleSubmit = (values: InitialValues) => {
+    if (currentTask?.id) {
+      dispatch(
+        updateTask({
+          id: currentTask.id,
+          title: values.title,
+          description: values.description,
+          completed: values.completed,
+          labels: values.labels.map(label => label.id),
+          dueDate: values.dueDate.toString(),
+          priority: values.priority,
+        }),
+      )
+    } else {
       dispatch(
         addTask({
           title: values.title,
@@ -75,105 +107,172 @@ function TaskForm() {
           completed: values.completed,
           labels: values.labels.map(label => label.id),
           dueDate: values.dueDate.toString(),
+          priority: values.priority,
         }),
-      ).then(() => {
-        formik.resetForm()
-      })
-    },
+      )
+    }
+    dispatch(setModalOpen(null))
+    formik.resetForm()
+  }
+  const handleClose = () => {
+    if (_.isEqual(defaultValues, formik.values)) {
+      dispatch(setModalOpen(null))
+    } else {
+      dispatch(setModalConfirm(true))
+    }
+  }
+
+  const handleCloseConfirm = () => {
+    dispatch(setModalConfirm(false))
+  }
+
+  const handleConfirm = () => {
+    dispatch(setModalConfirm(false))
+    dispatch(setModalOpen(null))
+    formik.resetForm()
+  }
+
+  const formik = useFormik<InitialValues>({
+    initialValues: defaultValues,
+    validationSchema: validationSchema,
+    onSubmit: handleSubmit,
   })
 
+  const isEdit = Boolean(currentTask)
+  
+
   return (
-    <FormikContext.Provider value={formik}>
-      <Box
-        component="form"
-        noValidate
-        onSubmit={formik.handleSubmit}
-        sx={{ mt: 3, maxWidth: 400, mx: "auto" }}
+    <>
+      <Dialog open={modalOpen === "task"} onClose={handleClose}>
+        <DialogTitle>{isEdit ? "Edit Task" : "Add Task"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {isEdit
+              ? "Edit the task details."
+              : "Add a new task to your to-do list."}
+          </DialogContentText>
+          <FormikContext.Provider value={formik}>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={formik.handleSubmit}
+              sx={{ mt: 3, maxWidth: 400, mx: "auto" }}
+            >
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="title"
+                    name="title"
+                    label="Title"
+                    value={formik.values.title}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.title && Boolean(formik.errors.title)}
+                    helperText={formik.touched.title && formik.errors.title}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    multiline
+                    minRows={2}
+                    maxRows={6}
+                    size="small"
+                    id="description"
+                    name="description"
+                    label="Description"
+                    value={formik.values.description}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.touched.description &&
+                      Boolean(formik.errors.description)
+                    }
+                    helperText={
+                      formik.touched.description && formik.errors.description
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <FormControl fullWidth>
+                    <Select
+                      id="priority"
+                      name="priority"
+                      value={String(formik.values.priority)}
+                      onChange={e =>
+                        formik.setFieldValue("priority", e.target.value)
+                      }
+                    >
+                      {priorityOptions.map(option => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    id="dueDate"
+                    name="dueDate"
+                    label="Due Date"
+                    type="date"
+                    value={formik.values.dueDate}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.touched.dueDate && Boolean(formik.errors.dueDate)
+                    }
+                    helperText={
+                      formik.touched.dueDate &&
+                      (formik.errors.dueDate as string)
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <LabelAutoComplete />
+                </Grid>
+              </Grid>
+              <input type="submit" style={{ display: "none" }} hidden />
+            </Box>
+          </FormikContext.Provider>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="secondary">
+            Cancel
+          </Button>
+          <Button
+            onClick={formik.submitForm}
+            disabled={loading}
+            color="primary"
+          >
+            {isEdit ? "Update" : "Add"}
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={modalConfirm}
+        onClose={() => dispatch(setModalConfirm(false))}
       >
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              required
-              // autoFocus
-              fullWidth
-              id="title"
-              name="title"
-              label="Title"
-              value={formik.values.title}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.title && Boolean(formik.errors.title)}
-              helperText={formik.touched.title && formik.errors.title}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              multiline
-              minRows={2}
-              maxRows={6}
-              size="small"
-              id="description"
-              name="description"
-              label="Description"
-              value={formik.values.description}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={
-                formik.touched.description && Boolean(formik.errors.description)
-              }
-              helperText={
-                formik.touched.description && formik.errors.description
-              }
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <Select
-                id="priority"
-                name="priority"
-                value={String(formik.values.priority)}
-                onChange={e => formik.setFieldValue("priority", e.target.value)}
-              >
-                {priorityOptions.map(option => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              id="dueDate"
-              name="dueDate"
-              label="Due Date"
-              type="date"
-              value={formik.values.dueDate}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.dueDate && Boolean(formik.errors.dueDate)}
-              helperText={
-                formik.touched.dueDate && (formik.errors.dueDate as string)
-              }
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <LabelAutoComplete />
-          </Grid>
-        </Grid>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-          disabled={loading}
-        >
-          Task
-        </Button>
-      </Box>
-    </FormikContext.Provider>
+        <DialogTitle>Discard Changes?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to discard the changes?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseConfirm} color="secondary">
+            No
+          </Button>
+          <Button onClick={handleConfirm} color="primary">
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   )
 }
 

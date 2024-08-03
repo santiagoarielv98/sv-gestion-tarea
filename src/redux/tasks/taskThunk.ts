@@ -23,6 +23,7 @@ export interface FirestoreTask {
   labels: string[]
   dueDate: Timestamp
   userId: string
+  priority: number
 }
 
 export class Task {
@@ -34,6 +35,7 @@ export class Task {
     public completed: boolean,
     public labels: string[] = [],
     public dueDate: string,
+    public priority: number = 2,
   ) {
     this.userId = auth.currentUser?.uid!
   }
@@ -50,6 +52,7 @@ export const taskConverter = {
         ? Timestamp.fromDate(new Date(task.dueDate as string))
         : Timestamp.now(),
       userId: auth.currentUser?.uid!,
+      priority: task.priority || 2,
     }
   },
   fromFirestore: (
@@ -65,6 +68,7 @@ export const taskConverter = {
         data.completed,
         data.labels,
         data.dueDate.toDate().toISOString(),
+        data.priority,
       ),
     }
   },

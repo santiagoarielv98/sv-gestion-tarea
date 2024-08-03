@@ -7,6 +7,7 @@ import { useAppDispatch } from "../redux/hooks"
 import { deleteTask, type Task, updateTask } from "../redux/tasks/taskThunk"
 import { DeleteFilled, EditFilled } from "@ant-design/icons"
 import { setCurrentTask } from "../redux/tasks/taskSlice"
+import { setModalOpen } from "../redux/modal/modalSlice"
 
 function TaskItem({ task }: { task: Task }) {
   const dispatch = useAppDispatch()
@@ -21,6 +22,7 @@ function TaskItem({ task }: { task: Task }) {
 
   const editTask = () => {
     dispatch(setCurrentTask(task))
+    dispatch(setModalOpen("task"))
   }
 
   return (
