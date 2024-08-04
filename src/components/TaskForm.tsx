@@ -67,7 +67,7 @@ const initialValues: InitialValues = {
   description: "",
   completed: false,
   labels: [],
-  dueDate: new Date().toISOString(),
+  dueDate: "",
   priority: 2,
 }
 
@@ -81,13 +81,18 @@ function TaskForm() {
   const { labels } = useAppSelector(selectLabelState)
   const { modalOpen, modalConfirm } = useAppSelector(selectModalState)
 
-  const defaultValues: InitialValues = currentTask?.id
-    ? {
-        ...currentTask,
-        labels: labels.filter(label => currentTask.labels.includes(label.id)),
-      }
-    : initialValues
-
+  const defaultValues: InitialValues = React.useMemo(
+    () =>
+      currentTask?.id
+        ? {
+            ...currentTask,
+            labels: labels.filter(label =>
+              currentTask.labels.includes(label.id),
+            ),
+          }
+        : { ...initialValues, dueDate: new Date().toISOString() },
+    [currentTask, labels],
+  )
   const handleSubmit = (values: InitialValues) => {
     if (currentTask?.id) {
       dispatch(
@@ -120,6 +125,7 @@ function TaskForm() {
     if (_.isEqual(defaultValues, formik.values)) {
       dispatch(setModalOpen(null))
       dispatch(setCurrentTask(null))
+      formik.resetForm()
     } else {
       dispatch(setModalConfirm(true))
     }
@@ -221,9 +227,10 @@ function TaskForm() {
                   <DatePicker
                     minDate={moment().startOf("day")}
                     value={moment(formik.values.dueDate)}
-                    onChange={date =>
+                    onChange={date => {
+                      console.log("mataron")
                       formik.setFieldValue("dueDate", date?.format())
-                    }
+                    }}
                     slotProps={{
                       textField: {
                         fullWidth: true,
