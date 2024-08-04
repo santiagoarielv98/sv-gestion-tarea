@@ -6,6 +6,7 @@ import {
   doc,
   getDoc,
   onSnapshot,
+  orderBy,
   query,
   Timestamp,
   updateDoc,
@@ -140,6 +141,7 @@ export type GetTasksCallback = (tasks: Task[]) => void
 export function getTasks(callback: GetTasksCallback) {
   const q = query(
     collection(db, TASK_COLLECTION),
+    orderBy("dueDate", "asc"),
     where("userId", "==", auth.currentUser!.uid),
   ).withConverter(taskConverter)
 
