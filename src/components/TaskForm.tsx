@@ -10,8 +10,10 @@ import Grid from "@mui/material/Grid"
 import MenuItem from "@mui/material/MenuItem"
 import Select from "@mui/material/Select"
 import TextField from "@mui/material/TextField"
+import { DatePicker } from "@mui/x-date-pickers/DatePicker"
 import { type FormikHelpers, type FormikState, useFormik } from "formik"
 import _ from "lodash"
+import moment from "moment"
 import React from "react"
 import * as Yup from "yup"
 import { useAppDispatch, useAppSelector } from "../redux/hooks"
@@ -22,7 +24,7 @@ import {
   setModalConfirm,
   setModalOpen,
 } from "../redux/modal/modalSlice"
-import { selectTaskState } from "../redux/tasks/taskSlice"
+import { selectTaskState, setCurrentTask } from "../redux/tasks/taskSlice"
 import { addTask, updateTask } from "../redux/tasks/taskThunk"
 import LabelAutoComplete from "./LabelAutoComplete"
 
@@ -65,7 +67,7 @@ const initialValues: InitialValues = {
   description: "",
   completed: false,
   labels: [],
-  dueDate: "",
+  dueDate: new Date().toISOString(),
   priority: 2,
 }
 
@@ -117,6 +119,7 @@ function TaskForm() {
   const handleClose = () => {
     if (_.isEqual(defaultValues, formik.values)) {
       dispatch(setModalOpen(null))
+      dispatch(setCurrentTask(null))
     } else {
       dispatch(setModalConfirm(true))
     }
@@ -136,10 +139,10 @@ function TaskForm() {
     initialValues: defaultValues,
     validationSchema: validationSchema,
     onSubmit: handleSubmit,
+    enableReinitialize: true,
   })
 
-  const isEdit = Boolean(currentTask)
-  
+  const isEdit = Boolean(currentTask?.id)
 
   return (
     <>
@@ -214,22 +217,24 @@ function TaskForm() {
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    id="dueDate"
-                    name="dueDate"
-                    label="Due Date"
-                    type="date"
-                    value={formik.values.dueDate}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    error={
-                      formik.touched.dueDate && Boolean(formik.errors.dueDate)
+                  <DatePicker
+                    minDate={moment().startOf("day")}
+                    value={moment(formik.values.dueDate)}
+                    onChange={date =>
+                      formik.setFieldValue("dueDate", date?.format())
                     }
-                    helperText={
-                      formik.touched.dueDate &&
-                      (formik.errors.dueDate as string)
-                    }
+                    slotProps={{
+                      textField: {
+                        fullWidth: true,
+                        onBlur: formik.handleBlur,
+                        error:
+                          formik.touched.dueDate &&
+                          Boolean(formik.errors.dueDate),
+                        helperText:
+                          formik.touched.dueDate &&
+                          (formik.errors.dueDate as string),
+                      },
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>

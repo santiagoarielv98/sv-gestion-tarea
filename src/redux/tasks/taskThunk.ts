@@ -49,7 +49,7 @@ export const taskConverter = {
       completed: task.completed || false,
       labels: task.labels || [],
       dueDate: task.dueDate
-        ? Timestamp.fromDate(new Date(task.dueDate as string))
+        ? Timestamp.fromDate(new Date(task.dueDate))
         : Timestamp.now(),
       userId: auth.currentUser?.uid!,
       priority: task.priority || 2,

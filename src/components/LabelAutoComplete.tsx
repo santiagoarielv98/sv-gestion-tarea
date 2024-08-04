@@ -34,15 +34,21 @@ function LabelAutoComplete() {
     if (!newLabel) return
 
     if (typeof newLabel === "string") {
-      const foundLabel = [...(newValue as Label[]), ...labels].find(
-        isMatchingLabelName(newLabel),
-      )
+      if ((newValue as Label[]).some(isMatchingLabelName(newLabel))) {
+        return
+      }
+      const foundLabel = [...labels].find(isMatchingLabelName(newLabel))
+
       if (foundLabel) {
         setLabels([...(newValue as Label[]), foundLabel])
         return
       }
 
       newLabel = await dispatch(addLabel({ title: newLabel })).unwrap()
+    }
+
+    if (newLabel.id === "") {
+      newLabel = await dispatch(addLabel({ title: newLabel.title })).unwrap()
     }
 
     setLabels([...(newValue as Label[]), newLabel])
@@ -79,8 +85,8 @@ function LabelAutoComplete() {
           labels.some(isMatchingLabelName(params.inputValue))
         if (params.inputValue !== "" && !isExisting) {
           filtered.push({
-            id: params.inputValue,
-            color: params.inputValue,
+            id: "",
+            color: "",
             inputValue: `Add "${params.inputValue}"`,
             title: params.inputValue,
           })
