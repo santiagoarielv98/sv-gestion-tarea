@@ -31,3 +31,9 @@ export const apiSlice = createApi({
     }),
   }),
 });
+
+export const {
+  useGetTasksQuery,
+  useCreateTaskMutation,
+  useCompleteTaskMutation,
+} = apiSlice;
