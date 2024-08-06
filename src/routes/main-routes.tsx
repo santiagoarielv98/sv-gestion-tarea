@@ -1,5 +1,5 @@
 import type { RouteObject } from "react-router-dom";
-import HomePage from "../pages/Home";
+import HomePage from "../features/app/Home";
 import ProtectedLayout from "../layouts/ProtectedLayout";
 
 export const mainRoutes: RouteObject = {

@@ -10,7 +10,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
 import LockOutlinedIcon from "@ant-design/icons/LockOutlined";
-import { useLoginMutation } from "../features/api/apiSlice";
+import { useLoginMutation } from "../api/apiSlice";
 
 const demoCredentials = {
   email: "demo@sv-dev.tech",
