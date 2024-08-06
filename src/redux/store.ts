@@ -1,12 +1,28 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { apiSlice } from "../features/api/apiSlice";
+import {
+  combineReducers,
+  configureStore,
+  type UnknownAction,
+} from "@reduxjs/toolkit";
+import { api } from "../features/api/apiSlice";
+import authReducer from "../features/auth/authSlice";
+
+const appReducer = combineReducers({
+  auth: authReducer,
+  [api.reducerPath]: api.reducer,
+});
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const rootReducer = (state: any, action: UnknownAction) => {
+  if (action.type === "auth/logout/fulfilled") {
+    return appReducer(undefined, action);
+  }
+  return appReducer(state, action);
+};
 
 export const store = configureStore({
-  reducer: {
-    [apiSlice.reducerPath]: apiSlice.reducer,
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware),
+    getDefaultMiddleware().concat(api.middleware),
 });
 
 // Infer the `RootState`,  `AppDispatch`, and `AppStore` typ    es from the store itself

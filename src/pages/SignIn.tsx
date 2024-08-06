@@ -10,20 +10,26 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
 import LockOutlinedIcon from "@ant-design/icons/LockOutlined";
+import { useLoginMutation } from "../features/api/apiSlice";
 
 const demoCredentials = {
   email: "demo@sv-dev.tech",
   password: "123456",
 };
 
-export default function SignInSide() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+export default function SignInPage() {
+  const [login, { isLoading }] = useLoginMutation();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    if (isLoading) return;
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const credentials = {
+      email: data.get("email") as string,
+      password: data.get("password") as string,
+    };
+
+    await login({ email: credentials.email, password: credentials.password });
   };
 
   return (
@@ -97,6 +103,7 @@ export default function SignInSide() {
               type="submit"
               fullWidth
               variant="contained"
+              disabled={isLoading}
               sx={{ mt: 3, mb: 2 }}
             >
               Sign In

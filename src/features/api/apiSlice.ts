@@ -1,3 +1,4 @@
+import { createSelector } from "@reduxjs/toolkit";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 interface Task {
@@ -8,10 +9,38 @@ interface Task {
 
 const baseUrl = import.meta.env.VITE_API_URL;
 
-export const apiSlice = createApi({
+interface User {
+  email: string;
+}
+
+interface UserCredentials {
+  email: string;
+  password: string;
+}
+
+export const api = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({ baseUrl: baseUrl }),
+  tagTypes: ["User"],
+  baseQuery: fetchBaseQuery({ baseUrl: baseUrl, credentials: "include" }),
   endpoints: (builder) => ({
+    verifySession: builder.query<User, void>({
+      providesTags: ["User"],
+      query: () => "users/check",
+    }),
+    login: builder.mutation<User, UserCredentials>({
+      query: ({ email, password }) => ({
+        providesTags: ["User"],
+        url: "users/signin",
+        method: "POST",
+        body: { email, password },
+      }),
+    }),
+    logout: builder.mutation<void, void>({
+      query: () => ({
+        url: "users/signout",
+        method: "POST",
+      }),
+    }),
     getTasks: builder.query<Task[], void>({
       query: () => "tasks",
     }),
@@ -32,8 +61,17 @@ export const apiSlice = createApi({
   }),
 });
 
+export const verifySessionResult = api.endpoints.verifySession.select();
+
+export const selectVerifyState = createSelector(
+  verifySessionResult,
+  (result) => result
+);
+
 export const {
+  useVerifySessionQuery,
+  useLoginMutation,
   useGetTasksQuery,
   useCreateTaskMutation,
   useCompleteTaskMutation,
-} = apiSlice;
+} = api;

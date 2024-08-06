@@ -1,12 +1,13 @@
-import { Outlet, type RouteObject } from "react-router-dom";
-import SignInSide from "../pages/SignIn";
+import { type RouteObject } from "react-router-dom";
+import SignInPage from "../pages/SignIn";
+import AuthLayout from "../layouts/AuthLayout";
 
 export const authRoutes: RouteObject = {
-  element: <Outlet />,
+  element: <AuthLayout />,
   path: "/auth",
   children: [
     {
-      element: <SignInSide />,
+      element: <SignInPage />,
       path: "sign-in",
     },
   ],
