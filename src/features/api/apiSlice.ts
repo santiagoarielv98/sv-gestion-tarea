@@ -20,11 +20,9 @@ interface UserCredentials {
 
 export const api = createApi({
   reducerPath: "api",
-  tagTypes: ["User"],
   baseQuery: fetchBaseQuery({ baseUrl: baseUrl, credentials: "include" }),
   endpoints: (builder) => ({
     verifySession: builder.query<User, void>({
-      providesTags: ["User"],
       query: () => "users/check",
     }),
     login: builder.mutation<User, UserCredentials>({
@@ -71,6 +69,7 @@ export const selectVerifyState = createSelector(
 export const {
   useVerifySessionQuery,
   useLoginMutation,
+  useLogoutMutation,
   useGetTasksQuery,
   useCreateTaskMutation,
   useCompleteTaskMutation,

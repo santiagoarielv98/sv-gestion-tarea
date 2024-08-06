@@ -1,10 +1,10 @@
 import type { RouteObject } from "react-router-dom";
 import HomePage from "../features/app/Home";
-import ProtectedLayout from "../layouts/ProtectedLayout";
+import MainLayout from "../layouts/MainLayout";
 
 export const mainRoutes: RouteObject = {
   path: "/",
-  element: <ProtectedLayout />,
+  element: <MainLayout />,
   children: [
     {
       path: "/",
