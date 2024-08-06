@@ -13,7 +13,6 @@ const appReducer = combineReducers({
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const rootReducer = (state: any, action: UnknownAction) => {
-  console.log(action);
   if (action.type === "auth/logout/fulfilled") {
     return appReducer(undefined, action);
   }

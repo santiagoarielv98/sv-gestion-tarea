@@ -10,7 +10,6 @@ const defaultTheme = createTheme();
 
 function App() {
   const { isLoading } = useVerifySessionQuery();
-
   if (isLoading) {
     return null;
   }

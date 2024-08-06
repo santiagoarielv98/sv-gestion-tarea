@@ -29,13 +29,7 @@ export default function Header() {
           News
         </Typography>
         {user ? (
-          <Button
-            disabled={isLoading}
-            color="inherit"
-            component={Link}
-            to="/auth/sign-out"
-            onClick={() => logout()}
-          >
+          <Button disabled={isLoading} color="inherit" onClick={() => logout()}>
             Logout
           </Button>
         ) : (

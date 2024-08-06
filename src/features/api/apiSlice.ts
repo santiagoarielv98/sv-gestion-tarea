@@ -1,5 +1,6 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { logout } from "../auth/authSlice";
 
 interface Task {
   id: number;
@@ -38,6 +39,13 @@ export const api = createApi({
         url: "users/signout",
         method: "POST",
       }),
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          await queryFulfilled;
+        } finally {
+          dispatch(logout());
+        }
+      },
     }),
     getTasks: builder.query<Task[], void>({
       query: () => "tasks",
