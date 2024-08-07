@@ -10,53 +10,90 @@ import ListItemText from "@mui/material/ListItemText";
 import DeleteOutlined from "@ant-design/icons/DeleteOutlined";
 import EditOutlined from "@ant-design/icons/EditOutlined";
 
-import { useCompleteTaskMutation, useGetTasksQuery } from "../api/apiSlice";
+import {
+  type Task,
+  type TaskTag,
+  useGetTodayTasksQuery,
+  useToggleTaskMutation,
+} from "../api/apiSlice";
 
 function HomePage() {
+  const { data: tasks = [] } = useGetTodayTasksQuery();
+  const [toggleTask] = useToggleTaskMutation();
+
+  const handleToggleTask = (invalidTags: TaskTag) => {
+    return (id: string) => {
+      toggleTask({
+        _id: id,
+        tag: invalidTags,
+      });
+    };
+  };
+
+  const day = new Date().getDay();
+  const index = tasks.findIndex(
+    (task) => new Date(task.dueDate).getDay() === day + 1
+  );
+  // tareas de hoy
+  const todayTasks = tasks.slice(0, index);
+
+  // tareas de mañana
+  const tomorrowTasks = tasks.slice(index);
+
   return (
     <div>
-      <h1>Home</h1>
-      <ListTasks />
+      <h1>Tasks</h1>
+      <h2>Today</h2>
+      <ListTasks tasks={todayTasks} onClick={handleToggleTask("TodayTasks")} />
+      <h2>Tomorrow</h2>
+      <ListTasks
+        tasks={tomorrowTasks}
+        onClick={handleToggleTask("TodayTasks")}
+      />
     </div>
   );
 }
 
 export default HomePage;
 
-function ListTasks() {
-  const [completeTask] = useCompleteTaskMutation();
-  const { data: tasks = [] } = useGetTasksQuery();
+function ListTasks({
+  tasks,
+  onClick,
+}: {
+  tasks: Task[];
+  onClick: (id: string) => void;
+}) {
   return (
     <Container>
       <List>
-        {tasks
-          .filter((task) => !task.isCompleted)
-          .slice(0, 20)
-          .map((task) => (
-            <ListItem
-              key={task._id}
-              secondaryAction={
-                <>
-                  <IconButton>
-                    <EditOutlined />
-                  </IconButton>
-                  <IconButton>
-                    <DeleteOutlined />
-                  </IconButton>
-                </>
-              }
-              disablePadding
-            >
-              <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  checked={task.isCompleted}
-                  onClick={() => completeTask({ _id: task._id })}
-                />
-              </ListItemIcon>
-              <ListItemText primary={task.title} />
-            </ListItem>
-          ))}
+        {tasks.map((task) => (
+          <ListItem
+            key={task._id}
+            secondaryAction={
+              <>
+                <IconButton>
+                  <EditOutlined />
+                </IconButton>
+                <IconButton>
+                  <DeleteOutlined />
+                </IconButton>
+              </>
+            }
+            disablePadding
+          >
+            <ListItemIcon>
+              <Checkbox
+                edge="start"
+                checked={task.isCompleted}
+                onClick={() => onClick(task._id)}
+              />
+            </ListItemIcon>
+            <ListItemText
+              primary={task.title}
+              secondary={new Date(task.dueDate).toLocaleDateString("es-AR")}
+            />
+          </ListItem>
+        ))}
       </List>
     </Container>
   );
