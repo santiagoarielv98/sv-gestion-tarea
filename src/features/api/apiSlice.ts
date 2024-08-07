@@ -3,9 +3,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { logout } from "../auth/authSlice";
 
 interface Task {
-  id: number;
+  _id: string;
   title: string;
-  completed: boolean;
+  isCompleted: boolean;
 }
 
 const baseUrl = import.meta.env.VITE_API_URL;
@@ -22,6 +22,7 @@ interface UserCredentials {
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: baseUrl, credentials: "include" }),
+  tagTypes: ["Tasks"],
   endpoints: (builder) => ({
     verifySession: builder.query<User, void>({
       query: () => "users/check",
@@ -48,7 +49,24 @@ export const api = createApi({
       },
     }),
     getTasks: builder.query<Task[], void>({
+      providesTags: ["Tasks"],
       query: () => "tasks",
+    }),
+    getTodayTasks: builder.query<Task[], void>({
+      providesTags: ["Tasks"],
+      query: () => "tasks/today",
+    }),
+    getCompletedTasks: builder.query<Task[], void>({
+      providesTags: ["Tasks"],
+      query: () => "tasks/completed",
+    }),
+    getTasksByDateRange: builder.query<Task[], { start: string; end: string }>({
+      providesTags: ["Tasks"],
+      query: ({ start, end }) => `tasks/range?start=${start}&end=${end}`,
+    }),
+    getTaskById: builder.query<Task, string>({
+      providesTags: ["Tasks"],
+      query: (_id) => `tasks/${_id}`,
     }),
     createTask: builder.mutation<Task, Partial<Task>>({
       query: (body) => ({
@@ -57,12 +75,27 @@ export const api = createApi({
         body,
       }),
     }),
-    completeTask: builder.mutation<Task, Partial<Task>>({
-      query: ({ id }) => ({
-        url: `tasks/${id}`,
+    toggleTask: builder.mutation<Task, string>({
+      invalidatesTags: ["Tasks"],
+      query: (_id) => ({
+        url: `tasks/${_id}`,
         method: "PATCH",
-        body: { completed: true },
       }),
+      async onQueryStarted(_id, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          api.util.updateQueryData("getTasks", undefined, (draft) => {
+            const task = draft.find((task) => task._id === _id);
+            if (task) {
+              task.isCompleted = !task.isCompleted;
+            }
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
     }),
   }),
 });
@@ -80,5 +113,9 @@ export const {
   useLogoutMutation,
   useGetTasksQuery,
   useCreateTaskMutation,
-  useCompleteTaskMutation,
+  useToggleTaskMutation,
+  useGetTodayTasksQuery,
+  useGetCompletedTasksQuery,
+  useGetTasksByDateRangeQuery,
+  useGetTaskByIdQuery,
 } = api;
