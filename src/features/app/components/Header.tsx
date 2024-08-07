@@ -1,13 +1,11 @@
-import MenuIcon from "@ant-design/icons/MenuOutlined";
 import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import { selectUser } from "../../auth/authSlice";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../../redux/hooks";
 import { useLogoutMutation } from "../../api/apiSlice";
+import { selectUser } from "../../auth/authSlice";
 
 export default function Header() {
   const user = useAppSelector(selectUser);
@@ -16,18 +14,8 @@ export default function Header() {
   return (
     <AppBar position="static">
       <Toolbar>
-        <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{ mr: 2 }}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          News
-        </Typography>
+        <Button color="inherit">Create Task</Button>
+        <Box sx={{ flexGrow: 1 }} />
         {user ? (
           <Button disabled={isLoading} color="inherit" onClick={() => logout()}>
             Logout

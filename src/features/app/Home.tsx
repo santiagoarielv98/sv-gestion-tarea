@@ -10,19 +10,15 @@ import ListItemText from "@mui/material/ListItemText";
 import DeleteOutlined from "@ant-design/icons/DeleteOutlined";
 import EditOutlined from "@ant-design/icons/EditOutlined";
 
-import FullCalendar from "@fullcalendar/react";
 import {
   type Task,
   type TaskTag,
-  useGetTasksQuery,
   useGetTodayTasksQuery,
   useToggleTaskMutation,
 } from "../api/apiSlice";
-import listPlugin from "@fullcalendar/list";
 
 function HomePage() {
   const { data: tasks = [] } = useGetTodayTasksQuery();
-  const { data: allTasks = [] } = useGetTasksQuery();
   const [toggleTask] = useToggleTaskMutation();
 
   const handleToggleTask = (invalidTags: TaskTag) => {
@@ -46,18 +42,7 @@ function HomePage() {
 
   return (
     <div>
-      <FullCalendar
-        plugins={[listPlugin]}
-        initialView="listYear"
-        events={allTasks.map((task) => ({
-          id: task._id,
-          title: task.title,
-          date: task.dueDate,
-          allDay: true,
-        }))}
-        height={"90vh"}
-      />
-      <div hidden>
+      <div>
         <h2>Today</h2>
         <ListTasks
           tasks={todayTasks}
