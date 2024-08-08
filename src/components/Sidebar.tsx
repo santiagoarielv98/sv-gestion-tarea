@@ -12,6 +12,8 @@ import Toolbar from "@mui/material/Toolbar";
 import MenuOutlinedIcon from "@ant-design/icons/MenuOutlined";
 
 import { drawerWidth } from "@/constants/drawer";
+import { menuItems } from "@/constants/nav";
+import { Link, useLocation } from "react-router-dom";
 
 interface SidebarProps {
   open: boolean;
@@ -26,6 +28,8 @@ export default function Sidebar({
   onDrawerTransitionEnd,
   onDrawerToggle,
 }: SidebarProps) {
+  const { pathname } = useLocation();
+
   const drawer = (
     <div>
       <Toolbar sx={{ justifyContent: "flex-end", width: "100%" }}>
@@ -42,26 +46,14 @@ export default function Sidebar({
           </ListSubheader>
         }
       >
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List
-        subheader={
-          <ListSubheader component="div" id="nested-list-subheader">
-            Nested List Items
-          </ListSubheader>
-        }
-      >
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemText primary={text} />
+        {menuItems.map((item) => (
+          <ListItem key={item.title} disablePadding>
+            <ListItemButton
+              component={Link}
+              to={item.path}
+              selected={pathname === item.path}
+            >
+              <ListItemText primary={item.title} />
             </ListItemButton>
           </ListItem>
         ))}

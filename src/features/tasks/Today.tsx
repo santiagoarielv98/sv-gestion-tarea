@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import DeleteOutlinedIcon from "@ant-design/icons/DeleteOutlined";
 import EditOutlinedIcon from "@ant-design/icons/EditOutlined";
 
-function Today() {
+function TodayPage() {
   return (
     <div>
       <Typography variant="h3">Today</Typography>
@@ -56,4 +56,4 @@ function Today() {
   );
 }
 
-export default Today;
+export default TodayPage;
