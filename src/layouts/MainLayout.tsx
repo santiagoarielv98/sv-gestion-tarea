@@ -1,13 +1,11 @@
+import { Outlet } from "react-router-dom";
 import ProtectedRoute from "../components/ProtectedRoute";
-import ResponsiveDrawer from "../components/ResponsiveLayout";
 
 function MainLayout() {
   return (
-    <>
-      <ProtectedRoute>
-        <ResponsiveDrawer />
-      </ProtectedRoute>
-    </>
+    <ProtectedRoute>
+      <Outlet />
+    </ProtectedRoute>
   );
 }
 
