@@ -1,6 +1,8 @@
-import PrivateRoute from "@/components/PrivateRoute";
-import MainLayout from "@/layouts/MainLayout";
 import type { RouteObject } from "react-router-dom";
+
+import PrivateRoute from "@/components/PrivateRoute";
+import Today from "@/features/tasks/Today";
+import MainLayout from "@/layouts/MainLayout";
 
 export const mainRoutes: RouteObject = {
   path: "/",
@@ -11,7 +13,7 @@ export const mainRoutes: RouteObject = {
       children: [
         {
           path: "/",
-          element: <h1>Home</h1>,
+          element: <Today />,
         },
       ],
     },

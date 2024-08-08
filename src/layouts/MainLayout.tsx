@@ -45,7 +45,7 @@ function MainLayout() {
       />
       <Main open={open}>
         <Toolbar />
-        <Container>
+        <Container sx={{ flexGrow: 1 }}>
           <Outlet />
         </Container>
       </Main>
