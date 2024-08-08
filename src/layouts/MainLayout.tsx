@@ -1,5 +1,5 @@
-import ProtectedRoute from "../features/app/components/ProtectedRoute";
-import ResponsiveDrawer from "../features/app/components/ResponsiveLayout";
+import ProtectedRoute from "../components/ProtectedRoute";
+import ResponsiveDrawer from "../components/ResponsiveLayout";
 
 function MainLayout() {
   return (

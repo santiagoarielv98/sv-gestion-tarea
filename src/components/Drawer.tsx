@@ -21,6 +21,13 @@ interface DrawerProps {
   onClose: () => void;
 }
 
+const menuItems = [
+  { text: "Inbox", icon: <InboxIcon /> },
+  { text: "Today", icon: <MailIcon /> },
+  { text: "Upcoming", icon: <InboxIcon /> },
+  { text: "Labels", icon: <MailIcon /> },
+];
+
 function Drawer({ open, onClose }: DrawerProps) {
   const drawer = (
     <div>
@@ -34,13 +41,11 @@ function Drawer({ open, onClose }: DrawerProps) {
       </Toolbar>
       <Divider />
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
+        {menuItems.map((menu, index) => (
+          <ListItem key={index} disablePadding>
             <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemIcon sx={{ fontSize: 24 }}>{menu.icon}</ListItemIcon>
+              <ListItemText primary={menu.text} />
             </ListItemButton>
           </ListItem>
         ))}

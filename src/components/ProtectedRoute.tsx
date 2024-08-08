@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
-import { selectUser } from "../../auth/authSlice";
-import { useAppSelector } from "../../../redux/hooks";
+import { selectUser } from "../features/auth/authSlice";
+import { useAppSelector } from "../redux/hooks";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
