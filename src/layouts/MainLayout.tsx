@@ -1,7 +1,7 @@
-import { Outlet } from "react-router-dom";
+import PrivateRoute from "@/components/PrivateRoute";
 
 function MainLayout() {
-  return <Outlet />;
+  return <PrivateRoute />;
 }
 
 export default MainLayout;
