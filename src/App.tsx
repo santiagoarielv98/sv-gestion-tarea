@@ -3,7 +3,7 @@ import { RouterProvider } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import { useVerifySessionQuery } from "./features/api/apiSlice";
+import { useVerifySessionQuery } from "./app/services/auth";
 import { routes } from "./routes";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";

@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import { useLoginMutation } from "../../app/services/auth";
+
 import Alert from "@mui/material/Alert";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -10,7 +12,6 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
 import LockOutlinedIcon from "@ant-design/icons/LockOutlined";
-import { useLoginMutation } from "../api/apiSlice";
 
 const demoCredentials = {
   email: "demo@sv-dev.tech",
@@ -21,8 +22,8 @@ export default function SignInPage() {
   const [login, { isLoading }] = useLoginMutation();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    if (isLoading) return;
     event.preventDefault();
+    if (isLoading) return;
     const data = new FormData(event.currentTarget);
     const credentials = {
       email: data.get("email") as string,
@@ -40,15 +41,7 @@ export default function SignInPage() {
         sm={4}
         md={7}
         sx={{
-          backgroundImage:
-            'url("/static/images/templates/templates-images/sign-in-side-bg.png")',
-
-          backgroundColor: (t) =>
-            t.palette.mode === "light"
-              ? t.palette.grey[50]
-              : t.palette.grey[900],
-          backgroundSize: "cover",
-          backgroundPosition: "left",
+          bgcolor: "primary.main",
         }}
       />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>

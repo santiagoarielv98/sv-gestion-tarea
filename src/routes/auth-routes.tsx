@@ -4,7 +4,7 @@ import AuthLayout from "../layouts/AuthLayout";
 
 export const authRoutes: RouteObject = {
   element: <AuthLayout />,
-  path: "/auth",
+  path: "auth",
   children: [
     {
       element: <SignInPage />,

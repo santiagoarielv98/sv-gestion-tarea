@@ -25,6 +25,7 @@
     "sv-gestion-tarea": "file:"
   },
   "devDependencies": {
+    "@types/node": "^22.1.0",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",

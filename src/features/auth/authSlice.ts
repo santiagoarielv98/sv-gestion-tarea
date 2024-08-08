@@ -1,10 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { api } from "../api/apiSlice";
-import type { RootState } from "../../redux/store";
-
-interface User {
-  email: string;
-}
+import { api, type User } from "@/app/services/auth";
+import type { RootState } from "@/app/store";
 
 interface AuthState {
   user: User | null;

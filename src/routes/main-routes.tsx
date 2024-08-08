@@ -1,5 +1,4 @@
 import type { RouteObject } from "react-router-dom";
-import HomePage from "../features/app/Home";
 import MainLayout from "../layouts/MainLayout";
 
 export const mainRoutes: RouteObject = {
@@ -7,8 +6,8 @@ export const mainRoutes: RouteObject = {
   element: <MainLayout />,
   children: [
     {
-      path: "/",
-      element: <HomePage />,
+      index: true,
+      element: <h1>Home</h1>,
     },
   ],
 };
