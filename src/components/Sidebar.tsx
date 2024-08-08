@@ -29,12 +29,7 @@ export default function Sidebar({
   const drawer = (
     <div>
       <Toolbar sx={{ justifyContent: "flex-end", width: "100%" }}>
-        <IconButton
-          edge="end"
-          color="inherit"
-          aria-label="open drawer"
-          onClick={onDrawerToggle}
-        >
+        <IconButton edge="end" color="inherit" onClick={onDrawerToggle}>
           <MenuOutlinedIcon />
         </IconButton>
       </Toolbar>
