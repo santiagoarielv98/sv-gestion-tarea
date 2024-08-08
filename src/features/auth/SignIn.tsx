@@ -5,18 +5,13 @@ import { useLoginMutation } from "@/app/services/auth";
 import Alert from "@mui/material/Alert";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
+import { demoCredentials } from "@/constants/credentials";
 import LockOutlinedIcon from "@ant-design/icons/LockOutlined";
-
-const demoCredentials = {
-  email: "demo@sv-dev.tech",
-  password: "123456",
-};
+import SignInForm from "./components/SignInForm";
 
 export default function SignInPage() {
   const [login, { isLoading }] = useLoginMutation();
@@ -64,44 +59,7 @@ export default function SignInPage() {
             You can sign in with email <strong>{demoCredentials.email}</strong>{" "}
             and password <strong>{demoCredentials.password}</strong>.
           </Alert>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 1 }}
-          >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              defaultValue={demoCredentials.email}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              defaultValue={demoCredentials.password}
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              disabled={isLoading}
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
-          </Box>
+          <SignInForm onSubmit={handleSubmit} isLoading={isLoading} />
         </Box>
       </Grid>
     </Grid>

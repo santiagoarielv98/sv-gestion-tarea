@@ -17,6 +17,7 @@ interface AppBarProps extends MuiAppBarProps {
 export const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })<AppBarProps>(({ theme, open }) => ({
+  boxShadow: "none",
   transition: theme.transitions.create(["margin", "width"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -40,7 +41,7 @@ interface NavbarProps {
 
 function Navbar({ open, onToggle }: NavbarProps) {
   return (
-    <AppBar position="fixed" open={open}>
+    <AppBar position="fixed" open={open} color="transparent">
       <Toolbar>
         <IconButton
           color="inherit"
