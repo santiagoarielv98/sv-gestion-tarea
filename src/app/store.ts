@@ -5,7 +5,7 @@ import {
   type UnknownAction,
 } from "@reduxjs/toolkit";
 import { api } from "./services/auth";
-import authReducer from "../features/auth/authSlice";
+import authReducer from "@/features/auth/authSlice";
 
 const appReducer = combineReducers({
   [api.reducerPath]: api.reducer,

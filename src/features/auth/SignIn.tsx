@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { useLoginMutation } from "../../app/services/auth";
+import { useLoginMutation } from "@/app/services/auth";
 
 import Alert from "@mui/material/Alert";
 import Avatar from "@mui/material/Avatar";

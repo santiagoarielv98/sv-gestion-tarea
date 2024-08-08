@@ -1,6 +1,6 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { logout } from "../../features/auth/authSlice";
+import { logout } from "@/features/auth/authSlice";
 
 export interface User {
   email: string;

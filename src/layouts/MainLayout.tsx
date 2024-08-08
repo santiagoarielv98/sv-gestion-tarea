@@ -1,7 +1,8 @@
 import PrivateRoute from "@/components/PrivateRoute";
+import S from "@/components/S";
 
 function MainLayout() {
-  return <PrivateRoute />;
+  return <S />;
 }
 
 export default MainLayout;
