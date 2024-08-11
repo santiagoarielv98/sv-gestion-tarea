@@ -2,12 +2,15 @@ import * as React from "react";
 import { Outlet } from "react-router-dom";
 
 import Main from "@/components/Main";
-import Navbar from "@/components/Navbar";
-import Sidebar from "@/components/Sidebar";
+// import Navbar from "@/components/Navbar";
+// import Sidebar from "@/components/Sidebar";
 import Container from "@mui/material/Container";
 import { useTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import useMediaQuery from "@mui/material/useMediaQuery";
+
+const Navbar = React.lazy(() => import("@/components/Navbar"));
+const Sidebar = React.lazy(() => import("@/components/Sidebar"));
 
 function MainLayout() {
   const theme = useTheme();
@@ -35,7 +38,7 @@ function MainLayout() {
   }, [isDesktop]);
 
   return (
-    <>
+    <React.Suspense fallback={null}>
       <Navbar open={open} onToggle={handleDrawerToggle} />
       <Sidebar
         open={open}
@@ -51,7 +54,7 @@ function MainLayout() {
           </React.Suspense>
         </Container>
       </Main>
-    </>
+    </React.Suspense>
   );
 }
 
