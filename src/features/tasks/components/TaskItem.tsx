@@ -22,10 +22,12 @@ interface TaskItemProps {
   task: Task;
 }
 
-function TaskItem({ task }: TaskItemProps) {
+function TaskItem({ task, style }: TaskItemProps) {
   const [open, setOpen] = React.useState(false);
   const [toggleTask, { isLoading }] = useToggleTaskMutation();
   const [deleteTask] = useDeleteTaskMutation();
+
+  const labelId = `checkbox-list-label-${task._id}`;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -43,6 +45,7 @@ function TaskItem({ task }: TaskItemProps) {
   return (
     <ListItem
       key={task._id}
+      style={style}
       secondaryAction={
         <>
           <IconButton aria-label="edit">
@@ -58,15 +61,17 @@ function TaskItem({ task }: TaskItemProps) {
       <ListItemButton disableRipple role={undefined} dense>
         <ListItemIcon>
           <Checkbox
+            id={`checkbox-${task._id}`}
             edge="start"
             checked={task.isCompleted}
             tabIndex={-1}
             disableRipple
             disabled={isLoading}
             onChange={() => toggleTask(task._id)}
+            inputProps={{ "aria-labelledby": labelId }}
           />
         </ListItemIcon>
-        <ListItemText primary={task.title} />
+        <ListItemText id={labelId} primary={task.title} />
       </ListItemButton>
       <Dialog
         open={open}

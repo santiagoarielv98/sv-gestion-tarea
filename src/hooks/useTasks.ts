@@ -10,20 +10,21 @@ function useTasks() {
 
   const todayTasks = tasks?.filter(
     (task) =>
-      // !task.isCompleted &&
+      !task.isCompleted &&
       new Date(task.dueDate).toDateString() === today.toDateString()
   );
 
   const tomorrowTasks = tasks?.filter(
     (task) =>
-      // !task.isCompleted &&
+      !task.isCompleted &&
       new Date(task.dueDate).toDateString() === tomorrow.toDateString()
   );
 
-  const overdueTasks = tasks?.filter((task) => {
-    const taskDate = new Date(task.dueDate);
-    return taskDate < today;
-  });
+  const overdueTasks = tasks?.filter((task) => new Date(task.dueDate) < today);
+
+  const upcomingTasks = tasks?.filter(
+    (task) => !task.isCompleted && new Date(task.dueDate) > today
+  );
 
   const completedTasks = tasks?.filter((task) => task.isCompleted);
 
@@ -32,6 +33,7 @@ function useTasks() {
     tomorrowTasks,
     overdueTasks,
     completedTasks,
+    upcomingTasks,
     ...rest,
   };
 }

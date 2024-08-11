@@ -1,4 +1,3 @@
-import { createSelector } from "@reduxjs/toolkit";
 import { api } from "./auth";
 
 export interface Task {
@@ -99,10 +98,6 @@ const extendedApi = api.injectEndpoints({
     }),
   }),
 });
-
-export const getTasksResult = extendedApi.endpoints.getTasks.select();
-
-export const selectTasks = createSelector(getTasksResult, (result) => result);
 
 export const {
   useGetTasksQuery,

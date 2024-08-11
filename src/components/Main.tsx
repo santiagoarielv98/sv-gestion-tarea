@@ -7,8 +7,7 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
   flexGrow: 1,
   display: "flex",
   flexDirection: "column",
-  padding: theme.spacing(2, 0),
-
+  overflow: "auto",
   transition: theme.transitions.create("margin", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
