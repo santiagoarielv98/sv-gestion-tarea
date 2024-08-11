@@ -10,13 +10,13 @@ function useTasks() {
 
   const todayTasks = tasks?.filter(
     (task) =>
-      !task.isCompleted &&
+      // !task.isCompleted &&
       new Date(task.dueDate).toDateString() === today.toDateString()
   );
 
   const tomorrowTasks = tasks?.filter(
     (task) =>
-      !task.isCompleted &&
+      // !task.isCompleted &&
       new Date(task.dueDate).toDateString() === tomorrow.toDateString()
   );
 
