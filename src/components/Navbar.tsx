@@ -9,6 +9,7 @@ import MenuOutlinedIcon from "@ant-design/icons/MenuOutlined";
 
 import { drawerWidth } from "@/constants/drawer";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -53,6 +54,7 @@ function Navbar({ open, onToggle }: NavbarProps) {
           <MenuOutlinedIcon />
         </IconButton>
         <Box sx={{ flexGrow: 1 }} />
+        <Button>asd</Button>
       </Toolbar>
     </AppBar>
   );

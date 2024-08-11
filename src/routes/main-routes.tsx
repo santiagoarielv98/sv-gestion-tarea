@@ -1,12 +1,8 @@
+import React from "react";
 import type { RouteObject } from "react-router-dom";
 
 import PrivateRoute from "@/components/PrivateRoute";
 import MainLayout from "@/layouts/MainLayout";
-
-import CompletedPage from "@/features/tasks/Completed";
-import InboxPage from "@/features/tasks/Inbox";
-import TodayPage from "@/features/tasks/Today";
-import UpcomingPage from "@/features/tasks/Upcoming";
 
 export const mainRoutes: RouteObject = {
   path: "/",
@@ -17,19 +13,19 @@ export const mainRoutes: RouteObject = {
       children: [
         {
           index: true,
-          element: <TodayPage />,
+          Component: React.lazy(() => import("@/features/tasks/Today")),
         },
         {
           path: "upcoming",
-          element: <UpcomingPage />,
+          Component: React.lazy(() => import("@/features/tasks/Upcoming")),
         },
         {
           path: "inbox",
-          element: <InboxPage />,
+          Component: React.lazy(() => import("@/features/tasks/Inbox")),
         },
         {
           path: "completed",
-          element: <CompletedPage />,
+          Component: React.lazy(() => import("@/features/tasks/Completed")),
         },
       ],
     },

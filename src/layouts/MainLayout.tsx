@@ -46,7 +46,9 @@ function MainLayout() {
       <Main open={open}>
         <Toolbar />
         <Container sx={{ flexGrow: 1 }}>
-          <Outlet />
+          <React.Suspense fallback="Loading...">
+            <Outlet />
+          </React.Suspense>
         </Container>
       </Main>
     </>

@@ -22,7 +22,7 @@ interface TaskItemProps {
   task: Task;
 }
 
-function TaskItem({ task, style }: TaskItemProps) {
+function TaskItem({ task }: TaskItemProps) {
   const [open, setOpen] = React.useState(false);
   const [toggleTask, { isLoading }] = useToggleTaskMutation();
   const [deleteTask] = useDeleteTaskMutation();
@@ -45,7 +45,6 @@ function TaskItem({ task, style }: TaskItemProps) {
   return (
     <ListItem
       key={task._id}
-      style={style}
       secondaryAction={
         <>
           <IconButton aria-label="edit">
