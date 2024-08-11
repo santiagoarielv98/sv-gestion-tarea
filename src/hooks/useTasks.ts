@@ -1,32 +1,21 @@
-import { useGetTasksQuery } from "@/app/services/api";
+import {
+  selectOverdueTasks,
+  selectTodayTasks,
+  selectTomorrowTasks,
+  selectUpcomingTasks,
+  selectCompletedTasks,
+  useGetTasksQuery,
+} from "@/app/services/api";
+import { useAppSelector } from "./store";
 
 function useTasks() {
-  const { data: tasks = [], ...rest } = useGetTasksQuery();
+  const { ...rest } = useGetTasksQuery();
 
-  const today = new Date();
-  const tomorrow = new Date();
-
-  tomorrow.setDate(tomorrow.getDate() + 1);
-
-  const todayTasks = tasks?.filter(
-    (task) =>
-      !task.isCompleted &&
-      new Date(task.dueDate).toDateString() === today.toDateString()
-  );
-
-  const tomorrowTasks = tasks?.filter(
-    (task) =>
-      !task.isCompleted &&
-      new Date(task.dueDate).toDateString() === tomorrow.toDateString()
-  );
-
-  const overdueTasks = tasks?.filter((task) => new Date(task.dueDate) < today);
-
-  const upcomingTasks = tasks?.filter(
-    (task) => !task.isCompleted && new Date(task.dueDate) > today
-  );
-
-  const completedTasks = tasks?.filter((task) => task.isCompleted);
+  const todayTasks = useAppSelector(selectTodayTasks);
+  const tomorrowTasks = useAppSelector(selectTomorrowTasks);
+  const overdueTasks = useAppSelector(selectOverdueTasks);
+  const upcomingTasks = useAppSelector(selectUpcomingTasks);
+  const completedTasks = useAppSelector(selectCompletedTasks);
 
   return {
     todayTasks,

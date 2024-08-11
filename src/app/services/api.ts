@@ -104,33 +104,43 @@ const selectTasks = api.endpoints.getTasks.select();
 
 export const selectTodayTasks = createSelector(selectTasks, (tasks) => {
   const today = new Date();
-  return tasks.data?.filter(
-    (task) =>
-      !task.isCompleted &&
-      new Date(task.dueDate).toDateString() === today.toDateString()
+  return (
+    tasks.data?.filter(
+      (task) =>
+        !task.isCompleted &&
+        new Date(task.dueDate).toDateString() === today.toDateString()
+    ) ?? []
   );
 });
 
 export const selectTomorrowTasks = createSelector(selectTasks, (tasks) => {
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
-  return tasks.data?.filter(
-    (task) =>
-      !task.isCompleted &&
-      new Date(task.dueDate).toDateString() === tomorrow.toDateString()
+  return (
+    tasks.data?.filter(
+      (task) =>
+        !task.isCompleted &&
+        new Date(task.dueDate).toDateString() === tomorrow.toDateString()
+    ) ?? []
   );
 });
 
 export const selectOverdueTasks = createSelector(selectTasks, (tasks) => {
   const today = new Date();
-  return tasks.data?.filter((task) => new Date(task.dueDate) < today);
+  return tasks.data?.filter((task) => new Date(task.dueDate) < today) ?? [];
 });
 
 export const selectUpcomingTasks = createSelector(selectTasks, (tasks) => {
   const today = new Date();
-  return tasks.data?.filter(
-    (task) => !task.isCompleted && new Date(task.dueDate) > today
+  return (
+    tasks.data?.filter(
+      (task) => !task.isCompleted && new Date(task.dueDate) > today
+    ) ?? []
   );
+});
+
+export const selectCompletedTasks = createSelector(selectTasks, (tasks) => {
+  return tasks.data?.filter((task) => task.isCompleted) ?? [];
 });
 
 export const {
