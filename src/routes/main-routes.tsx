@@ -1,15 +1,12 @@
 import React from "react";
 import type { RouteObject } from "react-router-dom";
 
-import PrivateRoute from "@/components/PrivateRoute";
-import MainLayout from "@/layouts/MainLayout";
-
 export const mainRoutes: RouteObject = {
   path: "/",
-  element: <MainLayout />,
+  Component: React.lazy(() => import("@/layouts/MainLayout")),
   children: [
     {
-      element: <PrivateRoute />,
+      Component: React.lazy(() => import("@/components/PrivateRoute")),
       children: [
         {
           index: true,
