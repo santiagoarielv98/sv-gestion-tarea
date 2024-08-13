@@ -10,11 +10,6 @@ import MenuOutlinedIcon from "@ant-design/icons/MenuOutlined";
 import { drawerWidth } from "@/constants/drawer";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogActions from "@mui/material/DialogActions";
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -61,25 +56,6 @@ function Navbar({ open, onToggle }: NavbarProps) {
         <Box sx={{ flexGrow: 1 }} />
         <Button>Create Task</Button>
       </Toolbar>
-      <Dialog
-        open={open}
-        // onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Delete Task"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete this task?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button color="primary">Cancel</Button>
-          <Button color="primary" autoFocus>
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
     </AppBar>
   );
 }
