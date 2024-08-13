@@ -8,15 +8,14 @@ export interface Task {
   dueDate: Date;
   labels: Label[];
   priority: Priority;
-  isCompleted: boolean;
+  completed: boolean;
 }
 
 export type UpdateTask = Partial<Omit<Task, "_id">> & { _id: string };
 
 export interface Label {
   _id: string;
-  name: string;
-  color: string;
+  title: string;
 }
 
 export enum Priority {
@@ -30,7 +29,7 @@ const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
     toggleTask: build.mutation<Task, string>({
       query: (id) => ({
-        url: `/tasks/${id}`,
+        url: `/tasks/toggle/${id}`,
         method: "PATCH",
       }),
       onQueryStarted: async (id, { dispatch, queryFulfilled }) => {
@@ -38,7 +37,7 @@ const extendedApi = api.injectEndpoints({
           api.util.updateQueryData("getTasks", undefined, (draft) => {
             const task = draft.find((task) => task._id === id);
             if (task) {
-              task.isCompleted = !task.isCompleted;
+              task.completed = !task.completed;
             }
           })
         );
@@ -97,17 +96,59 @@ const extendedApi = api.injectEndpoints({
         }
       },
     }),
+    createTask: build.mutation<Task, Omit<Task, "_id">>({
+      query: (task) => ({
+        url: "/tasks",
+        method: "POST",
+        body: task,
+      }),
+      onQueryStarted: async (task, { dispatch, queryFulfilled }) => {
+        const addResult = dispatch(
+          api.util.updateQueryData("getTasks", undefined, (draft) => {
+            draft.push(task);
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          addResult.undo();
+        }
+      },
+    }),
+    //label
+    addLabel: build.mutation<Label, string>({
+      query: (title) => ({
+        url: "/labels",
+        method: "POST",
+        body: { title },
+      }),
+      onQueryStarted: async (title, { dispatch, queryFulfilled }) => {
+        const addResult = dispatch(
+          api.util.updateQueryData("getLabels", undefined, (draft) => {
+            draft.push({ _id: "", title });
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          addResult.undo();
+        }
+      },
+    }),
   }),
 });
 
 const selectTasks = api.endpoints.getTasks.select();
+const selectLabels = api.endpoints.getLabels.select();
+
+export const selectTaskState = createSelector(selectTasks, (tasks) => tasks);
 
 export const selectTodayTasks = createSelector(selectTasks, (tasks) => {
   const today = new Date();
   return (
     tasks.data?.filter(
       (task) =>
-        !task.isCompleted &&
+        !task.completed &&
         new Date(task.dueDate).toDateString() === today.toDateString()
     ) ?? []
   );
@@ -119,7 +160,7 @@ export const selectTomorrowTasks = createSelector(selectTasks, (tasks) => {
   return (
     tasks.data?.filter(
       (task) =>
-        !task.isCompleted &&
+        !task.completed &&
         new Date(task.dueDate).toDateString() === tomorrow.toDateString()
     ) ?? []
   );
@@ -134,17 +175,26 @@ export const selectUpcomingTasks = createSelector(selectTasks, (tasks) => {
   const today = new Date();
   return (
     tasks.data?.filter(
-      (task) => !task.isCompleted && new Date(task.dueDate) > today
+      (task) => !task.completed && new Date(task.dueDate) > today
     ) ?? []
   );
 });
 
 export const selectCompletedTasks = createSelector(selectTasks, (tasks) => {
-  return tasks.data?.filter((task) => task.isCompleted) ?? [];
+  return tasks.data?.filter((task) => task.completed) ?? [];
 });
+
+export const selectLabelState = createSelector(
+  selectLabels,
+  (labels) => labels
+);
 
 export const {
   useGetTasksQuery,
   useToggleTaskMutation,
   useDeleteTaskMutation,
+  useUpdateTaskMutation,
+  useGetLabelsQuery,
+  useAddLabelMutation,
+  useCreateTaskMutation,
 } = extendedApi;

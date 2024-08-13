@@ -62,7 +62,7 @@ function TaskItem({ task }: TaskItemProps) {
           <Checkbox
             id={`checkbox-${task._id}`}
             edge="start"
-            checked={task.isCompleted}
+            checked={task.completed}
             tabIndex={-1}
             disableRipple
             disabled={isLoading}

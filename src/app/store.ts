@@ -6,10 +6,14 @@ import {
 } from "@reduxjs/toolkit";
 import { api } from "./services/auth";
 import authReducer from "@/features/auth/authSlice";
+import tasksReducer from "@/features/tasks/taskSlice";
+import { modalSlice } from "@/features/modal/modalSlice";
 
 const appReducer = combineReducers({
   [api.reducerPath]: api.reducer,
+  tasks: tasksReducer,
   auth: authReducer,
+  modal: modalSlice.reducer,
 });
 
 const rootReducer = (state: any, action: UnknownAction) => {

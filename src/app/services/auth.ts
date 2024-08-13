@@ -1,7 +1,7 @@
 import { logout } from "@/features/auth/authSlice";
 import { createSelector } from "@reduxjs/toolkit";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { Task } from "./api";
+import type { Label, Task } from "./api";
 
 export interface User {
   email: string;
@@ -17,6 +17,9 @@ const baseUrl = import.meta.env.VITE_API_URL;
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: baseUrl, credentials: "include" }),
   endpoints: (builder) => ({
+    getLabels: builder.query<Label[], void>({
+      query: () => "/labels",
+    }),
     getTasks: builder.query<Task[], void>({
       query: () => "/tasks",
     }),
