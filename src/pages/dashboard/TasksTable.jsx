@@ -14,7 +14,9 @@ import Typography from '@mui/material/Typography';
 
 // third-party
 // project import
-import { Checkbox, Chip } from '@mui/material';
+import Checkbox from '@mui/material/Checkbox';
+import Chip from '@mui/material/Chip';
+
 import useTask from '@/hooks/useTask';
 
 function descendingComparator(a, b, orderBy) {

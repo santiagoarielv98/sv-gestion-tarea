@@ -1,4 +1,6 @@
-import { Avatar, Stack, Typography } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
 import LogoImg from '@/assets/images/logo.png';
 

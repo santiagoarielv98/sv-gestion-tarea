@@ -1,24 +1,16 @@
 /* import * as Yup from 'yup'; */
 
-import {
-  Button,
-  /* ButtonProps, */
-  Dialog,
-  DialogActions,
-  /*   DialogActionsProps, */
-  DialogContent,
-  /* DialogContentProps, */
-  DialogContentText,
-  /* DialogContentTextProps, */
-  /* DialogProps, */
-  DialogTitle,
-  Divider,
-  /* DialogTitleProps, */
-  // makeStyles,
-  Grid,
-  Stack,
-  TextField
-} from '@mui/material';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Divider from '@mui/material/Divider';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+
 import {
   Field,
   /* FieldAttributes, */
@@ -175,10 +167,14 @@ export const DialogProvider /* : React.FC */ = ({ children }) => {
 
   const initialValues = getInitialValues(fields);
 
-  const openDialog /* : OpenDialog */ = (options) => dispatch({ type: 'open', payload: options /*  as DialogOptions  */ });
+  const openDialog /* : OpenDialog */ = (options) =>
+    dispatch({ type: 'open', payload: options /*  as DialogOptions  */ });
   const closeDialog = () => dispatch({ type: 'close' });
   const handleExited = () => dispatch({ type: 'reset' });
-  const handleSubmit = (values /* : typeof initialValues */, formikHelpers /* : FormikHelpers<typeof initialValues> */) => {
+  const handleSubmit = (
+    values /* : typeof initialValues */,
+    formikHelpers /* : FormikHelpers<typeof initialValues> */
+  ) => {
     if (!onSubmit) return;
     onSubmit(values, formikHelpers).then(closeDialog);
   };
@@ -226,7 +222,12 @@ export const DialogProvider /* : React.FC */ = ({ children }) => {
   return (
     <DialogContext.Provider value={{ openDialog, closeDialog }}>
       {children}
-      <Formik enableReinitialize initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+      <Formik
+        enableReinitialize
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
         {(formProps) => (
           <Dialog
             open={open}
@@ -269,7 +270,13 @@ export const DialogProvider /* : React.FC */ = ({ children }) => {
                       {submitButton && 'component' in submitButton ? (
                         submitButton.component
                       ) : submitButton ? (
-                        <Button type="submit" color="primary" variant="contained" disabled={formProps.isSubmitting} {...submitButton.props}>
+                        <Button
+                          type="submit"
+                          color="primary"
+                          variant="contained"
+                          disabled={formProps.isSubmitting}
+                          {...submitButton.props}
+                        >
                           {submitButton.children}
                         </Button>
                       ) : null}
@@ -288,5 +295,7 @@ export const DialogProvider /* : React.FC */ = ({ children }) => {
 export const useDialog = () => useContext(DialogContext);
 
 const getInitialValues = (fields /* : DialogOptions["fields"] */) => {
-  return Object.fromEntries(Object.entries(fields ?? {}).map(([name, fieldOptions]) => [name, fieldOptions.initialValue]));
+  return Object.fromEntries(
+    Object.entries(fields ?? {}).map(([name, fieldOptions]) => [name, fieldOptions.initialValue])
+  );
 };

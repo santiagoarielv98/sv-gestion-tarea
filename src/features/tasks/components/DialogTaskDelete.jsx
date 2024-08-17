@@ -1,7 +1,12 @@
 // material-ui
 import Button from '@mui/material/Button';
 
-import { DialogActions, DialogContent, DialogContentText, DialogTitle, Divider } from '@mui/material';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Divider from '@mui/material/Divider';
+
 import { useDeleteTaskMutation } from '../taskApi';
 
 // assets

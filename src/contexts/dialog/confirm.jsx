@@ -1,4 +1,10 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider } from '@mui/material';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Divider from '@mui/material/Divider';
 
 import { createContext, useContext } from 'react';
 
@@ -43,7 +49,16 @@ const DialogConfirmContext = createContext({
 
 export const DialogConfirmProvider = ({ children }) => {
   const [value, dispatch] = useReducer(reducer, initialState);
-  const { open, title, contentText, cancelButton, confirmButton, dialogProps = {}, subcomponentProps: sp, onConfirm } = value;
+  const {
+    open,
+    title,
+    contentText,
+    cancelButton,
+    confirmButton,
+    dialogProps = {},
+    subcomponentProps: sp,
+    onConfirm
+  } = value;
 
   const openDialogConfirm = (options) => dispatch({ type: 'open', payload: options });
   const closeDialogConfirm = () => dispatch({ type: 'close' });
