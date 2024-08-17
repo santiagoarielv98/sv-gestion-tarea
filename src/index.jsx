@@ -8,7 +8,6 @@ import '@fontsource/public-sans/700.css';
 
 // project import
 import App from './App';
-import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from 'app/store';
 
@@ -22,4 +21,3 @@ root.render(
   </Provider>
 );
 
-reportWebVitals();

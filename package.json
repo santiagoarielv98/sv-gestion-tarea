@@ -7,8 +7,6 @@
     "start": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
-    "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
     "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\""
   },
   "dependencies": {
@@ -32,12 +30,13 @@
     "react-router": "^6.22.3",
     "react-router-dom": "^6.22.3",
     "simplebar-react": "^3.2.4",
+    "sv-gestion-tarea": "file:",
     "swr": "^2.2.5",
     "vite-jsconfig-paths": "^2.0.1",
     "yup": "^1.4.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react-swc": "^4.2.1",
+    "@vitejs/plugin-react-swc": "^3.7.0",
     "prettier": "^3.2.5",
     "vite": "^5.2.10"
   }
