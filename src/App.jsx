@@ -7,7 +7,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import ScrollTop from '@/components/ScrollTop';
 
-// ==============================|| APP - THEME, ROUTER, LOCAL ||============================== //
+
 
 export default function App() {
   return (

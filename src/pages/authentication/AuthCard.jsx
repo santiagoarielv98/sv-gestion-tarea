@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 // project import
 import MainCard from '@/components/MainCard';
 
-// ==============================|| AUTHENTICATION - CARD WRAPPER ||============================== //
+
 
 export default function AuthCard({ children, ...other }) {
   return (
@@ -16,7 +16,7 @@ export default function AuthCard({ children, ...other }) {
       {...other}
       border={false}
       boxShadow
-      shadow={(theme) => theme.customShadows.z1}
+      shadow={(theme) => theme.shadows[5]}
     >
       <Box sx={{ p: { xs: 2, sm: 3, md: 4, xl: 5 } }}>{children}</Box>
     </MainCard>

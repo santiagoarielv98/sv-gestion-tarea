@@ -10,7 +10,7 @@ import Chip from '@mui/material/Chip';
 import Logo from './LogoMain';
 import config from '@/config';
 
-// ==============================|| MAIN LOGO ||============================== //
+
 
 const LogoSection = ({ sx, to }) => {
   return (

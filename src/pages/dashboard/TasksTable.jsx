@@ -64,7 +64,7 @@ const headCells = [
   }
 ];
 
-// ==============================|| ORDER TABLE - HEADER ||============================== //
+
 
 function OrderTableHead({ order, orderBy }) {
   return (

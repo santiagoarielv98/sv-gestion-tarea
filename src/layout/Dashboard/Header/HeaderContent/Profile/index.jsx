@@ -35,7 +35,7 @@ function TabPanel({ children, value, index, ...other }) {
   );
 }
 
-// ==============================|| HEADER CONTENT - PROFILE ||============================== //
+
 
 export default function Profile() {
   const user = useSelector(selectUser);
@@ -100,7 +100,7 @@ export default function Profile() {
       >
         {({ TransitionProps }) => (
           <Transitions type="grow" position="top-right" in={open} {...TransitionProps}>
-            <Paper sx={{ boxShadow: theme.customShadows.z1, width: 290, minWidth: 240, maxWidth: { xs: 250, md: 290 } }}>
+            <Paper sx={{ boxShadow: theme.shadows[5], width: 290, minWidth: 240, maxWidth: { xs: 250, md: 290 } }}>
               <ClickAwayListener onClickAway={handleClose}>
                 <MainCard elevation={0} border={false} content={false}>
                   <CardContent sx={{ px: 2.5, pt: 3 }}>

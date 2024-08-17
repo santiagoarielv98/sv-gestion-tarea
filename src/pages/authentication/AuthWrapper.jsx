@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import Logo from '@/components/logo';
 import AuthCard from './AuthCard';
 
-// ==============================|| AUTHENTICATION - WRAPPER ||============================== //
+
 
 export default function AuthWrapper({ children }) {
   return (

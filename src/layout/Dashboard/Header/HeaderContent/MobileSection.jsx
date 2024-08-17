@@ -18,7 +18,7 @@ import Transitions from '@/components/@extended/Transitions';
 // assets
 import MoreOutlined from '@ant-design/icons/MoreOutlined';
 
-// ==============================|| HEADER CONTENT - MOBILE ||============================== //
+
 
 export default function MobileSection() {
   const theme = useTheme();
@@ -87,7 +87,7 @@ export default function MobileSection() {
       >
         {({ TransitionProps }) => (
           <Transitions type="fade" in={open} {...TransitionProps}>
-            <Paper sx={{ boxShadow: theme.customShadows.z1 }}>
+            <Paper sx={{ boxShadow: theme.shadows[5] }}>
               <ClickAwayListener onClickAway={handleClose}>
                 <AppBar color="inherit">
                   <Toolbar>

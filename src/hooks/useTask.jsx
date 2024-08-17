@@ -1,4 +1,4 @@
-import { DeleteOutlined } from '@ant-design/icons';
+import DeleteOutlined from '@ant-design/icons/DeleteOutlined';
 import { IconButton, MenuItem } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { useDialog } from '@/contexts/dialog';

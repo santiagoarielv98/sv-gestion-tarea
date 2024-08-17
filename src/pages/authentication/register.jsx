@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import AuthWrapper from './AuthWrapper';
 import AuthRegister from './auth-forms/AuthRegister';
 
-// ================================|| REGISTER ||================================ //
+
 
 export default function Register() {
   return (

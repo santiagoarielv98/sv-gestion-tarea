@@ -13,7 +13,7 @@ import { store } from '@/app/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-// ==============================|| MAIN - REACT DOM RENDER ||============================== //
+
 
 root.render(
   <Provider store={store}>

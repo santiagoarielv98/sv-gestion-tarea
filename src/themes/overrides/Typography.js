@@ -1,4 +1,4 @@
-// ==============================|| OVERRIDES - TYPOGRAPHY ||============================== //
+
 
 export default function Typography() {
   return {

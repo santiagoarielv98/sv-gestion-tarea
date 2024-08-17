@@ -3,7 +3,7 @@ import { selectUser } from '@/features/auth/authSlice';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 
-// ==============================|| MINIMAL LAYOUT ||============================== //
+
 
 export default function MinimalLayout() {
   const user = useSelector(selectUser);

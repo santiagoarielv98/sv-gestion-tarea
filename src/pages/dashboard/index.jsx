@@ -8,7 +8,7 @@ import MainCard from '@/components/MainCard';
 import useTask from '@/hooks/useTask';
 import TasksTable from './TasksTable';
 
-// ==============================|| DASHBOARD - DEFAULT ||============================== //
+
 
 export default function DashboardDefault() {
   // const { openDialogTask } = useTask();

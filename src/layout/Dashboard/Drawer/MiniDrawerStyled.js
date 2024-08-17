@@ -28,10 +28,10 @@ const closedMixin = (theme) => ({
   overflowX: 'hidden',
   width: 0,
   borderRight: 'none',
-  boxShadow: theme.customShadows.z1
+  boxShadow: theme.shadows[5]
 });
 
-// ==============================|| DRAWER - MINI STYLED ||============================== //
+
 
 const MiniDrawerStyled = styled(Drawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
   width: drawerWidth,

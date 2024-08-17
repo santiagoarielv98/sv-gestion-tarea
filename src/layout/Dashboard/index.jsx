@@ -17,7 +17,7 @@ import { handlerDrawerOpen, useGetMenuMaster } from '@/api/menu';
 import { DialogProvider } from '@/contexts/dialog';
 import { DialogConfirmProvider } from '@/contexts/dialog/confirm';
 
-// ==============================|| MAIN LAYOUT ||============================== //
+
 
 export default function DashboardLayout() {
   const { menuMasterLoading } = useGetMenuMaster();

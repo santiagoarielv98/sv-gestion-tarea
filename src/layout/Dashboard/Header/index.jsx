@@ -17,7 +17,7 @@ import { handlerDrawerOpen, useGetMenuMaster } from '@/api/menu';
 import MenuFoldOutlined from '@ant-design/icons/MenuFoldOutlined';
 import MenuUnfoldOutlined from '@ant-design/icons/MenuUnfoldOutlined';
 
-// ==============================|| MAIN LAYOUT - HEADER ||============================== //
+
 
 export default function Header() {
   const theme = useTheme();
@@ -57,7 +57,7 @@ export default function Header() {
     elevation: 0,
     sx: {
       borderBottom: `1px solid ${theme.palette.divider}`
-      // boxShadow: theme.customShadows.z1
+      // boxShadow: theme.shadows[5]
     }
   };
 
