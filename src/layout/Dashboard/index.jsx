@@ -9,13 +9,13 @@ import Box from '@mui/material/Box';
 // project import
 import Drawer from './Drawer';
 import Header from './Header';
-import navigation from 'menu-items';
-import Loader from 'components/Loader';
-import Breadcrumbs from 'components/@extended/Breadcrumbs';
+import navigation from '@/menu-items';
+import Loader from '@/components/Loader';
+import Breadcrumbs from '@/components/@extended/Breadcrumbs';
 
-import { handlerDrawerOpen, useGetMenuMaster } from 'api/menu';
-import { DialogProvider } from 'contexts/dialog';
-import { DialogConfirmProvider } from 'contexts/dialog/confirm';
+import { handlerDrawerOpen, useGetMenuMaster } from '@/api/menu';
+import { DialogProvider } from '@/contexts/dialog';
+import { DialogConfirmProvider } from '@/contexts/dialog/confirm';
 
 // ==============================|| MAIN LAYOUT ||============================== //
 

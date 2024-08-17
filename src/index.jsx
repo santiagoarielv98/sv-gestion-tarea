@@ -9,7 +9,7 @@ import '@fontsource/public-sans/700.css';
 // project import
 import App from './App';
 import { Provider } from 'react-redux';
-import { store } from 'app/store';
+import { store } from '@/app/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

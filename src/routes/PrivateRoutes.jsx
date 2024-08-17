@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 
-import { selectUser } from 'features/auth/authSlice';
+import { selectUser } from '@/features/auth/authSlice';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router';
-import { useCheckQuery } from 'features/auth/authApi';
+import { useCheckQuery } from '@/features/auth/authApi';
 
 function PrivateRoutes({ children }) {
   const { isLoading } = useCheckQuery();

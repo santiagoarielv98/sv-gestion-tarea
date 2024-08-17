@@ -16,14 +16,14 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 // project import
-import Avatar from 'components/@extended/Avatar';
-import MainCard from 'components/MainCard';
-import Transitions from 'components/@extended/Transitions';
+import Avatar from '@/components/@extended/Avatar';
+import MainCard from '@/components/MainCard';
+import Transitions from '@/components/@extended/Transitions';
 
 // assets
 import LogoutOutlined from '@ant-design/icons/LogoutOutlined';
-import useAuth from 'hooks/useAuth';
-import { selectUser } from 'features/auth/authSlice';
+import useAuth from '@/hooks/useAuth';
+import { selectUser } from '@/features/auth/authSlice';
 import { useSelector } from 'react-redux';
 
 // tab panel wrapper

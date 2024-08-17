@@ -1,16 +1,16 @@
 import { DeleteOutlined } from '@ant-design/icons';
 import { IconButton, MenuItem } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
-import { useDialog } from 'contexts/dialog';
-import { useDialogConfirm } from 'contexts/dialog/confirm';
-import LabelAutoComplete from 'features/labels/components/LabelAutoComplete';
+import { useDialog } from '@/contexts/dialog';
+import { useDialogConfirm } from '@/contexts/dialog/confirm';
+import LabelAutoComplete from '@/features/labels/components/LabelAutoComplete';
 import {
   useCreateTaskMutation,
   useDeleteTaskMutation,
   useGetTasksQuery,
   useToggleTaskMutation,
   useUpdateTaskMutation
-} from 'features/tasks/taskApi';
+} from '@/features/tasks/taskApi';
 import _ from 'lodash';
 import moment from 'moment';
 import * as Yup from 'yup';

@@ -19,7 +19,7 @@ import * as Yup from 'yup';
 // assets
 import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
 import EyeOutlined from '@ant-design/icons/EyeOutlined';
-import { useRegisterMutation } from 'features/auth/authApi';
+import { useRegisterMutation } from '@/features/auth/authApi';
 
 // ============================|| JWT - REGISTER ||============================ //
 

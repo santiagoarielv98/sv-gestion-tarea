@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
 // project import
-import Logo from 'components/logo';
+import Logo from '@/components/logo';
 import AuthCard from './AuthCard';
 
 // ==============================|| AUTHENTICATION - WRAPPER ||============================== //

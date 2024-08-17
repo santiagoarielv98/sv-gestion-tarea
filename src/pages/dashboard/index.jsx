@@ -4,8 +4,8 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 // project import
-import MainCard from 'components/MainCard';
-import useTask from 'hooks/useTask';
+import MainCard from '@/components/MainCard';
+import useTask from '@/hooks/useTask';
 import TasksTable from './TasksTable';
 
 // ==============================|| DASHBOARD - DEFAULT ||============================== //

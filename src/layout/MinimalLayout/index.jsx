@@ -1,5 +1,5 @@
-import { useCheckQuery } from 'features/auth/authApi';
-import { selectUser } from 'features/auth/authSlice';
+import { useCheckQuery } from '@/features/auth/authApi';
+import { selectUser } from '@/features/auth/authSlice';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 

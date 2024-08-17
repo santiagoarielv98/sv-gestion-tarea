@@ -1,6 +1,6 @@
 import { Avatar, Stack, Typography } from '@mui/material';
 
-import LogoImg from 'assets/images/logo.png';
+import LogoImg from '@/assets/images/logo.png';
 
 const Logo = () => {
   return (

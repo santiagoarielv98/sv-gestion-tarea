@@ -1,11 +1,11 @@
 import { RouterProvider } from 'react-router-dom';
 
 // project import
-import router from 'routes';
-import ThemeCustomization from 'themes';
+import router from '@/routes';
+import ThemeCustomization from '@/themes';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import ScrollTop from 'components/ScrollTop';
+import ScrollTop from '@/components/ScrollTop';
 
 // ==============================|| APP - THEME, ROUTER, LOCAL ||============================== //
 

@@ -1,4 +1,4 @@
-import { useLoginMutation, useLogoutMutation } from 'features/auth/authApi';
+import { useLoginMutation, useLogoutMutation } from '@/features/auth/authApi';
 
 function useAuth() {
   const [login] = useLoginMutation();

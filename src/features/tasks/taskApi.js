@@ -1,4 +1,4 @@
-import { api } from 'app/services/api';
+import { api } from '@/app/services/api';
 
 const taskApi = api.injectEndpoints({
   endpoints: (builder) => ({
