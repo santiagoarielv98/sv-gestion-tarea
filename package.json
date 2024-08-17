@@ -4,10 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "vite",
+    "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\""
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@ant-design/colors": "^7.0.2",
@@ -36,7 +36,13 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react-swc": "^3.7.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.6",
     "prettier": "^3.2.5",
     "vite": "^5.2.10"
   }
