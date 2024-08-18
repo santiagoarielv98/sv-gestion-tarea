@@ -1,5 +1,3 @@
-/* import * as Yup from 'yup'; */
-
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -10,84 +8,15 @@ import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
+import propTypes from 'prop-types';
 
-import {
-  Field,
-  /* FieldAttributes, */
-  Form,
-  Formik
-  /* FormikFormProps,
-    FormikHelpers,
-    FormikProps, */
-} from 'formik';
+import { Field, Form, Formik } from 'formik';
 import { createContext, useContext } from 'react';
 
-/* import Lazy from "yup/lib/Lazy"; */
-/* import Reference from "yup/lib/Reference"; */
 import startCase from 'lodash/startCase';
 import { useReducer } from 'react';
 
-/* export type ActionButtonOptions =
-  | false
-  | { children: string | React.ReactNode; props?: ButtonProps }
-  | { component: React.ReactNode }; */
-
-/* export type FieldOptions<T extends string = string> = Record<
-  T,
-  {
-    initialValue: any;
-    label?: string;
-    fieldProps?: FieldAttributes<any>;
-    component?: React.ReactNode;
-  }
->; */
-
-/**
- * Turns ObjectShape into a generic.
- * See: https://github.com/jquense/yup/blob/3b67dc0b59c8cf05fb5ee00b1560a2ab68ca3918/src/object.ts#L30
- */
-/* type YupObjectShape<T extends string> = Record<
-  T,
-  Yup.AnySchema | Reference | Lazy<any, any>
->; */
-
-/* export type DialogOptions<
-  FieldNames extends string = string,
-  Fields = FieldOptions<FieldNames>,
-  Values = Record<keyof Fields, string>
-> = Partial<{
-  title: string | React.ReactNode;
-  contentText: string | React.ReactNode;
-  fields: Fields;
-  validationSchema: Yup.ObjectSchema<YupObjectShape<FieldNames>>;
-  cancelButton: ActionButtonOptions;
-  submitButton: ActionButtonOptions;
-  onSubmit: (
-    values: Values,
-    formikHelpers: FormikHelpers<Values>
-  ) => Promise<any>;
-  dialogProps: Omit<DialogProps, "open">;
-  subcomponentProps: {
-    dialogTitleProps?: DialogTitleProps;
-    dialogContentProps?: DialogContentProps;
-    dialogContentTextProps?: DialogContentTextProps;
-    dialogActionsProps?: DialogActionsProps;
-    formikProps?: Partial<FormikProps<Values>>;
-    formikFormProps?: FormikFormProps;
-  };
-  customContent: undefined | React.ReactNode;
-}>; */
-
-/* type OpenDialogAction = {
-  type: "open";
-  payload: DialogOptions;
-}; */
-/* type CloseDialogAction = { type: "close" }; */
-/* type ResetDialogAction = { type: "reset" }; */
-/* type Actions = OpenDialogAction | CloseDialogAction | ResetDialogAction; */
-/* type State = { open: boolean } & DialogOptions; */
-
-const reducer = (state /* : State */, action /* : Actions */) /* : State */ => {
+const reducer = (state, action) => {
   switch (action.type) {
     case 'open':
       return { ...state, ...action.payload, open: true };
@@ -100,7 +29,7 @@ const reducer = (state /* : State */, action /* : Actions */) /* : State */ => {
   }
 };
 
-const initialState /* : State */ = {
+const initialState = {
   open: false,
   title: 'Dialog Title',
   contentText: 'Dialog content text',
@@ -123,33 +52,12 @@ const initialState /* : State */ = {
   customContent: undefined
 };
 
-/* export type OpenDialog = <T extends string>(options: DialogOptions<T>) => void; */
+const DialogContext = createContext({
+  openDialog: () => null,
+  closeDialog: () => null
+});
 
-/* type ContextType = {
-  openDialog: OpenDialog;
-  closeDialog: () => void;
-}; */
-
-const DialogContext = createContext(
-  /* <ContextType> */ {
-    openDialog: () => null,
-    closeDialog: () => null
-  }
-);
-
-/* const useStyles = makeStyles((theme) => ({
-  dialogContent: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: `${theme.spacing(2)}px`,
-    marginBottom: theme.spacing(2)
-  }
-})); */
-
-export const DialogProvider /* : React.FC */ = ({ children }) => {
-  // The warning [Warning: findDOMNode is deprecated in StrictMode.] is a known issue:
-  // https://stackoverflow.com/a/63729408
-  /* const classes = useStyles(); */
+export const DialogProvider = ({ children }) => {
   const [value, dispatch] = useReducer(reducer, initialState);
   const {
     open,
@@ -167,14 +75,10 @@ export const DialogProvider /* : React.FC */ = ({ children }) => {
 
   const initialValues = getInitialValues(fields);
 
-  const openDialog /* : OpenDialog */ = (options) =>
-    dispatch({ type: 'open', payload: options /*  as DialogOptions  */ });
+  const openDialog = (options) => dispatch({ type: 'open', payload: options });
   const closeDialog = () => dispatch({ type: 'close' });
   const handleExited = () => dispatch({ type: 'reset' });
-  const handleSubmit = (
-    values /* : typeof initialValues */,
-    formikHelpers /* : FormikHelpers<typeof initialValues> */
-  ) => {
+  const handleSubmit = (values, formikHelpers) => {
     if (!onSubmit) return;
     onSubmit(values, formikHelpers).then(closeDialog);
   };
@@ -243,7 +147,7 @@ export const DialogProvider /* : React.FC */ = ({ children }) => {
               <Form {...sp?.formikFormProps}>
                 <DialogTitle {...sp?.dialogTitleProps}>{title}</DialogTitle>
                 <Divider />
-                <DialogContent /* className={classes.dialogContent} */ {...sp?.dialogContentProps}>
+                <DialogContent {...sp?.dialogContentProps}>
                   {contentText && <DialogContentText {...sp?.dialogContentTextProps}>{contentText}</DialogContentText>}
                   <Grid container spacing={3}>
                     {!!fieldComponents.length && fieldComponents}
@@ -292,9 +196,13 @@ export const DialogProvider /* : React.FC */ = ({ children }) => {
   );
 };
 
+DialogProvider.propTypes = {
+  children: propTypes.node
+};
+
 export const useDialog = () => useContext(DialogContext);
 
-const getInitialValues = (fields /* : DialogOptions["fields"] */) => {
+const getInitialValues = (fields) => {
   return Object.fromEntries(
     Object.entries(fields ?? {}).map(([name, fieldOptions]) => [name, fieldOptions.initialValue])
   );

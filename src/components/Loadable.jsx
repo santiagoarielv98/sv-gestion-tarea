@@ -1,5 +1,5 @@
-import { Suspense } from 'react';
 import propTypes from 'prop-types';
+import { Suspense } from 'react';
 
 // project import
 import Loader from './Loader';
