@@ -14,8 +14,6 @@ import { drawerWidth } from '@/config';
 import { handlerDrawerOpen, useGetMenuMaster } from '@/api/menu';
 
 export default function MainDrawer({ window }) {
-  const { menuMaster } = useGetMenuMaster();
-  const drawerOpen = menuMaster.isDashboardDrawerOpened;
   const matchDownMD = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   // responsive drawer container
@@ -23,12 +21,12 @@ export default function MainDrawer({ window }) {
 
   // header content
   const drawerContent = useMemo(() => <DrawerContent />, []);
-  const drawerHeader = useMemo(() => <DrawerHeader open={!!drawerOpen} />, [drawerOpen]);
+  const drawerHeader = useMemo(() => <DrawerHeader open={!!true} />, []);
 
   return (
     <Box component="nav" sx={{ flexShrink: { md: 0 }, zIndex: 1200 }} aria-label="mailbox folders">
       {!matchDownMD ? (
-        <MiniDrawerStyled variant="permanent" open={drawerOpen}>
+        <MiniDrawerStyled variant="permanent" open={true}>
           {drawerHeader}
           {drawerContent}
         </MiniDrawerStyled>
@@ -36,8 +34,8 @@ export default function MainDrawer({ window }) {
         <Drawer
           container={container}
           variant="temporary"
-          open={drawerOpen}
-          onClose={() => handlerDrawerOpen(!drawerOpen)}
+          open={true}
+          onClose={() => handlerDrawerOpen(!true)}
           ModalProps={{ keepMounted: true }}
           sx={{
             display: { xs: 'block', lg: 'none' },

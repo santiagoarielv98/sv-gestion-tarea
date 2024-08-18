@@ -1,42 +1,142 @@
-import { useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
-
 // material-ui
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import useMediaQuery from '@mui/material/useMediaQuery';
 
 // project import
-import Loader from '@/components/Loader';
-import Drawer from './Drawer';
-import Header from './Header';
 
-import { handlerDrawerOpen, useGetMenuMaster } from '@/api/menu';
-import { DialogProvider } from '@/contexts/dialog';
+import InboxOutlined from '@ant-design/icons/InboxOutlined';
+import MailOutlined from '@ant-design/icons/MailOutlined';
+import MenuOutlined from '@ant-design/icons/MenuOutlined';
+import Drawer from '@mui/material/Drawer';
+import AppBar from '@mui/material/AppBar';
+import CssBaseline from '@mui/material/CssBaseline';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
+import { Outlet } from 'react-router';
 import { DialogConfirmProvider } from '@/contexts/dialog/confirm';
+import { DialogProvider } from '@/contexts/dialog';
 
-export default function MainLayout() {
-  const { menuMasterLoading } = useGetMenuMaster();
-  const downXL = useMediaQuery((theme) => theme.breakpoints.down('xl'));
+const drawerWidth = 240;
 
-  useEffect(() => {
-    handlerDrawerOpen(!downXL);
-  }, [downXL]);
+function ResponsiveDrawer() {
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [isClosing, setIsClosing] = React.useState(false);
 
-  if (menuMasterLoading) return <Loader />;
+  const handleDrawerClose = () => {
+    setIsClosing(true);
+    setMobileOpen(false);
+  };
+
+  const handleDrawerTransitionEnd = () => {
+    setIsClosing(false);
+  };
+
+  const handleDrawerToggle = () => {
+    if (!isClosing) {
+      setMobileOpen(!mobileOpen);
+    }
+  };
+
+  const drawer = (
+    <div>
+      <Toolbar />
+      <Divider />
+      <List>
+        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>{index % 2 === 0 ? <InboxOutlined /> : <MailOutlined />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>{index % 2 === 0 ? <InboxOutlined /> : <MailOutlined />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  );
+
+  // Remove this const when copying and pasting into your project.
 
   return (
-    <Box sx={{ display: 'flex', width: '100%' }}>
-      <DialogConfirmProvider>
-        <DialogProvider>
-          <Header />
-          <Drawer />
-          <Box component="main" sx={{ width: 'calc(100% - 260px)', flexGrow: 1, p: { xs: 2, sm: 3 } }}>
+    <DialogConfirmProvider>
+      <DialogProvider>
+        <Box sx={{ display: 'flex' }}>
+          <CssBaseline />
+          <AppBar
+            position="fixed"
+            sx={{
+              width: { sm: `calc(100% - ${drawerWidth}px)` },
+              ml: { sm: `${drawerWidth}px` }
+            }}
+          >
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ mr: 2, display: { sm: 'none' } }}
+              >
+                <MenuOutlined />
+              </IconButton>
+              <Typography variant="h6" noWrap component="div">
+                Responsive drawer
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }} aria-label="mailbox folders">
+            {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+            <Drawer
+              variant="temporary"
+              open={mobileOpen}
+              onTransitionEnd={handleDrawerTransitionEnd}
+              onClose={handleDrawerClose}
+              ModalProps={{
+                keepMounted: true // Better open performance on mobile.
+              }}
+              sx={{
+                display: { xs: 'block', sm: 'none' },
+                '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth }
+              }}
+            >
+              {drawer}
+            </Drawer>
+            <Drawer
+              variant="permanent"
+              sx={{
+                display: { xs: 'none', sm: 'block' },
+                '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth }
+              }}
+              open
+            >
+              {drawer}
+            </Drawer>
+          </Box>
+          <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
             <Toolbar />
             <Outlet />
           </Box>
-        </DialogProvider>
-      </DialogConfirmProvider>
-    </Box>
+        </Box>
+      </DialogProvider>
+    </DialogConfirmProvider>
   );
 }
+
+export default ResponsiveDrawer;

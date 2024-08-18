@@ -1,17 +1,17 @@
 import { useMemo } from 'react';
 
 // material-ui
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
+import { useTheme } from '@mui/material/styles';
+import Toolbar from '@mui/material/Toolbar';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 // project import
 import AppBarStyled from './AppBarStyled';
 import HeaderContent from './HeaderContent';
 
-import { handlerDrawerOpen, useGetMenuMaster } from '@/api/menu';
+import { handlerDrawerOpen } from '@/api/menu';
 
 // assets
 import MenuFoldOutlined from '@ant-design/icons/MenuFoldOutlined';
@@ -21,8 +21,7 @@ export default function Header() {
   const theme = useTheme();
   const downLG = useMediaQuery(theme.breakpoints.down('lg'));
 
-  const { menuMaster } = useGetMenuMaster();
-  const drawerOpen = menuMaster.isDashboardDrawerOpened;
+  const drawerOpen = true; // drawerOpenState;
 
   // header content
   const headerContent = useMemo(() => <HeaderContent />, []);
