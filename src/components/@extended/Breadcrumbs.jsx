@@ -15,59 +15,16 @@ export default function Breadcrumbs({ navigation, title, ...others }) {
   const [main, setMain] = useState();
   const [item, setItem] = useState();
 
-  // set active item state
-  const getCollapse = (menu) => {
-    if (menu.children) {
-      menu.children.filter((collapse) => {
-        if (collapse.type && collapse.type === 'collapse') {
-          getCollapse(collapse);
-        } else if (collapse.type && collapse.type === 'item') {
-          if (location.pathname === collapse.url) {
-            setMain(menu);
-            setItem(collapse);
-          }
-        }
-        return false;
-      });
-    }
-  };
-
-  useEffect(() => {
-    navigation?.items?.map((menu) => {
-      if (menu.type && menu.type === 'group') {
-        getCollapse(menu);
-      }
-      return false;
-    });
-  });
-
-  // only used for component demo breadcrumbs
-  if (location.pathname === '/breadcrumbs') {
-    location.pathname = '/dashboard/analytics';
-  }
+  console.log(location.pathname);
 
   let mainContent;
   let itemContent;
   let breadcrumbContent = <Typography />;
   let itemTitle = '';
 
-  // collapse item
-  if (main && main.type === 'collapse') {
-    mainContent = (
-      <Typography
-        component={Link}
-        to={document.location.pathname}
-        variant="h6"
-        sx={{ textDecoration: 'none' }}
-        color="textSecondary"
-      >
-        {main.title}
-      </Typography>
-    );
-  }
-
   // items
   if (item && item.type === 'item') {
+    console.log('item', item);
     itemTitle = item.title;
     itemContent = (
       <Typography variant="subtitle1" color="textPrimary">

@@ -132,6 +132,4 @@ export default function NavItem({ item, level }) {
   );
 }
 
-NavItem.displayName = 'NavItem';
-
 NavItem.propTypes = { item: PropTypes.object, level: PropTypes.number };

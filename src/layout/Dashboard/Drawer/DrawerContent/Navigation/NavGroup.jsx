@@ -11,7 +11,6 @@ import NavItem from './NavItem';
 export default function NavGroup({ item }) {
   const { menuMaster } = useGetMenuMaster();
   const drawerOpen = menuMaster.isDashboardDrawerOpened;
-
   const navCollapse = item.children?.map((menuItem) => <NavItem key={menuItem.id} item={menuItem} level={1} />);
 
   return (
