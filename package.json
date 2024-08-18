@@ -32,7 +32,6 @@
     "simplebar-react": "^3.2.4",
     "sv-gestion-tarea": "file:",
     "swr": "^2.2.5",
-    "vite-jsconfig-paths": "^2.0.1",
     "yup": "^1.4.0"
   },
   "devDependencies": {
