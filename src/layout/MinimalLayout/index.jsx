@@ -11,7 +11,6 @@ export default function MinimalLayout() {
   if (isLoading) {
     return <Backdrop open={true} />;
   }
-
   if (user) {
     return <Navigate to="/" />;
   }
