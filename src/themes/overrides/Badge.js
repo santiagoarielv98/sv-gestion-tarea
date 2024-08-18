@@ -1,8 +1,6 @@
 // project import
 import getColors from '@/utils/getColors';
 
-
-
 function getColorStyle({ color, theme }) {
   const colors = getColors(theme, color);
   const { lighter, main } = colors;
@@ -12,8 +10,6 @@ function getColorStyle({ color, theme }) {
     backgroundColor: lighter
   };
 }
-
-
 
 export default function Badge(theme) {
   const defaultLightBadge = getColorStyle({ color: 'primary', theme });

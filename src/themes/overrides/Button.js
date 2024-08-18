@@ -78,8 +78,6 @@ function getColorStyle({ variant, color, theme }) {
   }
 }
 
-
-
 export default function Button(theme) {
   const primaryDashed = getColorStyle({ variant: 'dashed', color: 'primary', theme });
   const primaryShadow = getColorStyle({ variant: 'shadow', color: 'primary', theme });

@@ -1,7 +1,5 @@
 import PropTypes from 'prop-types';
 
-
-
 const getShadow = (theme, shadow) => {
   switch (shadow) {
     case 'secondary':

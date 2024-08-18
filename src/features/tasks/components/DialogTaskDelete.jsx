@@ -8,10 +8,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
 
 import { useDeleteTaskMutation } from '../taskApi';
+import propTypes from 'prop-types';
 
 // assets
-
-// ============================|| JWT - REGISTER ||============================ //
 
 export default function DialogTaskDelete({ task, closeDialog, onConfirm }) {
   const [deleteTask] = useDeleteTaskMutation();
@@ -27,7 +26,7 @@ export default function DialogTaskDelete({ task, closeDialog, onConfirm }) {
       <Divider />
       <DialogContent>
         <DialogContentText>
-          Are you sure you want to delete task <strong>Example Task</strong>?
+          Are you sure you want to delete task <strong>{task.title}</strong>?
         </DialogContentText>
       </DialogContent>
       <Divider />
@@ -42,3 +41,9 @@ export default function DialogTaskDelete({ task, closeDialog, onConfirm }) {
     </>
   );
 }
+
+DialogTaskDelete.propTypes = {
+  task: propTypes.object.isRequired,
+  closeDialog: propTypes.func.isRequired,
+  onConfirm: propTypes.func.isRequired
+};

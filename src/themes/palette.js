@@ -7,8 +7,6 @@ import { presetPalettes } from '@ant-design/colors';
 // project import
 import ThemeOption from './theme';
 
-
-
 export default function Palette(mode, presetColor) {
   const colors = presetPalettes;
 

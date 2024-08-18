@@ -17,8 +17,6 @@ import Profile from './Profile';
 // assets
 import MoreOutlined from '@ant-design/icons/MoreOutlined';
 
-
-
 export default function MobileSection() {
   const theme = useTheme();
 

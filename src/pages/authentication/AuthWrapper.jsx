@@ -8,8 +8,6 @@ import Grid from '@mui/material/Grid';
 import Logo from '@/components/logo';
 import AuthCard from './AuthCard';
 
-
-
 export default function AuthWrapper({ children }) {
   return (
     <Box sx={{ minHeight: '100vh' }}>

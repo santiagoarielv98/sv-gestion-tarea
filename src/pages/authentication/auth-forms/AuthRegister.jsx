@@ -21,8 +21,6 @@ import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
 import EyeOutlined from '@ant-design/icons/EyeOutlined';
 import { useRegisterMutation } from '@/features/auth/authApi';
 
-// ============================|| JWT - REGISTER ||============================ //
-
 export default function AuthRegister() {
   const [register, { error }] = useRegisterMutation();
   const [showPassword, setShowPassword] = useState(false);
@@ -148,7 +146,15 @@ export default function AuthRegister() {
                 </Grid>
               )}
               <Grid item xs={12}>
-                <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="primary">
+                <Button
+                  disableElevation
+                  disabled={isSubmitting}
+                  fullWidth
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                >
                   Create Account
                 </Button>
               </Grid>

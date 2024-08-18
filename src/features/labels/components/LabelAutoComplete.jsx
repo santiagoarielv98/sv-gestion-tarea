@@ -69,7 +69,8 @@ function LabelAutoComplete() {
       renderInput={(params) => <TextField {...params} label="Labels" placeholder="Add label" />}
       filterOptions={(options, params) => {
         const filtered = filter(options, params);
-        const isExisting = values.some(isMatchingLabelName(params.inputValue)) || labels.some(isMatchingLabelName(params.inputValue));
+        const isExisting =
+          values.some(isMatchingLabelName(params.inputValue)) || labels.some(isMatchingLabelName(params.inputValue));
         if (params.inputValue !== '' && !isExisting) {
           filtered.push({
             _id: '',

@@ -1,8 +1,6 @@
 // material-ui
 import { alpha } from '@mui/material/styles';
 
-
-
 export default function CustomShadows(theme) {
   return {
     button: `0 2px #0000000b`,

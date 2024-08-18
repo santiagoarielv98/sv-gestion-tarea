@@ -19,8 +19,6 @@ import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
 import EyeOutlined from '@ant-design/icons/EyeOutlined';
 import { useLoginMutation } from '@/features/auth/authApi';
 
-// ============================|| JWT - LOGIN ||============================ //
-
 export default function AuthLogin() {
   const [login, { error }] = useLoginMutation();
 
@@ -120,7 +118,15 @@ export default function AuthLogin() {
                 </Grid>
               )}
               <Grid item xs={12}>
-                <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="primary">
+                <Button
+                  disableElevation
+                  disabled={isSubmitting}
+                  fullWidth
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                >
                   Login
                 </Button>
               </Grid>

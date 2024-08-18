@@ -1,5 +1,3 @@
-
-
 const config = {
   defaultPath: '/',
   fontFamily: `'Public Sans', sans-serif`,

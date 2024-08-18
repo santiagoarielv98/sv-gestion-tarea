@@ -47,8 +47,6 @@ const actionSX = {
   transform: 'none'
 };
 
-
-
 export default function Notification() {
   const theme = useTheme();
   const matchesXs = useMediaQuery(theme.breakpoints.down('md'));

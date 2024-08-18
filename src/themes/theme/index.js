@@ -1,5 +1,3 @@
-
-
 export default function Theme(colors) {
   const { blue, red, gold, cyan, green, grey } = colors;
   const greyColors = {

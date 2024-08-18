@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
 import { forwardRef, useEffect } from 'react';
-import { Link, useLocation, matchPath } from 'react-router-dom';
+import { Link, matchPath, useLocation } from 'react-router-dom';
 
 // material-ui
-import { useTheme } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import Chip from '@mui/material/Chip';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 // project import
@@ -25,7 +25,9 @@ export default function NavItem({ item, level }) {
   if (item.target) {
     itemTarget = '_blank';
   }
-  let listItemProps = { component: forwardRef((props, ref) => <Link ref={ref} {...props} to={item.url} target={itemTarget} />) };
+  let listItemProps = {
+    component: forwardRef((props, ref) => <Link ref={ref} {...props} to={item.url} target={itemTarget} />)
+  };
   if (item?.external) {
     listItemProps = { component: 'a', href: item.url, target: itemTarget };
   }
@@ -38,6 +40,7 @@ export default function NavItem({ item, level }) {
   // active menu item on page load
   useEffect(() => {
     if (pathname === item.url) handlerActiveItem(item.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const textColor = 'text.primary';
@@ -128,5 +131,7 @@ export default function NavItem({ item, level }) {
     </ListItemButton>
   );
 }
+
+NavItem.displayName = 'NavItem';
 
 NavItem.propTypes = { item: PropTypes.object, level: PropTypes.number };

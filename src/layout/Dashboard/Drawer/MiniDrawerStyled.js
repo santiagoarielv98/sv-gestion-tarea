@@ -31,8 +31,6 @@ const closedMixin = (theme) => ({
   boxShadow: theme.shadows[5]
 });
 
-
-
 const MiniDrawerStyled = styled(Drawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
   width: drawerWidth,
   flexShrink: 0,

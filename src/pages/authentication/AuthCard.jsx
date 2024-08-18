@@ -6,8 +6,6 @@ import Box from '@mui/material/Box';
 // project import
 import MainCard from '@/components/MainCard';
 
-
-
 export default function AuthCard({ children, ...other }) {
   return (
     <MainCard

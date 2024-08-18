@@ -1,8 +1,6 @@
 // project import
 import getColors from '@/utils/getColors';
 
-
-
 function getColor({ color, theme }) {
   const colors = getColors(theme, color);
   const { dark } = colors;
@@ -31,8 +29,6 @@ function getColorStyle({ color, theme }) {
     }
   };
 }
-
-
 
 export default function Chip(theme) {
   const defaultLightChip = getColorStyle({ color: 'secondary', theme });

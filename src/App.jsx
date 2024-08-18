@@ -7,8 +7,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import ScrollTop from '@/components/ScrollTop';
 
-
-
 export default function App() {
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>

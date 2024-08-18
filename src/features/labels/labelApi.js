@@ -35,4 +35,10 @@ const labelApi = api.injectEndpoints({
   })
 });
 
-export const { useGetLabelQuery, useGetLabelsQuery, useCreateLabelMutation, useUpdateLabelMutation, useDeleteLabelMutation } = labelApi;
+export const {
+  useGetLabelQuery,
+  useGetLabelsQuery,
+  useCreateLabelMutation,
+  useUpdateLabelMutation,
+  useDeleteLabelMutation
+} = labelApi;

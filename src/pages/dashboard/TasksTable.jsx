@@ -30,7 +30,9 @@ function descendingComparator(a, b, orderBy) {
 }
 
 function getComparator(order, orderBy) {
-  return order === 'desc' ? (a, b) => descendingComparator(a, b, orderBy) : (a, b) => -descendingComparator(a, b, orderBy);
+  return order === 'desc'
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
 function stableSort(array, comparator) {
@@ -65,8 +67,6 @@ const headCells = [
     label: 'Date'
   }
 ];
-
-
 
 function OrderTableHead({ order, orderBy }) {
   return (
@@ -121,7 +121,13 @@ export default function TasksTable() {
               const labelId = `enhanced-table-checkbox-${index}`;
 
               return (
-                <TableRow hover role="checkbox" sx={{ '&:last-child td, &:last-child th': { border: 0 } }} tabIndex={-1} key={row._id}>
+                <TableRow
+                  hover
+                  role="checkbox"
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  tabIndex={-1}
+                  key={row._id}
+                >
                   <TableCell component="th" id={labelId} scope="row" padding="checkbox">
                     <Checkbox checked={row.completed} onClick={(event) => handleCheckboxChange(event, row)} />
                   </TableCell>

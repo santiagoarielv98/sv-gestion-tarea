@@ -39,8 +39,6 @@ function getColorStyle({ theme, color, type }) {
   }
 }
 
-
-
 function getSizeStyle(size) {
   switch (size) {
     case 'badge':
@@ -84,15 +82,15 @@ function getSizeStyle(size) {
   }
 }
 
-const AvatarStyle = styled(MuiAvatar, { shouldForwardProp: (prop) => prop !== 'color' && prop !== 'type' && prop !== 'size' })(
-  ({ theme, color, type, size }) => ({
-    ...getSizeStyle(size),
-    ...getColorStyle({ theme, color, type }),
-    ...(size === 'badge' && {
-      borderColor: theme.palette.background.default
-    })
+const AvatarStyle = styled(MuiAvatar, {
+  shouldForwardProp: (prop) => prop !== 'color' && prop !== 'type' && prop !== 'size'
+})(({ theme, color, type, size }) => ({
+  ...getSizeStyle(size),
+  ...getColorStyle({ theme, color, type }),
+  ...(size === 'badge' && {
+    borderColor: theme.palette.background.default
   })
-);
+}));
 
 export default function Avatar({ children, color = 'primary', type, size = 'md', ...others }) {
   const theme = useTheme();

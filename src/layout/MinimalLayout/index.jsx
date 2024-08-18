@@ -3,8 +3,6 @@ import { selectUser } from '@/features/auth/authSlice';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 
-
-
 export default function MinimalLayout() {
   const user = useSelector(selectUser);
   const { isLoading } = useCheckQuery();

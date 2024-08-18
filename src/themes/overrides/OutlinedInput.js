@@ -1,8 +1,6 @@
 // material-ui
 import { alpha } from '@mui/material/styles';
 
-
-
 export default function OutlinedInput(theme) {
   return {
     MuiOutlinedInput: {

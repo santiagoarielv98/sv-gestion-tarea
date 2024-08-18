@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 // material-ui
+import MuiBreadcrumbs from '@mui/material/Breadcrumbs';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import MuiBreadcrumbs from '@mui/material/Breadcrumbs';
 
 // project import
 import MainCard from '@/components/MainCard';
@@ -54,7 +54,13 @@ export default function Breadcrumbs({ navigation, title, ...others }) {
   // collapse item
   if (main && main.type === 'collapse') {
     mainContent = (
-      <Typography component={Link} to={document.location.pathname} variant="h6" sx={{ textDecoration: 'none' }} color="textSecondary">
+      <Typography
+        component={Link}
+        to={document.location.pathname}
+        variant="h6"
+        sx={{ textDecoration: 'none' }}
+        color="textSecondary"
+      >
         {main.title}
       </Typography>
     );
@@ -111,5 +117,17 @@ Breadcrumbs.propTypes = {
   title: PropTypes.bool,
   titleBottom: PropTypes.bool,
   sx: PropTypes.any,
-  others: PropTypes.any
+  others: PropTypes.any,
+  navigation: PropTypes.shape({
+    items: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        title: PropTypes.string,
+        type: PropTypes.string,
+        url: PropTypes.string,
+        icon: PropTypes.node,
+        children: PropTypes.array
+      })
+    )
+  })
 };

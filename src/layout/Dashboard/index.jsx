@@ -17,8 +17,6 @@ import { handlerDrawerOpen, useGetMenuMaster } from '@/api/menu';
 import { DialogProvider } from '@/contexts/dialog';
 import { DialogConfirmProvider } from '@/contexts/dialog/confirm';
 
-
-
 export default function DashboardLayout() {
   const { menuMasterLoading } = useGetMenuMaster();
   const downXL = useMediaQuery((theme) => theme.breakpoints.down('xl'));

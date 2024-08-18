@@ -1,5 +1,3 @@
-
-
 const getColors = (theme, color) => {
   switch (color) {
     case 'secondary':

@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 
-
-
 const ScrollTop = ({ children }) => {
   useEffect(() => {
     window.scrollTo({

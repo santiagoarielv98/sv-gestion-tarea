@@ -1,5 +1,3 @@
-
-
 export default function InputLabel(theme) {
   return {
     MuiInputLabel: {

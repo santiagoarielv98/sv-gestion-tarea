@@ -7,8 +7,6 @@ import AppBar from '@mui/material/AppBar';
 // project import
 import { drawerWidth } from '@/config';
 
-
-
 const AppBarStyled = styled(AppBar, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
   left: 0,

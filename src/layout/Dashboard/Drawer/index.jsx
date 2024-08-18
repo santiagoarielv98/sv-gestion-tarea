@@ -13,8 +13,6 @@ import MiniDrawerStyled from './MiniDrawerStyled';
 import { drawerWidth } from '@/config';
 import { handlerDrawerOpen, useGetMenuMaster } from '@/api/menu';
 
-
-
 export default function MainDrawer({ window }) {
   const { menuMaster } = useGetMenuMaster();
   const drawerOpen = menuMaster.isDashboardDrawerOpened;
@@ -30,7 +28,7 @@ export default function MainDrawer({ window }) {
   return (
     <Box component="nav" sx={{ flexShrink: { md: 0 }, zIndex: 1200 }} aria-label="mailbox folders">
       {!matchDownMD ? (
-        <MiniDrawerStyled  variant="permanent" open={drawerOpen}>
+        <MiniDrawerStyled variant="permanent" open={drawerOpen}>
           {drawerHeader}
           {drawerContent}
         </MiniDrawerStyled>

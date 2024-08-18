@@ -13,7 +13,6 @@ const DashboardDefault = Loadable(lazy(() => import('@/pages/dashboard/index')))
 // render - sample page
 // const HistoryPage = Loadable(lazy(() => import('@/pages/extra-pages/sample-page')));
 
-
 /**
  * The MainRoutes object   contains the main routes of the application.
  * @type {import('@/react-router-dom').RouteObject} RouteObject

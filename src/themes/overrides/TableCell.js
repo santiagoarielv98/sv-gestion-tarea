@@ -1,5 +1,3 @@
-
-
 export default function TableCell(theme) {
   const commonCell = {
     '&:not(:last-of-type)': {

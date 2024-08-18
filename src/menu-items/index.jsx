@@ -1,8 +1,6 @@
 // project import
 import dashboard from './dashboard';
 
-
-
 const menuItems = {
   items: [dashboard]
 };
