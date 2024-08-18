@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import { selectUser } from '@/features/auth/authSlice';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router';
@@ -19,9 +17,5 @@ function PrivateRoutes({ children }) {
 
   return children;
 }
-
-PrivateRoutes.propTypes = {
-  children: PropTypes.node
-};
 
 export default PrivateRoutes;

@@ -4,7 +4,6 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 // project import
-import MainCard from '@/components/MainCard';
 import useTask from '@/hooks/useTask';
 import TasksTable from './TasksTable';
 
@@ -25,9 +24,7 @@ export default function DashboardDefault() {
             </Button>
           </Grid>
         </Grid>
-        <MainCard sx={{ mt: 2 }} content={false}>
-          <TasksTable />
-        </MainCard>
+        <TasksTable />
       </Grid>
     </Grid>
   );

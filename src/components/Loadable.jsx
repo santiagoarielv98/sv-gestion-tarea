@@ -1,4 +1,3 @@
-import propTypes from 'prop-types';
 import { Suspense } from 'react';
 
 // project import
@@ -11,9 +10,5 @@ const Loadable = (Component) => (props) => (
 );
 
 Loadable.displayName = 'Loadable';
-
-Loadable.propTypes = {
-  Component: propTypes.elementType.isRequired
-};
 
 export default Loadable;

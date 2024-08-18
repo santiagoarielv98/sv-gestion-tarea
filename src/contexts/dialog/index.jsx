@@ -8,7 +8,6 @@ import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
-import propTypes from 'prop-types';
 
 import { Field, Form, Formik } from 'formik';
 import { createContext, useContext } from 'react';
@@ -194,10 +193,6 @@ export const DialogProvider = ({ children }) => {
       </Formik>
     </DialogContext.Provider>
   );
-};
-
-DialogProvider.propTypes = {
-  children: propTypes.node
 };
 
 export const useDialog = () => useContext(DialogContext);

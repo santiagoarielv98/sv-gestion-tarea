@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 // material-ui
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -156,5 +155,3 @@ export default function TasksTable() {
     </Box>
   );
 }
-
-OrderTableHead.propTypes = { order: PropTypes.any, orderBy: PropTypes.string };
