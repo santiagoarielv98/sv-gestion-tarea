@@ -4,26 +4,33 @@ import Toolbar from '@mui/material/Toolbar';
 
 // project import
 
+import Logo from '@/components/logo/LogoMain';
+import { DialogProvider } from '@/contexts/dialog';
+import { DialogConfirmProvider } from '@/contexts/dialog/confirm';
 import InboxOutlined from '@ant-design/icons/InboxOutlined';
+import Logout from '@ant-design/icons/LogoutOutlined';
 import MailOutlined from '@ant-design/icons/MailOutlined';
 import MenuOutlined from '@ant-design/icons/MenuOutlined';
-import Drawer from '@mui/material/Drawer';
+import { Button, Chip, Stack } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
+import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { Outlet } from 'react-router';
-import { DialogConfirmProvider } from '@/contexts/dialog/confirm';
-import { DialogProvider } from '@/contexts/dialog';
 
-const drawerWidth = 240;
+const drawerWidth = 280;
 
 function ResponsiveDrawer() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -46,7 +53,12 @@ function ResponsiveDrawer() {
 
   const drawer = (
     <div>
-      <Toolbar />
+      <Toolbar>
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <Logo />
+          <Chip label={import.meta.env.VITE_APP_VERSION} color="primary" size="small" />
+        </Stack>
+      </Toolbar>
       <Divider />
       <List>
         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
@@ -87,18 +99,11 @@ function ResponsiveDrawer() {
             }}
           >
             <Toolbar>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleDrawerToggle}
-                sx={{ mr: 2, display: { sm: 'none' } }}
-              >
+              <IconButton color="inherit" aria-label="open drawer" edge="start" onClick={handleDrawerToggle}>
                 <MenuOutlined />
               </IconButton>
-              <Typography variant="h6" noWrap component="div">
-                Responsive drawer
-              </Typography>
+              <Box sx={{ flexGrow: 1 }} />
+              <AccountMenu />
             </Toolbar>
           </AppBar>
           <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }} aria-label="mailbox folders">
@@ -140,3 +145,43 @@ function ResponsiveDrawer() {
 }
 
 export default ResponsiveDrawer;
+
+function AccountMenu() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  return (
+    <React.Fragment>
+      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+        <Tooltip title="Account settings">
+          <Button color="inherit" onClick={handleClick} sx={{ textTransform: 'none' }} startIcon={<Avatar />}>
+            <Typography color="inherit" sx={{ display: { xs: 'none', md: 'block' } }}>
+              John Doe
+            </Typography>
+          </Button>
+        </Tooltip>
+      </Box>
+      <Menu
+        anchorEl={anchorEl}
+        id="account-menu"
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon>
+            <Logout fontSize="small" />
+          </ListItemIcon>
+          Logout
+        </MenuItem>
+      </Menu>
+    </React.Fragment>
+  );
+}
