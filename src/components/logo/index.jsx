@@ -1,14 +1,13 @@
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 // material-ui
 import ButtonBase from '@mui/material/ButtonBase';
-import Stack from '@mui/material/Stack';
 import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
 
 // project import
-import Logo from './LogoMain';
 import config from '@/config';
+import Logo from './LogoMain';
 
 const LogoSection = ({ sx, to }) => {
   return (
@@ -25,11 +24,6 @@ const LogoSection = ({ sx, to }) => {
       </Stack>
     </ButtonBase>
   );
-};
-
-LogoSection.propTypes = {
-  sx: PropTypes.object,
-  to: PropTypes.string
 };
 
 export default LogoSection;

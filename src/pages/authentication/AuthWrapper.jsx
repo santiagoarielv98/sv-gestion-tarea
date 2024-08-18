@@ -1,12 +1,9 @@
-import PropTypes from 'prop-types';
-
 // material-ui
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
 // project import
 import Logo from '@/components/logo';
-import AuthCard from './AuthCard';
 
 export default function AuthWrapper({ children }) {
   return (
@@ -24,14 +21,10 @@ export default function AuthWrapper({ children }) {
             alignItems="center"
             sx={{ minHeight: { xs: 'calc(100vh - 210px)', sm: 'calc(100vh - 134px)', md: 'calc(100vh - 112px)' } }}
           >
-            <Grid item>
-              <AuthCard>{children}</AuthCard>
-            </Grid>
+            <Grid item>{children}</Grid>
           </Grid>
         </Grid>
       </Grid>
     </Box>
   );
 }
-
-AuthWrapper.propTypes = { children: PropTypes.node };

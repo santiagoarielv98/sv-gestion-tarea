@@ -16,9 +16,5 @@ export default function MinimalLayout() {
     return <Navigate to="/" />;
   }
 
-  return (
-    <>
-      <Outlet />
-    </>
-  );
+  return <Outlet />;
 }
