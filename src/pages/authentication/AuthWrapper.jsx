@@ -1,8 +1,6 @@
-// material-ui
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
-// project import
 import Logo from '@/components/logo';
 
 export default function AuthWrapper({ children }) {

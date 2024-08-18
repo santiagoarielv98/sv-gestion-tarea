@@ -1,6 +1,5 @@
 import { RouterProvider } from 'react-router-dom';
 
-// project import
 import router from '@/routes';
 import ThemeCustomization from '@/themes';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';

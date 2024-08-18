@@ -1,4 +1,3 @@
-// material-ui
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
@@ -9,10 +8,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 
-// icons @ant-design/icons
-
-// third-party
-// project import
 import Checkbox from '@mui/material/Checkbox';
 import Chip from '@mui/material/Chip';
 

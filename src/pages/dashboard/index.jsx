@@ -1,9 +1,7 @@
-// material-ui
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-// project import
 import useTask from '@/hooks/useTask';
 import TasksTable from './TasksTable';
 

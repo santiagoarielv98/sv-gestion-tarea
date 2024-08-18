@@ -1,6 +1,5 @@
 import React from 'react';
 
-// material-ui
 import Button from '@mui/material/Button';
 import FormHelperText from '@mui/material/FormHelperText';
 import Grid from '@mui/material/Grid';
@@ -10,11 +9,9 @@ import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Stack from '@mui/material/Stack';
 
-// third party
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-// assets
 import { useLoginMutation } from '@/features/auth/authApi';
 import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
 import EyeOutlined from '@ant-design/icons/EyeOutlined';

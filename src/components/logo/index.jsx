@@ -1,11 +1,9 @@
 import { Link } from 'react-router-dom';
 
-// material-ui
 import ButtonBase from '@mui/material/ButtonBase';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
-// project import
 import config from '@/config';
 import Logo from './LogoMain';
 

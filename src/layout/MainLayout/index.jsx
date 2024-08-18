@@ -1,8 +1,5 @@
-// material-ui
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-
-// project import
 
 import Logo from '@/components/logo/LogoMain';
 import { DialogProvider } from '@/contexts/dialog';
