@@ -129,7 +129,7 @@ function useTask() {
           label: 'Title',
           initialValue: task?.title,
           fieldProps: {
-            autoFocus: true,
+            autoFocus: task?._id ? false : true,
             required: true
           }
         },
