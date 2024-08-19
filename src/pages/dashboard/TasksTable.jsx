@@ -12,6 +12,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Chip from '@mui/material/Chip';
 
 import useTask from '@/hooks/useTask';
+import Paper from '@mui/material/Paper';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -99,6 +100,7 @@ export default function TasksTable() {
   return (
     <Box>
       <TableContainer
+        component={Paper}
         sx={{
           width: '100%',
           overflowX: 'auto',

@@ -2,7 +2,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 
-import Google from '@/assets/images/icons/google.svg';
+// assetsimport Google from '@/assets/images/icons/google.svg';
 import Twitter from '@/assets/images/icons/twitter.svg';
 import Facebook from '@/assets/images/icons/facebook.svg';
 

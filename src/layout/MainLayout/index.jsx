@@ -4,15 +4,13 @@ import Toolbar from '@mui/material/Toolbar';
 import Logo from '@/components/logo/LogoMain';
 import { DialogProvider } from '@/contexts/dialog';
 import { DialogConfirmProvider } from '@/contexts/dialog/confirm';
-import InboxOutlined from '@ant-design/icons/InboxOutlined';
 import Logout from '@ant-design/icons/LogoutOutlined';
-import MailOutlined from '@ant-design/icons/MailOutlined';
+import DashboardOutlined from '@ant-design/icons/DashboardOutlined';
 import MenuOutlined from '@ant-design/icons/MenuOutlined';
+import MuiAppBar from '@mui/material/AppBar';
+import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
-import AppBar from '@mui/material/AppBar';
-import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
@@ -22,22 +20,28 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import ListSubheader from '@mui/material/ListSubheader';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import Stack from '@mui/material/Stack';
+import { styled, useTheme } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import * as React from 'react';
 import { Outlet } from 'react-router';
 
 const drawerWidth = 280;
 
 function ResponsiveDrawer() {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [open, setOpen] = React.useState(!isMobile);
   const [isClosing, setIsClosing] = React.useState(false);
 
   const handleDrawerClose = () => {
     setIsClosing(true);
-    setMobileOpen(false);
+    setOpen(false);
   };
 
   const handleDrawerTransitionEnd = () => {
@@ -46,9 +50,17 @@ function ResponsiveDrawer() {
 
   const handleDrawerToggle = () => {
     if (!isClosing) {
-      setMobileOpen(!mobileOpen);
+      setOpen(!open);
     }
   };
+
+  React.useEffect(() => {
+    if (isMobile) {
+      setOpen(false);
+    } else {
+      setOpen(true);
+    }
+  }, [isMobile]);
 
   const drawer = (
     <div>
@@ -59,44 +71,25 @@ function ResponsiveDrawer() {
         </Stack>
       </Toolbar>
       <Divider />
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>{index % 2 === 0 ? <InboxOutlined /> : <MailOutlined />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>{index % 2 === 0 ? <InboxOutlined /> : <MailOutlined />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+      <List subheader={<ListSubheader component="div">Navigation</ListSubheader>}>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <DashboardOutlined />
+            </ListItemIcon>
+            <ListItemText primary="Dashboard" />
+          </ListItemButton>
+        </ListItem>
       </List>
     </div>
   );
-
-  // Remove this const when copying and pasting into your project.
 
   return (
     <DialogConfirmProvider>
       <DialogProvider>
         <Box sx={{ display: 'flex' }}>
           <CssBaseline />
-          <AppBar
-            position="fixed"
-            sx={{
-              width: { sm: `calc(100% - ${drawerWidth}px)` },
-              ml: { sm: `${drawerWidth}px` }
-            }}
-          >
+          <AppBar color="transparent" elevation={0} position="fixed" open={open}>
             <Toolbar>
               <IconButton color="inherit" aria-label="open drawer" edge="start" onClick={handleDrawerToggle}>
                 <MenuOutlined />
@@ -109,7 +102,7 @@ function ResponsiveDrawer() {
             {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
             <Drawer
               variant="temporary"
-              open={mobileOpen}
+              open={open}
               onTransitionEnd={handleDrawerTransitionEnd}
               onClose={handleDrawerClose}
               ModalProps={{
@@ -123,20 +116,29 @@ function ResponsiveDrawer() {
               {drawer}
             </Drawer>
             <Drawer
-              variant="permanent"
+              variant="persistent"
               sx={{
                 display: { xs: 'none', sm: 'block' },
                 '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth }
               }}
-              open
+              open={open}
             >
               {drawer}
             </Drawer>
           </Box>
-          <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
+          <Main
+            open={open}
+            // component="main"
+            // sx={{
+            //   flexGrow: 1,
+            //   p: 3,
+
+            //   width: { sm: `calc(100% - ${drawerWidth}px)` }
+            // }}
+          >
             <Toolbar />
             <Outlet />
-          </Box>
+          </Main>
         </Box>
       </DialogProvider>
     </DialogConfirmProvider>
@@ -184,3 +186,43 @@ function AccountMenu() {
     </React.Fragment>
   );
 }
+
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
+  flexGrow: 1,
+  padding: theme.spacing(3),
+  transition: theme.transitions.create('margin', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen
+  }),
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: `-${drawerWidth}px`,
+    ...(open && {
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen
+      }),
+      marginLeft: 0
+    })
+  }
+}));
+
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open'
+})(({ theme, open }) => ({
+  backgroundColor: theme.palette.background.paper,
+  borderBottom: `1px solid ${theme.palette.divider}`,
+  transition: theme.transitions.create(['margin', 'width'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen
+  }),
+  [theme.breakpoints.up('sm')]: {
+    ...(open && {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: `${drawerWidth}px`,
+      transition: theme.transitions.create(['margin', 'width'], {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen
+      })
+    })
+  }
+}));
