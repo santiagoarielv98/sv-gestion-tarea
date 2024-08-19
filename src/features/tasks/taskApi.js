@@ -54,7 +54,6 @@ taskApi.injectEndpoints({
   })
 });
 
-//toggle
 taskApi.injectEndpoints({
   endpoints: (builder) => ({
     toggleTask: builder.mutation({

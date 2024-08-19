@@ -1,5 +1,3 @@
-// ==============================|| OVERRIDES - INPUT LABEL ||============================== //
-
 /**
  * @return {import('@mui/material/styles').Components}
  */

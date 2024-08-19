@@ -1,14 +1,10 @@
 import PropTypes from 'prop-types';
 
-// project import
 import getColors from '@/utils/getColors';
 
-// assets
 import BorderOutlined from '@ant-design/icons/BorderOutlined';
 import CheckSquareFilled from '@ant-design/icons/CheckSquareFilled';
 import MinusSquareFilled from '@ant-design/icons/MinusSquareFilled';
-
-// ==============================|| RADIO - COLORS ||============================== //
 
 function getColorStyle({ color, theme }) {
   const colors = getColors(theme, color);
@@ -40,8 +36,6 @@ function getSizeStyle(size) {
   }
 }
 
-// ==============================|| CHECKBOX - STYLE ||============================== //
-
 function checkboxStyle(size) {
   const sizes = getSizeStyle(size);
 
@@ -51,8 +45,6 @@ function checkboxStyle(size) {
     }
   };
 }
-
-// ==============================|| OVERRIDES - CHECKBOX ||============================== //
 
 export default function Checkbox(theme) {
   const { palette } = theme;

@@ -1,7 +1,5 @@
-// third-party
 import merge from 'lodash/merge';
 
-// project import
 import Badge from './Badge';
 import Button from './Button';
 import CardContent from './CardContent';
@@ -15,8 +13,6 @@ import ListItemIcon from './ListItemIcon';
 import OutlinedInput from './OutlinedInput';
 import TableCell from './TableCell';
 import Typography from './Typography';
-
-// ==============================|| OVERRIDES - MAIN ||============================== //
 
 export default function ComponentsOverrides(theme) {
   return merge(

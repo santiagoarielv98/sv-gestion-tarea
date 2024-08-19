@@ -1,22 +1,17 @@
 import { useMemo } from 'react';
 
-// material-ui
 import CssBaseline from '@mui/material/CssBaseline';
 import StyledEngineProvider from '@mui/material/StyledEngineProvider';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-// project import
 import componentsOverride from './overrides';
 import Palette from './palette';
 import CustomShadows from './shadows';
 import Typography from './typography';
 
-// ==============================|| DEFAULT THEME - MAIN  ||============================== //
-
 export default function ThemeCustomization({ children }) {
   const theme = Palette('light', 'default');
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const themeTypography = Typography(`'Roboto', sans-serif`, theme);
   const themeCustomShadows = useMemo(() => CustomShadows(theme), [theme]);
 

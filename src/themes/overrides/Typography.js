@@ -1,4 +1,3 @@
-// ==============================|| OVERRIDES - TYPOGRAPHY ||============================== //
 /**
  *
  * @returns {import('@mui/material').Components}
