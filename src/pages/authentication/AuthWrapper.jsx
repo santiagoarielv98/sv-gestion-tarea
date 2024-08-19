@@ -2,27 +2,30 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
 import Logo from '@/components/logo';
+import Stack from '@mui/material/Stack';
+import { Card, Container, Paper, Toolbar } from '@mui/material';
 
 export default function AuthWrapper({ children }) {
   return (
-    <Box sx={{ minHeight: '100vh' }}>
-      <Grid container direction="column" justifyContent="flex-start" sx={{ minHeight: '100vh' }}>
-        <Grid item xs={12} sx={{ ml: 3, mt: 3 }}>
-          <Logo />
-        </Grid>
-        <Grid item xs={12}>
-          <Grid
-            item
-            xs={12}
-            container
-            justifyContent="center"
-            alignItems="center"
-            sx={{ minHeight: { xs: 'calc(100vh - 210px)', sm: 'calc(100vh - 134px)', md: 'calc(100vh - 112px)' } }}
-          >
-            <Grid item>{children}</Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Box>
+    <Stack minHeight="100vh">
+      <Toolbar>
+        <Logo />
+      </Toolbar>
+      <Container
+        sx={{
+          flexGrow: 1,
+          my: 8
+        }}
+        maxWidth="sm"
+      >
+        <Paper
+          sx={{
+            p: 4
+          }}
+        >
+          {children}
+        </Paper>
+      </Container>
+    </Stack>
   );
 }

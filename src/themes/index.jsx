@@ -8,7 +8,7 @@ export default function ThemeCustomization({ children }) {
     <StyledEngineProvider injectFirst>
       <GlobalStyles
         styles={{
-          'html, body, #app': {
+          'html, body, #root': {
             height: '100%'
           }
         }}
