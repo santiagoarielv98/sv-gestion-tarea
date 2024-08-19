@@ -109,12 +109,6 @@ export const DialogProvider = ({ children }) => {
                 InputLabelProps={{ shrink: true }}
                 error={form.dirty && meta.touched && !!meta.error}
                 aria-describedby={`${name}-helper-text`}
-                InputProps={{
-                  label: '',
-                  sx: {
-                    mt: 1
-                  }
-                }}
               />
             );
           }}

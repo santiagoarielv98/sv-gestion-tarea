@@ -152,21 +152,6 @@ function useTask() {
           component: DatePicker,
           onChange: (setFieldValue) => (date) => {
             setFieldValue('dueDate', date);
-          },
-          fieldProps: {
-            slotProps: {
-              textField: {
-                InputProps: {
-                  label: '',
-                  sx: {
-                    mt: 1
-                  }
-                },
-                InputLabelProps: {
-                  shrink: true
-                }
-              }
-            }
           }
         },
         priority: {

@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
 
 // material-ui
-import { CssBaseline, StyledEngineProvider } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
+import StyledEngineProvider from '@mui/material/StyledEngineProvider';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 // project import

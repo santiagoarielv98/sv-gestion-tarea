@@ -1,8 +1,14 @@
 // ==============================|| OVERRIDES - INPUT LABEL ||============================== //
 
+/**
+ * @return {import('@mui/material/styles').Components}
+ */
 export default function InputLabel(theme) {
   return {
     MuiInputLabel: {
+      defaultProps: {
+        shrink: true
+      },
       styleOverrides: {
         root: {
           color: theme.palette.grey[600]

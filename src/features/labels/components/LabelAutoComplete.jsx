@@ -66,20 +66,7 @@ function LabelAutoComplete() {
       options={labels}
       getOptionLabel={(option) => option.title}
       isOptionEqualToValue={(option, value) => option._id === value._id}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Labels"
-          placeholder="Add label"
-          InputLabelProps={{ shrink: true }}
-          InputProps={{
-            label: '',
-            sx: {
-              mt: 1
-            }
-          }}
-        />
-      )}
+      renderInput={(params) => <TextField {...params} label="Labels" placeholder="Add label" />}
       filterOptions={(options, params) => {
         const filtered = filter(options, params);
         const isExisting =

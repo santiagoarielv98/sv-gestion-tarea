@@ -1,5 +1,5 @@
 // third-party
-import { merge } from 'lodash';
+import merge from 'lodash/merge';
 
 // project import
 import Badge from './Badge';
@@ -13,9 +13,7 @@ import LinearProgress from './LinearProgress';
 import Link from './Link';
 import ListItemIcon from './ListItemIcon';
 import OutlinedInput from './OutlinedInput';
-import Tab from './Tab';
 import TableCell from './TableCell';
-import Tabs from './Tabs';
 import Typography from './Typography';
 
 // ==============================|| OVERRIDES - MAIN ||============================== //
@@ -33,9 +31,7 @@ export default function ComponentsOverrides(theme) {
     Link(),
     ListItemIcon(),
     OutlinedInput(theme),
-    Tab(theme),
     TableCell(theme),
-    Tabs(),
     Typography()
   );
 }

@@ -2,7 +2,10 @@
 import { alpha } from '@mui/material/styles';
 
 // ==============================|| OVERRIDES - OUTLINED INPUT ||============================== //
-
+/**
+ *
+ * @returns {import('@mui/material/styles').Components}
+ */
 export default function OutlinedInput(theme) {
   return {
     MuiOutlinedInput: {
