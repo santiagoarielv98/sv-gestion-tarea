@@ -3,25 +3,25 @@ import { api } from '@/app/services/api';
 export const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
     check: builder.query({
-      query: () => 'users/check'
+      query: () => 'auth/check'
     }),
     login: builder.mutation({
       query: (credentials) => ({
-        url: 'users/signin',
+        url: 'auth/signin',
         method: 'POST',
         body: credentials
       })
     }),
     register: builder.mutation({
       query: (credentials) => ({
-        url: 'users/signup',
+        url: 'auth/signup',
         method: 'POST',
         body: credentials
       })
     }),
     logout: builder.mutation({
       query: () => ({
-        url: 'users/signout',
+        url: 'auth/signout',
         method: 'POST'
       })
     })
