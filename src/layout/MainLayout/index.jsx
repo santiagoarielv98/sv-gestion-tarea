@@ -163,7 +163,19 @@ function AccountMenu() {
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
         <Tooltip title="Account settings">
-          <Button color="inherit" onClick={handleClick} sx={{ textTransform: 'none' }} startIcon={<Avatar />}>
+          <Button
+            color="inherit"
+            onClick={handleClick}
+            sx={{ textTransform: 'none' }}
+            startIcon={
+              <Avatar
+                sx={{
+                  width: 32,
+                  height: 32
+                }}
+              />
+            }
+          >
             <Typography color="inherit" sx={{ display: { xs: 'none', md: 'block' } }}>
               {user?.name}
             </Typography>
