@@ -6,12 +6,10 @@ import useTask from '@/hooks/useTask';
 import TasksTable from './TasksTable';
 
 export default function DashboardDefault() {
-  // const { openDialogTask } = useTask();
   const { openTask } = useTask();
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-      {/* row 1 */}
-      <Grid item xs={12} sx={{ mb: -2.25 }}>
+      <Grid item xs={12}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
             <Typography variant="h5">Tasks</Typography>
@@ -22,6 +20,8 @@ export default function DashboardDefault() {
             </Button>
           </Grid>
         </Grid>
+      </Grid>
+      <Grid item xs={12}>
         <TasksTable />
       </Grid>
     </Grid>

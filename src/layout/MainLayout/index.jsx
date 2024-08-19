@@ -4,8 +4,10 @@ import Toolbar from '@mui/material/Toolbar';
 import Logo from '@/components/logo/LogoMain';
 import { DialogProvider } from '@/contexts/dialog';
 import { DialogConfirmProvider } from '@/contexts/dialog/confirm';
-import Logout from '@ant-design/icons/LogoutOutlined';
+import { selectUser } from '@/features/auth/authSlice';
+import useAuth from '@/hooks/useAuth';
 import DashboardOutlined from '@ant-design/icons/DashboardOutlined';
+import Logout from '@ant-design/icons/LogoutOutlined';
 import MenuOutlined from '@ant-design/icons/MenuOutlined';
 import MuiAppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
@@ -29,6 +31,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router';
 
 const drawerWidth = 280;
@@ -36,7 +39,7 @@ const drawerWidth = 280;
 function ResponsiveDrawer() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const [open, setOpen] = React.useState(!isMobile);
+  const [open, setOpen] = React.useState(() => !isMobile);
   const [isClosing, setIsClosing] = React.useState(false);
 
   const handleDrawerClose = () => {
@@ -73,7 +76,14 @@ function ResponsiveDrawer() {
       <Divider />
       <List subheader={<ListSubheader component="div">Navigation</ListSubheader>}>
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton
+            selected
+            sx={{
+              '&.Mui-selected': {
+                borderRight: `4px solid ${theme.palette.primary.main}`
+              }
+            }}
+          >
             <ListItemIcon>
               <DashboardOutlined />
             </ListItemIcon>
@@ -99,14 +109,13 @@ function ResponsiveDrawer() {
             </Toolbar>
           </AppBar>
           <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }} aria-label="mailbox folders">
-            {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
             <Drawer
               variant="temporary"
               open={open}
               onTransitionEnd={handleDrawerTransitionEnd}
               onClose={handleDrawerClose}
               ModalProps={{
-                keepMounted: true // Better open performance on mobile.
+                keepMounted: true
               }}
               sx={{
                 display: { xs: 'block', sm: 'none' },
@@ -126,16 +135,7 @@ function ResponsiveDrawer() {
               {drawer}
             </Drawer>
           </Box>
-          <Main
-            open={open}
-            // component="main"
-            // sx={{
-            //   flexGrow: 1,
-            //   p: 3,
-
-            //   width: { sm: `calc(100% - ${drawerWidth}px)` }
-            // }}
-          >
+          <Main open={open}>
             <Toolbar />
             <Outlet />
           </Main>
@@ -148,6 +148,9 @@ function ResponsiveDrawer() {
 export default ResponsiveDrawer;
 
 function AccountMenu() {
+  const user = useSelector(selectUser);
+  const { logout } = useAuth();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -162,7 +165,7 @@ function AccountMenu() {
         <Tooltip title="Account settings">
           <Button color="inherit" onClick={handleClick} sx={{ textTransform: 'none' }} startIcon={<Avatar />}>
             <Typography color="inherit" sx={{ display: { xs: 'none', md: 'block' } }}>
-              John Doe
+              {user?.name}
             </Typography>
           </Button>
         </Tooltip>
@@ -176,7 +179,7 @@ function AccountMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={logout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
