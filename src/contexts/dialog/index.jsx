@@ -10,7 +10,7 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 
 import { Field, Form, Formik } from 'formik';
-import { createContext, useContext } from 'react';
+import { createContext } from 'react';
 
 import startCase from 'lodash/startCase';
 import { useReducer } from 'react';
@@ -51,7 +51,7 @@ const initialState = {
   customContent: undefined
 };
 
-const DialogContext = createContext({
+export const DialogContext = createContext({
   openDialog: () => null,
   closeDialog: () => null
 });
@@ -189,8 +189,6 @@ export const DialogProvider = ({ children }) => {
     </DialogContext.Provider>
   );
 };
-
-export const useDialog = () => useContext(DialogContext);
 
 const getInitialValues = (fields) => {
   return Object.fromEntries(

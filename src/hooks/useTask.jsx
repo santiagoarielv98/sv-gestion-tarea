@@ -2,8 +2,8 @@ import DeleteOutlined from '@ant-design/icons/DeleteOutlined';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { useDialog } from '@/contexts/dialog';
-import { useDialogConfirm } from '@/contexts/dialog/confirm';
+import { useDialog } from '@/hooks/useDialog';
+import { useDialogConfirm } from '@/hooks/useDialogConfirm';
 import LabelAutoComplete from '@/features/labels/components/LabelAutoComplete';
 import {
   useCreateTaskMutation,
