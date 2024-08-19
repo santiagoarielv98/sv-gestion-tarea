@@ -12,7 +12,6 @@ import Checkbox from '@mui/material/Checkbox';
 import Chip from '@mui/material/Chip';
 
 import useTask from '@/hooks/useTask';
-import Paper from '@mui/material/Paper';
 
 const headCells = [
   {
@@ -51,7 +50,6 @@ export default function TasksTable() {
   return (
     <Box>
       <TableContainer
-        component={Paper}
         sx={{
           width: '100%',
           overflowX: 'auto',

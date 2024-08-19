@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 
 import useTask from '@/hooks/useTask';
 import TasksTable from './TasksTable';
+import MainCard from '@/components/MainCard';
 
 export default function DashboardDefault() {
   const { openTask } = useTask();
@@ -22,7 +23,9 @@ export default function DashboardDefault() {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <TasksTable />
+        <MainCard content={false}>
+          <TasksTable />
+        </MainCard>
       </Grid>
     </Grid>
   );
