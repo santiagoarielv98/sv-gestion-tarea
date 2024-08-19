@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 
 const ScrollTop = ({ children }) => {
@@ -11,10 +10,6 @@ const ScrollTop = ({ children }) => {
   }, []);
 
   return children || null;
-};
-
-ScrollTop.propTypes = {
-  children: PropTypes.node
 };
 
 export default ScrollTop;

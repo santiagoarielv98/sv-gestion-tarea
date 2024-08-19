@@ -37,11 +37,11 @@ function LabelAutoComplete() {
         return;
       }
 
-      newLabel = await addLabel(newLabel).unwrap();
+      newLabel = await addLabel({ title: newLabel }).unwrap();
     }
 
     if (newLabel._id === '') {
-      newLabel = await addLabel(newLabel.title).unwrap();
+      newLabel = await addLabel({ title: newLabel.title }).unwrap();
     }
     if (newValue.some(isMatchingLabelName(newLabel.title))) {
       return;

@@ -8,10 +8,9 @@ import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
-import propTypes from 'prop-types';
 
 import { Field, Form, Formik } from 'formik';
-import { createContext, useContext } from 'react';
+import { createContext } from 'react';
 
 import startCase from 'lodash/startCase';
 import { useReducer } from 'react';
@@ -52,7 +51,7 @@ const initialState = {
   customContent: undefined
 };
 
-const DialogContext = createContext({
+export const DialogContext = createContext({
   openDialog: () => null,
   closeDialog: () => null
 });
@@ -82,45 +81,9 @@ export const DialogProvider = ({ children }) => {
     if (!onSubmit) return;
     onSubmit(values, formikHelpers).then(closeDialog);
   };
-  const fieldComponents = Object.entries(fields ?? {}).map(([name, { gridProps, onChange, ...fieldOptions }]) => (
-    <Grid item xs={12} {...gridProps} key={name}>
-      <Stack spacing={1}>
-        <Field name={name}>
-          {({ meta, field, form }) => {
-            return fieldOptions && 'component' in fieldOptions ? (
-              <fieldOptions.component
-                type={fieldOptions?.fieldProps?.type}
-                name={form.name}
-                value={form.values[name] ?? null}
-                onBlur={form.handleBlur}
-                label={fieldOptions?.label || startCase(name)}
-                {...fieldOptions?.fieldProps}
-                error={form.dirty && meta.touched && !!meta.error}
-                onChange={onChange?.(form.setFieldValue)}
-              />
-            ) : (
-              <TextField
-                label={fieldOptions?.label || startCase(name)}
-                {...fieldOptions?.fieldProps}
-                {...field}
-                value={field.value ?? ''}
-                id={name}
-                fullWidth
-                InputLabelProps={{ shrink: true }}
-                error={form.dirty && meta.touched && !!meta.error}
-                aria-describedby={`${name}-helper-text`}
-                InputProps={{
-                  label: '',
-                  sx: {
-                    mt: 1
-                  }
-                }}
-              />
-            );
-          }}
-        </Field>
-      </Stack>
-    </Grid>
+
+  const fieldComponents = Object.entries(fields ?? {}).map(([name, fieldOptions]) => (
+    <FormField key={name} name={name} options={fieldOptions} />
   ));
 
   return (
@@ -196,14 +159,47 @@ export const DialogProvider = ({ children }) => {
   );
 };
 
-DialogProvider.propTypes = {
-  children: propTypes.node
-};
-
-export const useDialog = () => useContext(DialogContext);
-
 const getInitialValues = (fields) => {
   return Object.fromEntries(
     Object.entries(fields ?? {}).map(([name, fieldOptions]) => [name, fieldOptions.initialValue])
   );
 };
+
+function FormField({ options, name }) {
+  const { gridProps, onChange, ...fieldOptions } = options;
+  return (
+    <Grid item xs={12} {...gridProps} key={name}>
+      <Stack spacing={1}>
+        <Field name={name}>
+          {({ meta, field, form }) => {
+            return fieldOptions && 'component' in fieldOptions ? (
+              <fieldOptions.component
+                type={fieldOptions?.fieldProps?.type}
+                name={form.name}
+                value={form.values[name] ?? null}
+                onBlur={form.handleBlur}
+                label={fieldOptions?.label || startCase(name)}
+                {...fieldOptions?.fieldProps}
+                error={form.dirty && meta.touched && !!meta.error}
+                onChange={onChange?.(form.setFieldValue)}
+              />
+            ) : (
+              <TextField
+                label={fieldOptions?.label || startCase(name)}
+                {...fieldOptions?.fieldProps}
+                {...field}
+                value={field.value ?? ''}
+                id={name}
+                name={name}
+                fullWidth
+                InputLabelProps={{ shrink: true }}
+                error={form.dirty && meta.touched && !!meta.error}
+                aria-describedby={`${name}-helper-text`}
+              />
+            );
+          }}
+        </Field>
+      </Stack>
+    </Grid>
+  );
+}

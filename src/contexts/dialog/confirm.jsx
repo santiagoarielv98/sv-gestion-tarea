@@ -5,9 +5,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
-import propTypes from 'prop-types';
 
-import { createContext, useContext } from 'react';
+import { createContext } from 'react';
 
 import { useReducer } from 'react';
 
@@ -43,7 +42,7 @@ const initialState = {
   }
 };
 
-const DialogConfirmContext = createContext({
+export const DialogConfirmContext = createContext({
   openDialogConfirm: () => null,
   closeDialogConfirm: () => null
 });
@@ -110,9 +109,3 @@ export const DialogConfirmProvider = ({ children }) => {
     </DialogConfirmContext.Provider>
   );
 };
-
-DialogConfirmProvider.propTypes = {
-  children: propTypes.node
-};
-
-export const useDialogConfirm = () => useContext(DialogConfirmContext);

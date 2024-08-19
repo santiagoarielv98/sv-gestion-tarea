@@ -1,7 +1,5 @@
-// material-ui
 import { alpha } from '@mui/material/styles';
 
-// project import
 import getColors from '@/utils/getColors';
 import getShadow from '@/utils/getShadow';
 

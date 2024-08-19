@@ -1,3 +1,4 @@
+import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
@@ -8,10 +9,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 
-import Checkbox from '@mui/material/Checkbox';
-import Chip from '@mui/material/Chip';
-
-import useTask from '@/hooks/useTask';
+import useTags from '@/hooks/useTags';
+import TagOutlined from '@ant-design/icons/TagOutlined';
 
 const headCells = [
   {
@@ -25,26 +24,14 @@ const headCells = [
     align: 'left',
     disablePadding: false,
     label: 'Task'
-  },
-  {
-    id: 'date',
-    align: 'left',
-    disablePadding: true,
-    label: 'Date'
   }
 ];
 
-export default function TasksTable() {
-  const { openTask, tasks, toggleTask, isLoadingToggle } = useTask();
-
+export default function TagsTable() {
+  const { tags, openTag } = useTags();
+  // const { openTask, tasks, toggleTask, isLoadingToggle } = useTask();
   const handleRowClick = (event, row) => {
-    openTask(row);
-  };
-
-  const handleCheckboxChange = async (event, row) => {
-    event.stopPropagation();
-    if (isLoadingToggle) return;
-    await toggleTask(row._id);
+    openTag(row);
   };
 
   return (
@@ -74,7 +61,7 @@ export default function TasksTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {tasks.map((row, index) => {
+            {tags.map((row, index) => {
               const labelId = `enhanced-table-checkbox-${index}`;
 
               return (
@@ -86,29 +73,16 @@ export default function TasksTable() {
                   key={row._id}
                 >
                   <TableCell component="th" id={labelId} scope="row" padding="checkbox">
-                    <Checkbox
-                      id={labelId}
-                      checked={row.completed}
-                      onClick={(event) => handleCheckboxChange(event, row)}
-                    />
+                    <Avatar>
+                      <TagOutlined />
+                    </Avatar>
                   </TableCell>
                   <TableCell onClick={(event) => handleRowClick(event, row)} sx={{ cursor: 'pointer' }}>
                     <Stack>
                       <Typography variant="subtitle1" sx={{ textDecoration: row.completed ? 'line-through' : 'none' }}>
                         {row.title}
                       </Typography>
-                      <Typography variant="caption" color="textSecondary">
-                        {row.desc}
-                      </Typography>
-                      <Stack direction="row" spacing={1}>
-                        {row.labels.map((label) => (
-                          <Chip key={label._id} label={label.title} size="small" />
-                        ))}
-                      </Stack>
                     </Stack>
-                  </TableCell>
-                  <TableCell width={100} onClick={(event) => handleRowClick(event, row)} sx={{ cursor: 'pointer' }}>
-                    {new Date(row.dueDate).toLocaleDateString()}
                   </TableCell>
                 </TableRow>
               );

@@ -1,20 +1,18 @@
-import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 
-// material-ui
 import CssBaseline from '@mui/material/CssBaseline';
-import { createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+import StyledEngineProvider from '@mui/material/StyledEngineProvider';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-// project import
-import Palette from './palette';
-import Typography from './typography';
-import CustomShadows from './shadows';
 import componentsOverride from './overrides';
+import Palette from './palette';
+import CustomShadows from './shadows';
+import Typography from './typography';
 
 export default function ThemeCustomization({ children }) {
   const theme = Palette('light', 'default');
 
-  const themeTypography = Typography(`'Public Sans', sans-serif`);
+  const themeTypography = Typography(`'Roboto', sans-serif`, theme);
   const themeCustomShadows = useMemo(() => CustomShadows(theme), [theme]);
 
   const themeOptions = useMemo(
@@ -55,7 +53,3 @@ export default function ThemeCustomization({ children }) {
     </StyledEngineProvider>
   );
 }
-
-ThemeCustomization.propTypes = {
-  children: PropTypes.node
-};

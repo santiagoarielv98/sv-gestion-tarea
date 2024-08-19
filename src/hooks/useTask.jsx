@@ -1,9 +1,9 @@
 import DeleteOutlined from '@ant-design/icons/DeleteOutlined';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
-import { DatePicker } from '@mui/x-date-pickers';
-import { useDialog } from '@/contexts/dialog';
-import { useDialogConfirm } from '@/contexts/dialog/confirm';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { useDialog } from '@/hooks/useDialog';
+import { useDialogConfirm } from '@/hooks/useDialogConfirm';
 import LabelAutoComplete from '@/features/labels/components/LabelAutoComplete';
 import {
   useCreateTaskMutation,
@@ -12,7 +12,7 @@ import {
   useToggleTaskMutation,
   useUpdateTaskMutation
 } from '@/features/tasks/taskApi';
-import _ from 'lodash';
+import isEqual from 'lodash/isEqual';
 import moment from 'moment';
 import * as Yup from 'yup';
 
@@ -107,7 +107,7 @@ function useTask() {
       },
       dialogProps: {
         onClose: (formik) => {
-          if (_.isEqual(formik.values, formik.initialValues)) {
+          if (isEqual(formik.values, formik.initialValues)) {
             closeDialog();
           }
           if (!formik.isSubmitting && formik.dirty) {
@@ -152,21 +152,6 @@ function useTask() {
           component: DatePicker,
           onChange: (setFieldValue) => (date) => {
             setFieldValue('dueDate', date);
-          },
-          fieldProps: {
-            slotProps: {
-              textField: {
-                InputProps: {
-                  label: '',
-                  sx: {
-                    mt: 1
-                  }
-                },
-                InputLabelProps: {
-                  shrink: true
-                }
-              }
-            }
           }
         },
         priority: {

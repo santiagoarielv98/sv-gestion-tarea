@@ -1,4 +1,3 @@
-// project import
 import getColors from '@/utils/getColors';
 
 function getColorStyle({ color, theme }) {

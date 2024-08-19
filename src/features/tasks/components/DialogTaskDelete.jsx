@@ -1,4 +1,3 @@
-// material-ui
 import Button from '@mui/material/Button';
 
 import DialogActions from '@mui/material/DialogActions';
@@ -8,9 +7,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
 
 import { useDeleteTaskMutation } from '../taskApi';
-import propTypes from 'prop-types';
-
-// assets
 
 export default function DialogTaskDelete({ task, closeDialog, onConfirm }) {
   const [deleteTask] = useDeleteTaskMutation();
@@ -41,9 +37,3 @@ export default function DialogTaskDelete({ task, closeDialog, onConfirm }) {
     </>
   );
 }
-
-DialogTaskDelete.propTypes = {
-  task: propTypes.object.isRequired,
-  closeDialog: propTypes.func.isRequired,
-  onConfirm: propTypes.func.isRequired
-};

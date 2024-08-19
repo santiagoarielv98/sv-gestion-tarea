@@ -1,6 +1,8 @@
 import { useState } from 'react';
 
-// material-ui
+import { useRegisterMutation } from '@/features/auth/authApi';
+import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
+import EyeOutlined from '@ant-design/icons/EyeOutlined';
 import Button from '@mui/material/Button';
 import FormHelperText from '@mui/material/FormHelperText';
 import Grid from '@mui/material/Grid';
@@ -9,17 +11,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Stack from '@mui/material/Stack';
-
-// third party
 import { Formik } from 'formik';
-import * as Yup from 'yup';
-
-// project import
-
-// assets
-import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
-import EyeOutlined from '@ant-design/icons/EyeOutlined';
-import { useRegisterMutation } from '@/features/auth/authApi';
+import { registerSchema } from '../schemas/registerSchema';
 
 export default function AuthRegister() {
   const [register, { error }] = useRegisterMutation();
@@ -40,15 +33,11 @@ export default function AuthRegister() {
     <>
       <Formik
         initialValues={{
-          name: 'Demo',
-          email: 'demo@sv-dev.tech',
-          password: '123456'
+          name: '',
+          email: '',
+          password: ''
         }}
-        validationSchema={Yup.object().shape({
-          name: Yup.string().min(3).max(30).required('Name is required'),
-          email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-          password: Yup.string().min(6).max(255).required('Password is required')
-        })}
+        validationSchema={registerSchema}
         onSubmit={handleSubmit}
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
@@ -56,9 +45,9 @@ export default function AuthRegister() {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="name-signup">Name*</InputLabel>
+                  <InputLabel htmlFor="name">Name*</InputLabel>
                   <OutlinedInput
-                    id="name-login"
+                    id="name"
                     type="text"
                     value={values.name}
                     name="name"
@@ -67,43 +56,46 @@ export default function AuthRegister() {
                     placeholder="John"
                     fullWidth
                     error={Boolean(touched.name && errors.name)}
+                    aria-describedby="helper-text-name"
+                    autoComplete="given-name"
                   />
                 </Stack>
                 {touched.name && errors.name && (
-                  <FormHelperText error id="helper-text-name-signup">
+                  <FormHelperText error id="helper-text-name">
                     {errors.name}
                   </FormHelperText>
                 )}
               </Grid>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="email-signup">Email Address*</InputLabel>
+                  <InputLabel htmlFor="email">Email Address*</InputLabel>
                   <OutlinedInput
                     fullWidth
                     error={Boolean(touched.email && errors.email)}
-                    id="email-login"
+                    id="email"
                     type="email"
                     value={values.email}
                     name="email"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     placeholder="demo@company.com"
-                    inputProps={{}}
+                    autoComplete="email"
+                    aria-describedby="helper-text-email"
                   />
                 </Stack>
                 {touched.email && errors.email && (
-                  <FormHelperText error id="helper-text-email-signup">
+                  <FormHelperText error id="helper-text-email">
                     {errors.email}
                   </FormHelperText>
                 )}
               </Grid>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="password-signup">Password</InputLabel>
+                  <InputLabel htmlFor="password">Password</InputLabel>
                   <OutlinedInput
                     fullWidth
                     error={Boolean(touched.password && errors.password)}
-                    id="password-signup"
+                    id="password"
                     type={showPassword ? 'text' : 'password'}
                     value={values.password}
                     name="password"
@@ -117,19 +109,18 @@ export default function AuthRegister() {
                           aria-label="toggle password visibility"
                           onClick={handleClickShowPassword}
                           onMouseDown={handleMouseDownPassword}
-                          edge="end"
-                          color="secondary"
                         >
                           {showPassword ? <EyeOutlined /> : <EyeInvisibleOutlined />}
                         </IconButton>
                       </InputAdornment>
                     }
                     placeholder="******"
-                    inputProps={{}}
+                    autoComplete="new-password"
+                    aria-describedby="helper-text-password"
                   />
                 </Stack>
                 {touched.password && errors.password && (
-                  <FormHelperText error id="helper-text-password-signup">
+                  <FormHelperText error id="helper-text-password">
                     {errors.password}
                   </FormHelperText>
                 )}

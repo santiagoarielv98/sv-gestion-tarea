@@ -1,14 +1,12 @@
 import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
 
-// material-ui
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-// header style
 const headerSX = {
   p: 2.5,
   '& .MuiCardHeader-action': { m: '0px auto', alignSelf: 'center' }
@@ -43,9 +41,10 @@ function MainCard(
         border: border ? '1px solid' : 'none',
         borderRadius: 2,
         borderColor: theme.palette.mode === 'dark' ? theme.palette.divider : theme.palette.grey.A800,
-        boxShadow: boxShadow && (!border || theme.palette.mode === 'dark') ? shadow || theme.shadows[5] : 'inherit',
+        boxShadow:
+          boxShadow && (!border || theme.palette.mode === 'dark') ? shadow || theme.customShadows.z1 : 'inherit',
         ':hover': {
-          boxShadow: boxShadow ? shadow || theme.shadows[5] : 'inherit'
+          boxShadow: boxShadow ? shadow || theme.customShadows.z1 : 'inherit'
         },
         '& pre': {
           m: 0,

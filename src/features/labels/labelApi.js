@@ -13,24 +13,24 @@ const labelApi = api.injectEndpoints({
       query: (label) => ({
         url: 'labels',
         method: 'POST',
-        body: {
-          title: label
-        }
+        body: label
       }),
       invalidatesTags: ['Label']
     }),
     updateLabel: builder.mutation({
-      query: ({ id, label }) => ({
-        url: `labels/${id}`,
+      query: ({ _id, ...label }) => ({
+        url: `labels/${_id}`,
         method: 'PUT',
         body: label
-      })
+      }),
+      invalidatesTags: ['Label', 'Task']
     }),
     deleteLabel: builder.mutation({
-      query: (id) => ({
-        url: `labels/${id}`,
+      query: (_id) => ({
+        url: `labels/${_id}`,
         method: 'DELETE'
-      })
+      }),
+      invalidatesTags: ['Label', 'Task']
     })
   })
 });

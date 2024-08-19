@@ -1,16 +1,15 @@
-import PropTypes from 'prop-types';
-
 import { selectUser } from '@/features/auth/authSlice';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router';
 import { useCheckQuery } from '@/features/auth/authApi';
+import Backdrop from '@mui/material/Backdrop';
 
 function PrivateRoutes({ children }) {
   const { isLoading } = useCheckQuery();
   const user = useSelector(selectUser);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Backdrop open={true} />;
   }
 
   if (!user) {
@@ -19,9 +18,5 @@ function PrivateRoutes({ children }) {
 
   return children;
 }
-
-PrivateRoutes.propTypes = {
-  children: PropTypes.node
-};
 
 export default PrivateRoutes;
