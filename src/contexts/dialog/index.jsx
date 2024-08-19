@@ -104,6 +104,7 @@ export const DialogProvider = ({ children }) => {
                 {...field}
                 value={field.value ?? ''}
                 id={name}
+                name={name}
                 fullWidth
                 InputLabelProps={{ shrink: true }}
                 error={form.dirty && meta.touched && !!meta.error}

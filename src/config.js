@@ -9,6 +9,11 @@ const config = {
   themeDirection: 'ltr'
 };
 
+export const credentials = {
+  email: 'demo@sv-dev.tech',
+  password: '123456'
+};
+
 export default config;
 export const drawerWidth = 280;
 

@@ -1,5 +1,10 @@
 import React from 'react';
 
+import { credentials } from '@/config';
+import { useLoginMutation } from '@/features/auth/authApi';
+import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
+import EyeOutlined from '@ant-design/icons/EyeOutlined';
+import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import FormHelperText from '@mui/material/FormHelperText';
 import Grid from '@mui/material/Grid';
@@ -8,18 +13,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Stack from '@mui/material/Stack';
-
 import { Formik } from 'formik';
-import * as Yup from 'yup';
-
-import { useLoginMutation } from '@/features/auth/authApi';
-import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
-import EyeOutlined from '@ant-design/icons/EyeOutlined';
-
-const loginSchema = Yup.object().shape({
-  email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-  password: Yup.string().max(255).required('Password is required')
-});
+import { loginSchema } from '../schemas/loginSchema';
 
 export default function AuthLogin() {
   const [login, { error }] = useLoginMutation();
@@ -38,22 +33,20 @@ export default function AuthLogin() {
   };
 
   return (
-    <Formik
-      initialValues={{
-        email: 'demo@sv-dev.tech',
-        password: '123456'
-      }}
-      validationSchema={loginSchema}
-      onSubmit={handleSubmit}
-    >
+    <Formik initialValues={credentials} validationSchema={loginSchema} onSubmit={handleSubmit}>
       {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
         <form noValidate onSubmit={handleSubmit}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
+              <Alert severity="info">
+                Use <strong>{credentials.email}</strong> and <strong>{credentials.password}</strong> to login.
+              </Alert>
+            </Grid>
+            <Grid item xs={12}>
               <Stack spacing={1}>
-                <InputLabel htmlFor="email-login">Email Address</InputLabel>
+                <InputLabel htmlFor="email">Email Address</InputLabel>
                 <OutlinedInput
-                  id="email-login"
+                  id="email"
                   type="email"
                   value={values.email}
                   name="email"
@@ -62,21 +55,23 @@ export default function AuthLogin() {
                   placeholder="Enter email address"
                   fullWidth
                   error={Boolean(touched.email && errors.email)}
+                  autoComplete="email"
+                  aria-describedby="helper-text-email"
                 />
               </Stack>
               {touched.email && errors.email && (
-                <FormHelperText error id="standard-weight-helper-text-email-login">
+                <FormHelperText error id="helper-text-email">
                   {errors.email}
                 </FormHelperText>
               )}
             </Grid>
             <Grid item xs={12}>
               <Stack spacing={1}>
-                <InputLabel htmlFor="password-login">Password</InputLabel>
+                <InputLabel htmlFor="password">Password</InputLabel>
                 <OutlinedInput
                   fullWidth
                   error={Boolean(touched.password && errors.password)}
-                  id="-password-login"
+                  id="password"
                   type={showPassword ? 'text' : 'password'}
                   value={values.password}
                   name="password"
@@ -88,18 +83,18 @@ export default function AuthLogin() {
                         aria-label="toggle password visibility"
                         onClick={handleClickShowPassword}
                         onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                        color="secondary"
                       >
                         {showPassword ? <EyeOutlined /> : <EyeInvisibleOutlined />}
                       </IconButton>
                     </InputAdornment>
                   }
                   placeholder="Enter password"
+                  autoComplete="current-password"
+                  aria-describedby="helper-text-password"
                 />
               </Stack>
               {touched.password && errors.password && (
-                <FormHelperText error id="standard-weight-helper-text-password-login">
+                <FormHelperText error id="helper-text-password">
                   {errors.password}
                 </FormHelperText>
               )}

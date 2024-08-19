@@ -88,7 +88,11 @@ export default function TasksTable() {
                   key={row._id}
                 >
                   <TableCell component="th" id={labelId} scope="row" padding="checkbox">
-                    <Checkbox checked={row.completed} onClick={(event) => handleCheckboxChange(event, row)} />
+                    <Checkbox
+                      id={labelId}
+                      checked={row.completed}
+                      onClick={(event) => handleCheckboxChange(event, row)}
+                    />
                   </TableCell>
                   <TableCell onClick={(event) => handleRowClick(event, row)} sx={{ cursor: 'pointer' }}>
                     <Stack>
