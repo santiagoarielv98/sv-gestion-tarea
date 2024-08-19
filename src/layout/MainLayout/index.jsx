@@ -7,6 +7,7 @@ import { DialogConfirmProvider } from '@/contexts/dialog/confirm';
 import { selectUser } from '@/features/auth/authSlice';
 import useAuth from '@/hooks/useAuth';
 import DashboardOutlined from '@ant-design/icons/DashboardOutlined';
+import TagOutlined from '@ant-design/icons/TagOutlined';
 import Logout from '@ant-design/icons/LogoutOutlined';
 import MenuOutlined from '@ant-design/icons/MenuOutlined';
 import MuiAppBar from '@mui/material/AppBar';
@@ -32,11 +33,27 @@ import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
-import { Outlet } from 'react-router';
+import { Outlet, useLocation } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 280;
 
+const menuItems = [
+  {
+    title: 'Dashboard',
+    icon: <DashboardOutlined />,
+    path: '/'
+  },
+  {
+    // etiquetas
+    title: 'Tags',
+    icon: <TagOutlined />,
+    path: '/tags'
+  }
+];
+
 function ResponsiveDrawer() {
+  const { pathname } = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [open, setOpen] = React.useState(() => !isMobile);
@@ -75,21 +92,23 @@ function ResponsiveDrawer() {
       </Toolbar>
       <Divider />
       <List subheader={<ListSubheader component="div">Navigation</ListSubheader>}>
-        <ListItem disablePadding>
-          <ListItemButton
-            selected
-            sx={{
-              '&.Mui-selected': {
-                borderRight: `4px solid ${theme.palette.primary.main}`
-              }
-            }}
-          >
-            <ListItemIcon>
-              <DashboardOutlined />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-          </ListItemButton>
-        </ListItem>
+        {menuItems.map((item) => (
+          <ListItem key={item.title} disablePadding>
+            <ListItemButton
+              component={Link}
+              to={item.path}
+              selected={pathname === item.path}
+              sx={{
+                '&.Mui-selected': {
+                  borderRight: `4px solid ${theme.palette.primary.main}`
+                }
+              }}
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.title} />
+            </ListItemButton>
+          </ListItem>
+        ))}
       </List>
     </div>
   );

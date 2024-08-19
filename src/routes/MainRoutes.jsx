@@ -6,6 +6,7 @@ import PrivateRoutes from './PrivateRoutes';
 
 const MainLayout = Loadable(lazy(() => import('@/layout/MainLayout')));
 const Dashboard = Loadable(lazy(() => import('@/pages/dashboard/index')));
+const TagsPage = Loadable(lazy(() => import('@/pages/tags')));
 
 const MainRoutes = {
   path: '/',
@@ -18,6 +19,10 @@ const MainRoutes = {
     {
       path: '/',
       element: <Dashboard />
+    },
+    {
+      path: '/tags',
+      element: <TagsPage />
     },
     {
       path: '*',
