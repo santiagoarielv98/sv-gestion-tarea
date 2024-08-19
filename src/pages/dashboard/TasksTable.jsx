@@ -94,7 +94,9 @@ export default function TasksTable() {
                   </TableCell>
                   <TableCell onClick={(event) => handleRowClick(event, row)} sx={{ cursor: 'pointer' }}>
                     <Stack>
-                      <Typography variant="subtitle1">{row.title}</Typography>
+                      <Typography variant="subtitle1" sx={{ textDecoration: row.completed ? 'line-through' : 'none' }}>
+                        {row.title}
+                      </Typography>
                       <Typography variant="caption" color="textSecondary">
                         {row.desc}
                       </Typography>
