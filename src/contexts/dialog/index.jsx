@@ -81,40 +81,9 @@ export const DialogProvider = ({ children }) => {
     if (!onSubmit) return;
     onSubmit(values, formikHelpers).then(closeDialog);
   };
-  const fieldComponents = Object.entries(fields ?? {}).map(([name, { gridProps, onChange, ...fieldOptions }]) => (
-    <Grid item xs={12} {...gridProps} key={name}>
-      <Stack spacing={1}>
-        <Field name={name}>
-          {({ meta, field, form }) => {
-            return fieldOptions && 'component' in fieldOptions ? (
-              <fieldOptions.component
-                type={fieldOptions?.fieldProps?.type}
-                name={form.name}
-                value={form.values[name] ?? null}
-                onBlur={form.handleBlur}
-                label={fieldOptions?.label || startCase(name)}
-                {...fieldOptions?.fieldProps}
-                error={form.dirty && meta.touched && !!meta.error}
-                onChange={onChange?.(form.setFieldValue)}
-              />
-            ) : (
-              <TextField
-                label={fieldOptions?.label || startCase(name)}
-                {...fieldOptions?.fieldProps}
-                {...field}
-                value={field.value ?? ''}
-                id={name}
-                name={name}
-                fullWidth
-                InputLabelProps={{ shrink: true }}
-                error={form.dirty && meta.touched && !!meta.error}
-                aria-describedby={`${name}-helper-text`}
-              />
-            );
-          }}
-        </Field>
-      </Stack>
-    </Grid>
+
+  const fieldComponents = Object.entries(fields ?? {}).map(([name, fieldOptions]) => (
+    <FormField key={name} name={name} options={fieldOptions} />
   ));
 
   return (
@@ -195,3 +164,42 @@ const getInitialValues = (fields) => {
     Object.entries(fields ?? {}).map(([name, fieldOptions]) => [name, fieldOptions.initialValue])
   );
 };
+
+function FormField({ options, name }) {
+  const { gridProps, onChange, ...fieldOptions } = options;
+  return (
+    <Grid item xs={12} {...gridProps} key={name}>
+      <Stack spacing={1}>
+        <Field name={name}>
+          {({ meta, field, form }) => {
+            return fieldOptions && 'component' in fieldOptions ? (
+              <fieldOptions.component
+                type={fieldOptions?.fieldProps?.type}
+                name={form.name}
+                value={form.values[name] ?? null}
+                onBlur={form.handleBlur}
+                label={fieldOptions?.label || startCase(name)}
+                {...fieldOptions?.fieldProps}
+                error={form.dirty && meta.touched && !!meta.error}
+                onChange={onChange?.(form.setFieldValue)}
+              />
+            ) : (
+              <TextField
+                label={fieldOptions?.label || startCase(name)}
+                {...fieldOptions?.fieldProps}
+                {...field}
+                value={field.value ?? ''}
+                id={name}
+                name={name}
+                fullWidth
+                InputLabelProps={{ shrink: true }}
+                error={form.dirty && meta.touched && !!meta.error}
+                aria-describedby={`${name}-helper-text`}
+              />
+            );
+          }}
+        </Field>
+      </Stack>
+    </Grid>
+  );
+}
