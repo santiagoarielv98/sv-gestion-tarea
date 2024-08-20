@@ -29,9 +29,8 @@ function useTags() {
     const isEdit = Boolean(tag?._id);
     openDialog({
       title: isEdit ? 'Edit Tag' : 'Add Tag',
-      contentText: '',
       validationSchema: tagValidationSchema,
-      onSubmit: async (values) => {
+      onSubmit: async (values: Yup.InferType<typeof tagValidationSchema>) => {
         if (isEdit) {
           await updateLabel({ ...tag!, ...values });
         } else {

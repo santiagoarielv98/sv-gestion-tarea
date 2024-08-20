@@ -11,17 +11,17 @@ import type {
   DialogTitleProps,
   GridProps
 } from '@mui/material';
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  Grid,
-  Stack,
-  TextField
-} from '@mui/material';
+
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Divider from '@mui/material/Divider';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+
 import type { FieldAttributes, FieldProps, FormikFormProps, FormikHelpers, FormikProps } from 'formik';
 import { Field, Form, Formik } from 'formik';
 import { createContext } from 'react';
@@ -51,21 +51,21 @@ export type FieldOptions<T extends string = string> = Record<
  * Turns ObjectShape into a generic.
  * See: https://github.com/jquense/yup/blob/3b67dc0b59c8cf05fb5ee00b1560a2ab68ca3918/src/object.ts#L30
  */
-type YupObjectShape<T extends string> = Record<T, Yup.AnySchema | Yup.Reference | Yup.Lazy<any, any>>;
+// type YupObjectShape<T> = T extends Record<string, any> ? { [K in keyof T]: any } : never;
 
 export type DialogOptions<
   FieldNames extends string = string,
-  Fields = FieldOptions<FieldNames>,
-  Values = Record<keyof Fields, string>
+  Schema extends Yup.AnyObjectSchema = Yup.AnyObjectSchema,
+  Values = Yup.InferType<Schema>
 > = Partial<{
   title: string | React.ReactNode;
-  fields: Fields;
-  validationSchema: Yup.ObjectSchema<YupObjectShape<FieldNames>>;
+  fields: Partial<FieldOptions<FieldNames>>;
+  validationSchema: Schema;
   cancelButton: ActionButtonOptions;
   submitButton: ActionButtonOptions;
   onSubmit: (values: Values, formikHelpers: FormikHelpers<Values>) => Promise<any>;
   dialogProps: Omit<DialogProps, 'open' | 'onClose'> & { onClose?: (formikProps: FormikProps<Values>) => void };
-  subcomponentProps: {
+  slots: {
     dialogTitleProps?: DialogTitleProps;
     dialogContentProps?: DialogContentProps;
     dialogContentTextProps?: DialogContentTextProps;
@@ -108,7 +108,7 @@ const initialState: State = {
     fullWidth: true,
     maxWidth: 'sm'
   },
-  subcomponentProps: {
+  slots: {
     dialogTitleProps: {},
     dialogContentProps: {},
     dialogContentTextProps: {},
@@ -142,7 +142,7 @@ export const DialogProvider = ({ children }: { children: React.ReactNode }) => {
     cancelButton,
     submitButton,
     dialogProps: { onClose, ...dialogProps } = {},
-    subcomponentProps: sp
+    slots: sp
   } = value;
 
   const initialValues = getInitialValues(fields);
@@ -155,7 +155,8 @@ export const DialogProvider = ({ children }: { children: React.ReactNode }) => {
     onSubmit(values, formikHelpers).then(closeDialog);
   };
 
-  const fieldComponents = Object.entries(fields ?? {}).map(([name, { gridProps, onChange, ...fieldOptions }]) => {
+  const fieldComponents = Object.entries(fields ?? {}).map(([name, fieldProps]) => {
+    const { gridProps, onChange, ...fieldOptions } = fieldProps!;
     return (
       <Grid item xs={12} {...gridProps} key={name}>
         <Stack spacing={1}>
@@ -209,6 +210,7 @@ export const DialogProvider = ({ children }: { children: React.ReactNode }) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
         validateOnChange={false}
+        enableReinitialize
         validateOnBlur={false}
         {...sp?.formikProps}
       >
@@ -226,7 +228,9 @@ export const DialogProvider = ({ children }: { children: React.ReactNode }) => {
               <Divider />
               <DialogContent {...sp?.dialogContentProps}>
                 {/* {contentText && <DialogContentText {...sp?.dialogContentTextProps}>{contentText}</DialogContentText>} */}
-                {!!fieldComponents.length && fieldComponents}
+                <Grid container spacing={2}>
+                  {!!fieldComponents.length && fieldComponents}
+                </Grid>
               </DialogContent>
               <Divider />
               <DialogActions {...sp?.dialogActionsProps}>
@@ -265,6 +269,6 @@ export const DialogProvider = ({ children }: { children: React.ReactNode }) => {
 
 const getInitialValues = (fields: DialogOptions['fields']) => {
   return Object.fromEntries(
-    Object.entries(fields ?? {}).map(([name, fieldOptions]) => [name, fieldOptions.initialValue])
+    Object.entries(fields ?? {}).map(([name, fieldOptions]) => [name, fieldOptions!.initialValue])
   );
 };

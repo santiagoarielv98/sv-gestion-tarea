@@ -14,7 +14,7 @@ export interface TaskCreate {
   title: string;
   desc?: string;
   dueDate?: Date | string;
-  tags?: Tag[];
+  tags?: string[];
   priority?: string;
 }
 
@@ -23,7 +23,7 @@ export interface TaskUpdate {
   title?: string;
   desc?: string;
   dueDate?: Date | string;
-  tags?: Tag[];
+  tags?: string[];
   priority?: string;
   completed?: boolean;
 }

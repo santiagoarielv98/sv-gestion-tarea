@@ -1,9 +1,3 @@
-import DeleteOutlined from '@ant-design/icons/DeleteOutlined';
-import IconButton from '@mui/material/IconButton';
-import MenuItem from '@mui/material/MenuItem';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { useDialog } from '@/hooks/useDialog';
-import { useDialogConfirm } from '@/hooks/useDialogConfirm';
 import LabelAutoComplete from '@/features/labels/components/LabelAutoComplete';
 import {
   useCreateTaskMutation,
@@ -12,10 +6,16 @@ import {
   useToggleTaskMutation,
   useUpdateTaskMutation
 } from '@/features/tasks/taskApi';
+import type { Task } from '@/features/tasks/types/task';
+import { useDialog } from '@/hooks/useDialog';
+import { useDialogConfirm } from '@/hooks/useDialogConfirm';
+import DeleteOutlined from '@ant-design/icons/DeleteOutlined';
+import IconButton from '@mui/material/IconButton';
+import MenuItem from '@mui/material/MenuItem';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import isEqual from 'lodash/isEqual';
 import moment from 'moment';
 import * as Yup from 'yup';
-import type { Task } from '@/features/tasks/types/task';
 
 const taskValidationSchema = Yup.object().shape({
   title: Yup.string().max(255).required('Title is required'),
@@ -57,13 +57,12 @@ function useTask() {
   const openTask = (task?: Task) => {
     openDialog({
       title: task?._id ? 'Edit Task' : 'Add Task',
-      contentText: task?.desc,
       validationSchema: taskValidationSchema,
-      onSubmit: async (values) => {
-        const tags = values.tags.map((label) => label._id);
-        const dueDate = values.dueDate?.tFoISOString();
+      onSubmit: async (values: Yup.InferType<typeof taskValidationSchema>) => {
+        const tags = values.tags?.map((label) => label._id!) ?? [];
+        const dueDate = values.dueDate?.toISOString();
         if (task?._id) {
-          await updateTask({ ...task, ...values, dueDate, tags });
+          await updateTask({ _id: task._id!, ...values, dueDate, tags });
         } else {
           await createTask({ ...values, dueDate, tags });
         }
