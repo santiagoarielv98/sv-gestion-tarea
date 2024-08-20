@@ -13,7 +13,7 @@ function LabelAutoComplete() {
   const formik = useFormikContext();
   const { data: labels = [], isLoading: loading } = useGetLabelsQuery();
   const [addLabel] = useCreateLabelMutation();
-  const values = formik.values.labels ?? [];
+  const values = formik.values.tags ?? [];
 
   const handleChange = async (_event, newValue) => {
     if (newValue.length === 0) {
@@ -51,7 +51,7 @@ function LabelAutoComplete() {
   };
 
   function setLabels(labels) {
-    formik.setFieldValue('labels', labels);
+    formik.setFieldValue('tags', labels);
   }
 
   return (

@@ -22,7 +22,7 @@ const taskValidationSchema = Yup.object().shape({
   dueDate: Yup.date()
     .required('Due Date is required')
     .default(() => moment()),
-  labels: Yup.array().of(Yup.object().shape({ _id: Yup.string(), title: Yup.string() })),
+  tags: Yup.array().of(Yup.object().shape({ _id: Yup.string(), title: Yup.string() })),
   priority: Yup.string().oneOf(['low', 'medium', 'high', 'urgent']).default('medium'),
   completed: Yup.boolean().default(false)
 });
@@ -61,12 +61,12 @@ function useTask() {
       contentText: task?.description,
       validationSchema: taskValidationSchema,
       onSubmit: async (values) => {
-        const labels = values.labels.map((label) => label._id);
+        const tags = values.tags.map((label) => label._id);
         const dueDate = values.dueDate?.toISOString();
         if (task?._id) {
-          await updateTask({ ...task, ...values, dueDate, labels });
+          await updateTask({ ...task, ...values, dueDate, tags });
         } else {
-          await createTask({ ...values, dueDate, labels });
+          await createTask({ ...values, dueDate, tags });
         }
       },
       slots: {
@@ -169,9 +169,9 @@ function useTask() {
             ))
           }
         },
-        labels: {
+        tags: {
           label: 'Labels',
-          initialValue: task?.labels || [],
+          initialValue: task?.tags || [],
           component: LabelAutoComplete
         }
       }

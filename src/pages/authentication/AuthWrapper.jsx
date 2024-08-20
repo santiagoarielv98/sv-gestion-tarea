@@ -13,7 +13,7 @@ export default function AuthWrapper({ children }) {
         </Toolbar>
       </Grid>
       <Grid item xs={12}>
-        <Container maxWidth="sm" sx={{ my: 8 }}>
+        <Container maxWidth="xs" sx={{ my: 8 }}>
           {children}
         </Container>
       </Grid>

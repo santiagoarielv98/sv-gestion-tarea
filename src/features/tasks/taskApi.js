@@ -58,7 +58,7 @@ taskApi.injectEndpoints({
   endpoints: (builder) => ({
     toggleTask: builder.mutation({
       query: (id) => ({
-        url: `tasks/toggle/${id}/`,
+        url: `tasks/${id}/toggle`,
         method: 'PATCH'
       }),
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
