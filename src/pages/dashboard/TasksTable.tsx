@@ -113,9 +113,7 @@ export default function TasksTable() {
                         {row.desc}
                       </Typography>
                       <Stack direction="row" spacing={1}>
-                        {row.tags?.map((label) => (
-                          <Chip key={label._id} label={label.title} size="small" />
-                        ))}
+                        {row.tags?.map((label) => <Chip key={label._id} label={label.title} size="small" />)}
                       </Stack>
                     </Stack>
                   </TableCell>
