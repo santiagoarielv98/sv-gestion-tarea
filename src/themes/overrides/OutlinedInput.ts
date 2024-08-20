@@ -1,10 +1,7 @@
 import { alpha } from '@mui/material/styles';
 
-/**
- *
- * @returns {import('@mui/material/styles').Components}
- */
-export default function OutlinedInput(theme) {
+import type { Theme } from '@mui/material/styles';
+export default function OutlinedInput(theme: Theme) {
   return {
     MuiOutlinedInput: {
       styleOverrides: {

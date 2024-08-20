@@ -1,7 +1,6 @@
-/**
- * @return {import('@mui/material/styles').Components}
- */
-export default function InputLabel(theme) {
+import type { Theme } from '@mui/material/styles';
+
+export default function InputLabel(theme: Theme) {
   return {
     MuiInputLabel: {
       defaultProps: {

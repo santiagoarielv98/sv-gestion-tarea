@@ -1,4 +1,6 @@
-export default function Theme(colors) {
+import type { PalettesProps } from '@ant-design/colors';
+
+export default function Theme(colors: PalettesProps) {
   const { blue, red, gold, cyan, green, grey } = colors;
   const greyColors = {
     0: grey[0],

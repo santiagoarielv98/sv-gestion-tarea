@@ -1,6 +1,7 @@
 import getColors from '@/utils/getColors';
+import type { Theme } from '@mui/material/styles';
 
-function getColorStyle({ color, theme }) {
+function getColorStyle({ color, theme }: { color: string; theme: Theme }) {
   const colors = getColors(theme, color);
   const { lighter, main } = colors;
 
@@ -10,7 +11,7 @@ function getColorStyle({ color, theme }) {
   };
 }
 
-export default function Badge(theme) {
+export default function Badge(theme: Theme) {
   const defaultLightBadge = getColorStyle({ color: 'primary', theme });
 
   return {

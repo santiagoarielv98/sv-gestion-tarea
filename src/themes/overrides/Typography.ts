@@ -1,7 +1,3 @@
-/**
- *
- * @returns {import('@mui/material').Components}
- */
 export default function Typography() {
   return {
     MuiTypography: {

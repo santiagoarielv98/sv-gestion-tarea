@@ -11,7 +11,7 @@ import CustomShadows from './shadows';
 import Typography from './typography';
 
 export default function ThemeCustomization({ children }: { children: React.ReactNode }) {
-  const theme = Palette('light', 'default');
+  const theme = Palette('light');
 
   const themeTypography = Typography(`'Roboto', sans-serif`);
   const themeCustomShadows = useMemo(() => CustomShadows(theme), [theme]);

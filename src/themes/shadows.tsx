@@ -1,6 +1,6 @@
-import { alpha } from '@mui/material/styles';
+import { alpha, type Theme } from '@mui/material/styles';
 
-export default function CustomShadows(theme) {
+export default function CustomShadows(theme: Theme) {
   return {
     button: `0 2px #0000000b`,
     text: `0 -1px 0 rgb(0 0 0 / 12%)`,

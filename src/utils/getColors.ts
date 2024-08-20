@@ -1,4 +1,6 @@
-const getColors = (theme, color) => {
+import type { Theme } from '@mui/material/styles';
+
+const getColors = (theme: Theme, color: string) => {
   switch (color) {
     case 'secondary':
       return theme.palette.secondary;

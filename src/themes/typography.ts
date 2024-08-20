@@ -1,4 +1,4 @@
-export default function Typography(fontFamily) {
+export default function Typography(fontFamily: string) {
   return {
     htmlFontSize: 16,
     fontFamily,

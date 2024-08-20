@@ -13,8 +13,9 @@ import ListItemIcon from './ListItemIcon';
 import OutlinedInput from './OutlinedInput';
 import TableCell from './TableCell';
 import Typography from './Typography';
+import type { Theme } from '@mui/material/styles';
 
-export default function ComponentsOverrides(theme) {
+export default function ComponentsOverrides(theme: Theme) {
   return merge(
     Button(theme),
     Badge(theme),

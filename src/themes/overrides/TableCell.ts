@@ -1,4 +1,6 @@
-export default function TableCell(theme) {
+import type { Theme } from '@mui/material/styles';
+
+export default function TableCell(theme: Theme) {
   const commonCell = {
     '&:not(:last-of-type)': {
       position: 'relative',
