@@ -5,8 +5,8 @@ import { useCreateLabelMutation, useGetLabelsQuery } from '../labelApi';
 
 const filter = createFilterOptions();
 
-function isMatchingLabelName(value) {
-  return (label) => label.title === value;
+function isMatchingLabelName(value: string) {
+  return (label: Tag) => label.title === value;
 }
 
 function LabelAutoComplete() {
@@ -15,7 +15,7 @@ function LabelAutoComplete() {
   const [addLabel] = useCreateLabelMutation();
   const values = formik.values.tags ?? [];
 
-  const handleChange = async (_event, newValue) => {
+  const handleChange = async (_event: React.SyntheticEvent, newValue: Tag[]) => {
     if (newValue.length === 0) {
       setLabels([]);
 
@@ -50,7 +50,7 @@ function LabelAutoComplete() {
     setLabels([...newValue, newLabel]);
   };
 
-  function setLabels(labels) {
+  function setLabels(labels: Tag[]) {
     formik.setFieldValue('tags', labels);
   }
 

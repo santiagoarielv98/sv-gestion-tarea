@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const ScrollTop = ({ children }) => {
+const ScrollTop = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     window.scrollTo({
       top: 0,

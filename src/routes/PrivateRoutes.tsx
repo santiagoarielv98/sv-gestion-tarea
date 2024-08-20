@@ -4,7 +4,7 @@ import { Navigate } from 'react-router';
 import { useCheckQuery } from '@/features/auth/authApi';
 import Backdrop from '@mui/material/Backdrop';
 
-function PrivateRoutes({ children }) {
+function PrivateRoutes({ children }: { children: React.ReactNode }) {
   const { isLoading } = useCheckQuery();
   const user = useSelector(selectUser);
 

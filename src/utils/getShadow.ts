@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types';
-
-const getShadow = (theme, shadow) => {
+import type { Theme } from '@mui/material/styles';
+const getShadow = (theme: Theme, shadow: string) => {
   switch (shadow) {
     case 'secondary':
       return theme.customShadows.secondary;
@@ -27,11 +26,6 @@ const getShadow = (theme, shadow) => {
     default:
       return theme.customShadows.primary;
   }
-};
-
-getShadow.propTypes = {
-  theme: PropTypes.object,
-  shadow: PropTypes.string
 };
 
 export default getShadow;

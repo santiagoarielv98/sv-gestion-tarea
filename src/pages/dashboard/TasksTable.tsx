@@ -16,19 +16,19 @@ import useTask from '@/hooks/useTask';
 const headCells = [
   {
     id: 'checkbox',
-    align: 'left',
+    align: 'left' as const,
     disablePadding: true,
     label: ''
   },
   {
     id: 'task',
-    align: 'left',
+    align: 'left' as const,
     disablePadding: false,
     label: 'Task'
   },
   {
     id: 'date',
-    align: 'left',
+    align: 'left' as const,
     disablePadding: true,
     label: 'Date'
   }
@@ -37,11 +37,11 @@ const headCells = [
 export default function TasksTable() {
   const { openTask, tasks, toggleTask, isLoadingToggle } = useTask();
 
-  const handleRowClick = (event, row) => {
+  const handleRowClick = (event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, row: Task) => {
     openTask(row);
   };
 
-  const handleCheckboxChange = async (event, row) => {
+  const handleCheckboxChange = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, row: Task) => {
     event.stopPropagation();
     if (isLoadingToggle) return;
     await toggleTask(row._id);

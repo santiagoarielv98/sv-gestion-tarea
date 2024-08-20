@@ -21,11 +21,11 @@ export default function AuthRegister() {
     setShowPassword(!showPassword);
   };
 
-  const handleMouseDownPassword = (event) => {
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values: RegisterValue) => {
     await register(values).unwrap();
   };
 

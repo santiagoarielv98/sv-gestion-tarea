@@ -4,7 +4,7 @@ import Toolbar from '@mui/material/Toolbar';
 
 import Logo from '@/components/logo';
 
-export default function AuthWrapper({ children }) {
+export default function AuthWrapper({ children }: { children: React.ReactNode }) {
   return (
     <Grid container direction="column" justifyContent="flex-start" sx={{ minHeight: '100vh' }}>
       <Grid item xs={12}>

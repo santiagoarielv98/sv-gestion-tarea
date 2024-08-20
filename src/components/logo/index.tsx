@@ -6,8 +6,14 @@ import Stack from '@mui/material/Stack';
 
 import config from '@/config';
 import Logo from './LogoMain';
+import type { SxProps } from '@mui/material';
 
-const LogoSection = ({ sx, to }) => {
+interface LogoSectionProps {
+  sx?: SxProps;
+  to?: string;
+}
+
+const LogoSection = ({ sx, to }: LogoSectionProps) => {
   return (
     <ButtonBase disableRipple component={Link} to={!to ? config.defaultPath : to} sx={sx}>
       <Stack direction="row" spacing={1} alignItems="center">

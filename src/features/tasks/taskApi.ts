@@ -1,15 +1,16 @@
 import { api } from '@/app/services/api';
+import type { Task, TaskCreate, TaskUpdate } from './types/task';
 
 const taskApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getTask: builder.query({
+    getTask: builder.query<Task, void>({
       query: (id) => `tasks/${id}`
     }),
-    getTasks: builder.query({
+    getTasks: builder.query<Task[], void>({
       query: () => 'tasks',
       providesTags: ['Task']
     }),
-    createTask: builder.mutation({
+    createTask: builder.mutation<Task, TaskCreate>({
       query: (task) => ({
         url: 'tasks',
         method: 'POST',
@@ -17,7 +18,7 @@ const taskApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Task']
     }),
-    updateTask: builder.mutation({
+    updateTask: builder.mutation<Task, TaskUpdate>({
       query: ({ _id, ...task }) => ({
         url: `tasks/${_id}`,
         method: 'PUT',
@@ -28,9 +29,9 @@ const taskApi = api.injectEndpoints({
   })
 });
 
-taskApi.injectEndpoints({
+export const { useDeleteTaskMutation } = taskApi.injectEndpoints({
   endpoints: (builder) => ({
-    deleteTask: builder.mutation({
+    deleteTask: builder.mutation<void, string>({
       query: (id) => ({
         url: `tasks/${id}`,
         method: 'DELETE'
@@ -54,9 +55,9 @@ taskApi.injectEndpoints({
   })
 });
 
-taskApi.injectEndpoints({
+export const { useToggleTaskMutation } = taskApi.injectEndpoints({
   endpoints: (builder) => ({
-    toggleTask: builder.mutation({
+    toggleTask: builder.mutation<void, string>({
       query: (id) => ({
         url: `tasks/${id}/toggle`,
         method: 'PATCH'
@@ -80,11 +81,4 @@ taskApi.injectEndpoints({
   })
 });
 
-export const {
-  useGetTaskQuery,
-  useGetTasksQuery,
-  useCreateTaskMutation,
-  useUpdateTaskMutation,
-  useDeleteTaskMutation,
-  useToggleTaskMutation
-} = taskApi;
+export const { useGetTaskQuery, useGetTasksQuery, useCreateTaskMutation, useUpdateTaskMutation } = taskApi;

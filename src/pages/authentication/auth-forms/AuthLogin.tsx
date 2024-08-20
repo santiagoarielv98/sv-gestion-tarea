@@ -24,11 +24,11 @@ export default function AuthLogin() {
     setShowPassword(!showPassword);
   };
 
-  const handleMouseDownPassword = (event) => {
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values: LoginValues) => {
     await login({ email: values.email, password: values.password });
   };
 

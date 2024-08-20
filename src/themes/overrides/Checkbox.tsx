@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import getColors from '@/utils/getColors';
 
 import BorderOutlined from '@ant-design/icons/BorderOutlined';
@@ -82,5 +80,3 @@ export default function Checkbox(theme: Theme) {
     }
   };
 }
-
-getColorStyle.propTypes = { color: PropTypes.any, theme: PropTypes.any };

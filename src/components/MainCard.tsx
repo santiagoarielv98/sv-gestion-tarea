@@ -12,6 +12,21 @@ const headerSX = {
   '& .MuiCardHeader-action': { m: '0px auto', alignSelf: 'center' }
 };
 
+interface MainCardProps {
+  border?: boolean;
+  boxShadow?: boolean;
+  children: React.ReactNode;
+  content?: boolean;
+  contentSX?: object;
+  darkTitle?: boolean;
+  elevation?: number;
+  secondary: any;
+  shadow?: string;
+  sx?: object;
+  title: string;
+  others: any;
+}
+
 function MainCard(
   {
     border = true,
@@ -70,7 +85,7 @@ function MainCard(
   );
 }
 
-export default forwardRef(MainCard);
+export default forwardRef<unknown, MainCardProps>(MainCard);
 
 MainCard.propTypes = {
   border: PropTypes.bool,

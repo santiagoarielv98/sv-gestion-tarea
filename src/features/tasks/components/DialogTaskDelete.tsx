@@ -8,7 +8,13 @@ import Divider from '@mui/material/Divider';
 
 import { useDeleteTaskMutation } from '../taskApi';
 
-export default function DialogTaskDelete({ task, closeDialog, onConfirm }) {
+interface DialogTaskDeleteProps {
+  task: Task;
+  closeDialog: () => void;
+  onConfirm: () => void;
+}
+
+export default function DialogTaskDelete({ task, closeDialog, onConfirm }: DialogTaskDeleteProps) {
   const [deleteTask] = useDeleteTaskMutation();
 
   const handleDelete = async () => {

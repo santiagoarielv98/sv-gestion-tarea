@@ -2,7 +2,7 @@ import { api } from '@/app/services/api';
 
 export const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    check: builder.query({
+    check: builder.query<void, void>({
       query: () => 'auth/check'
     }),
     login: builder.mutation({

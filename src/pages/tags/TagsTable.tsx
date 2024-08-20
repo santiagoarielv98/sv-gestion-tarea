@@ -15,13 +15,13 @@ import TagOutlined from '@ant-design/icons/TagOutlined';
 const headCells = [
   {
     id: 'checkbox',
-    align: 'left',
+    align: 'left' as const,
     disablePadding: true,
     label: ''
   },
   {
     id: 'task',
-    align: 'left',
+    align: 'left' as const,
     disablePadding: false,
     label: 'Task'
   }
@@ -29,8 +29,7 @@ const headCells = [
 
 export default function TagsTable() {
   const { tags, openTag } = useTags();
-  // const { openTask, tasks, toggleTask, isLoadingToggle } = useTask();
-  const handleRowClick = (event, row) => {
+  const handleRowClick = (event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, row: Tag) => {
     openTag(row);
   };
 
