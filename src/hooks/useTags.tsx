@@ -10,8 +10,8 @@ import isEqual from 'lodash/isEqual';
 import { useDialog } from './useDialog';
 import { useDialogConfirm } from './useDialogConfirm';
 
-import * as Yup from 'yup';
 import type { Tag } from '@/features/labels/types/tag';
+import * as Yup from 'yup';
 
 const tagValidationSchema = Yup.object().shape({
   title: Yup.string().required('Title is required')
@@ -25,7 +25,7 @@ function useTags() {
   const { openDialog, closeDialog } = useDialog();
   const { openDialogConfirm } = useDialogConfirm();
 
-  const openTag = (tag: Tag) => {
+  const openTag = (tag?: Tag) => {
     const isEdit = Boolean(tag?._id);
     openDialog({
       title: isEdit ? 'Edit Tag' : 'Add Tag',
@@ -33,8 +33,7 @@ function useTags() {
       validationSchema: tagValidationSchema,
       onSubmit: async (values) => {
         if (isEdit) {
-          console.log({ ...tag, ...values });
-          await updateLabel({ ...tag, ...values });
+          await updateLabel({ ...tag!, ...values });
         } else {
           await createLabel({ ...values });
         }
@@ -59,11 +58,11 @@ function useTags() {
                     title: 'Delete Task?',
                     contentText: (
                       <>
-                        Are you sure you want to delete the task <strong>{tag.title}</strong>?
+                        Are you sure you want to delete the task <strong>{tag!.title}</strong>?
                       </>
                     ),
                     onConfirm: async () => {
-                      deleteLabel(tag?._id);
+                      deleteLabel(tag!._id);
                       closeDialog();
                     }
                   });
@@ -87,7 +86,7 @@ function useTags() {
               },
               title: 'Discard Changes?',
               contentText: 'You have unsaved changes. Are you sure you want to discard them?',
-              onConfirm: () => {
+              onConfirm: async () => {
                 closeDialog();
               }
             });

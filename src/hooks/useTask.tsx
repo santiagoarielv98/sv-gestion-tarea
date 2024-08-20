@@ -54,14 +54,14 @@ function useTask() {
   const { openDialog, closeDialog } = useDialog();
   const { openDialogConfirm } = useDialogConfirm();
 
-  const openTask = (task: Task) => {
+  const openTask = (task?: Task) => {
     openDialog({
       title: task?._id ? 'Edit Task' : 'Add Task',
-      contentText: task?.description,
+      contentText: task?.desc,
       validationSchema: taskValidationSchema,
       onSubmit: async (values) => {
         const tags = values.tags.map((label) => label._id);
-        const dueDate = values.dueDate?.toISOString();
+        const dueDate = values.dueDate?.tFoISOString();
         if (task?._id) {
           await updateTask({ ...task, ...values, dueDate, tags });
         } else {
@@ -91,7 +91,7 @@ function useTask() {
                         Are you sure you want to delete the task <strong>{task?.title}</strong>?
                       </>
                     ),
-                    onConfirm: () => {
+                    onConfirm: async () => {
                       deleteTask(task?._id);
                       closeDialog();
                     }
@@ -116,7 +116,7 @@ function useTask() {
               },
               title: 'Discard Changes?',
               contentText: 'You have unsaved changes. Are you sure you want to discard them?',
-              onConfirm: () => {
+              onConfirm: async () => {
                 closeDialog();
               }
             });

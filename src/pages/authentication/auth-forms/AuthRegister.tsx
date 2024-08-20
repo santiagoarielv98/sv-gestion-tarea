@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { useRegisterMutation } from '@/features/auth/authApi';
+import type { RegisterCredentials } from '@/features/auth/types/auth';
 import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
 import EyeOutlined from '@ant-design/icons/EyeOutlined';
 import Button from '@mui/material/Button';
@@ -13,7 +14,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Stack from '@mui/material/Stack';
 import { Formik } from 'formik';
 import { registerSchema } from '../schemas/registerSchema';
-import type { RegisterCredentials } from '@/features/auth/types/auth';
+import { renderError } from '../utils/errorHandle';
 
 export default function AuthRegister() {
   const [register, { error }] = useRegisterMutation();
@@ -128,13 +129,7 @@ export default function AuthRegister() {
               </Grid>
               {error && 'data' in error && (
                 <Grid item xs={12}>
-                  <FormHelperText error>{error.data.message}</FormHelperText>
-                  {error.data.errors &&
-                    error.data.errors.map((err) => (
-                      <FormHelperText key={err} error>
-                        {err}
-                      </FormHelperText>
-                    ))}
+                  {renderError(error)}
                 </Grid>
               )}
               <Grid item xs={12}>

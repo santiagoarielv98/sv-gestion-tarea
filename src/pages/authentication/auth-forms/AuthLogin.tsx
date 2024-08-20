@@ -16,6 +16,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Stack from '@mui/material/Stack';
 import { Formik } from 'formik';
 import { loginSchema } from '../schemas/loginSchema';
+import { renderError } from '../utils/errorHandle';
 
 export default function AuthLogin() {
   const [login, { error }] = useLoginMutation();
@@ -102,13 +103,7 @@ export default function AuthLogin() {
             </Grid>
             {error && 'data' in error && (
               <Grid item xs={12}>
-                <FormHelperText error>{error.data.message}</FormHelperText>
-                {error.data.errors &&
-                  error.data.errors.map((err) => (
-                    <FormHelperText key={err} error>
-                      {err}
-                    </FormHelperText>
-                  ))}
+                {renderError(error)}
               </Grid>
             )}
             <Grid item xs={12}>
