@@ -2,17 +2,19 @@ import { useMemo } from 'react';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import StyledEngineProvider from '@mui/material/StyledEngineProvider';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeOptions, ThemeProvider } from '@mui/material/styles';
 
 import componentsOverride from './overrides';
 import Palette from './palette';
 import CustomShadows from './shadows';
 import Typography from './typography';
 
-export default function ThemeCustomization({ children }) {
+export default function ThemeCustomization({ children }:{
+  children: React.ReactNode;
+}) {
   const theme = Palette('light', 'default');
 
-  const themeTypography = Typography(`'Roboto', sans-serif`, theme);
+  const themeTypography = Typography(`'Roboto', sans-serif`);
   const themeCustomShadows = useMemo(() => CustomShadows(theme), [theme]);
 
   const themeOptions = useMemo(
@@ -37,7 +39,7 @@ export default function ThemeCustomization({ children }) {
       palette: theme.palette,
       customShadows: themeCustomShadows,
       typography: themeTypography
-    }),
+    }) as ThemeOptions,
     [theme, themeTypography, themeCustomShadows]
   );
 
