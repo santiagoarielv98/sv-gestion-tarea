@@ -74,6 +74,18 @@ export default function TasksTable() {
             </TableRow>
           </TableHead>
           <TableBody>
+            {
+              // Empty row
+              tasks.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={headCells.length}>
+                    <Typography variant="body1" color="textSecondary" align="center">
+                      No tasks found
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              )
+            }
             {tasks.map((row, index) => {
               const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -101,7 +113,7 @@ export default function TasksTable() {
                         {row.desc}
                       </Typography>
                       <Stack direction="row" spacing={1}>
-                        {row.labels.map((label) => (
+                        {row.tags?.map((label) => (
                           <Chip key={label._id} label={label.title} size="small" />
                         ))}
                       </Stack>

@@ -3,15 +3,15 @@ import { api } from '@/app/services/api';
 const labelApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getLabel: builder.query({
-      query: (id) => `labels/${id}`
+      query: (id) => `tags/${id}`
     }),
     getLabels: builder.query({
-      query: () => 'labels',
+      query: () => 'tags',
       providesTags: ['Label']
     }),
     createLabel: builder.mutation({
       query: (label) => ({
-        url: 'labels',
+        url: 'tags',
         method: 'POST',
         body: label
       }),
@@ -19,7 +19,7 @@ const labelApi = api.injectEndpoints({
     }),
     updateLabel: builder.mutation({
       query: ({ _id, ...label }) => ({
-        url: `labels/${_id}`,
+        url: `tags/${_id}`,
         method: 'PUT',
         body: label
       }),
@@ -27,7 +27,7 @@ const labelApi = api.injectEndpoints({
     }),
     deleteLabel: builder.mutation({
       query: (_id) => ({
-        url: `labels/${_id}`,
+        url: `tags/${_id}`,
         method: 'DELETE'
       }),
       invalidatesTags: ['Label', 'Task']

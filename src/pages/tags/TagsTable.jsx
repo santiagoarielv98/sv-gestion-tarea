@@ -61,6 +61,15 @@ export default function TagsTable() {
             </TableRow>
           </TableHead>
           <TableBody>
+            {tags.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={headCells.length}>
+                  <Typography variant="body1" color="textSecondary" align="center">
+                    No tags found
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            )}
             {tags.map((row, index) => {
               const labelId = `enhanced-table-checkbox-${index}`;
 
