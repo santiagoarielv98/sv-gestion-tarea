@@ -10,7 +10,7 @@ import DashboardOutlined from '@ant-design/icons/DashboardOutlined';
 import TagOutlined from '@ant-design/icons/TagOutlined';
 import Logout from '@ant-design/icons/LogoutOutlined';
 import MenuOutlined from '@ant-design/icons/MenuOutlined';
-import MuiAppBar from '@mui/material/AppBar';
+import MuiAppBar, { type AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
@@ -170,9 +170,9 @@ function AccountMenu() {
   const user = useSelector(selectUser);
   const { logout } = useAuth();
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -196,7 +196,7 @@ function AccountMenu() {
             }
           >
             <Typography color="inherit" sx={{ display: { xs: 'none', md: 'block' } }}>
-              {user?.name}
+              {user?.displayName}
             </Typography>
           </Button>
         </Tooltip>
@@ -221,7 +221,9 @@ function AccountMenu() {
   );
 }
 
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
+  open?: boolean;
+}>(({ theme, open }) => ({
   flexGrow: 1,
   padding: theme.spacing(3),
   transition: theme.transitions.create('margin', {
@@ -240,9 +242,13 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({
   }
 }));
 
+interface AppBarProps extends MuiAppBarProps {
+  open?: boolean;
+}
+
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open'
-})(({ theme, open }) => ({
+})<AppBarProps>(({ theme, open }) => ({
   backgroundColor: theme.palette.background.paper,
   borderBottom: `1px solid ${theme.palette.divider}`,
   transition: theme.transitions.create(['margin', 'width'], {

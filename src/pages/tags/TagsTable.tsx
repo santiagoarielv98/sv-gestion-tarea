@@ -1,6 +1,5 @@
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,6 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 
+import type { Tag } from '@/features/labels/types/tag';
 import useTags from '@/hooks/useTags';
 import TagOutlined from '@ant-design/icons/TagOutlined';
 
@@ -29,7 +29,7 @@ const headCells = [
 
 export default function TagsTable() {
   const { tags, openTag } = useTags();
-  const handleRowClick = (event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, row: Tag) => {
+  const handleRowClick = (_event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, row: Tag) => {
     openTag(row);
   };
 
@@ -86,11 +86,7 @@ export default function TagsTable() {
                     </Avatar>
                   </TableCell>
                   <TableCell onClick={(event) => handleRowClick(event, row)} sx={{ cursor: 'pointer' }}>
-                    <Stack>
-                      <Typography variant="subtitle1" sx={{ textDecoration: row.completed ? 'line-through' : 'none' }}>
-                        {row.title}
-                      </Typography>
-                    </Stack>
+                    <Typography variant="subtitle1">{row.title}</Typography>
                   </TableCell>
                 </TableRow>
               );

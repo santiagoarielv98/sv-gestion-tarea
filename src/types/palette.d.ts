@@ -1,8 +1,10 @@
+import '@mui/material';
 import '@mui/material/styles/createPalette';
 
 declare module '@mui/material/styles' {
   interface Theme {
     customShadows: {
+      z1: string;
       primary: string;
       secondary: string;
       info: string;
@@ -26,5 +28,11 @@ declare module '@mui/material/styles' {
   interface SimplePaletteColorOptions {
     lighter?: string;
     darker?: string;
+  }
+}
+
+declare module '@mui/material' {
+  interface Color {
+    A800: string;
   }
 }

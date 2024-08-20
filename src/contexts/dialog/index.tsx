@@ -15,7 +15,73 @@ import { createContext } from 'react';
 import startCase from 'lodash/startCase';
 import { useReducer } from 'react';
 
-const reducer = (state, action) => {
+import * as React from 'react';
+import type * as Yup from 'yup';
+
+import type {
+  ButtonProps,
+  DialogActionsProps,
+  DialogContentProps,
+  DialogContentTextProps,
+  DialogProps,
+  DialogTitleProps
+} from '@mui/material';
+import type { FieldAttributes, FormikFormProps, FormikHelpers, FormikProps } from 'formik';
+
+// import type Lazy from 'yup/lib/Lazy';
+// import type Reference from 'yup/lib/Reference';
+
+export type ActionButtonOptions =
+  | false
+  | { children: string | React.ReactNode; props?: ButtonProps }
+  | { component: React.ReactNode };
+
+export type FieldOptions<T extends string = string> = Record<
+  T,
+  {
+    initialValue: any;
+    label?: string;
+    fieldProps?: FieldAttributes<any>;
+    component?: React.ReactNode;
+  }
+>;
+
+type YupObjectShape<T extends string> = Record<T, Yup.AnySchema | Yup.Reference | Yup.Lazy<any, any>>;
+
+export type DialogOptions<
+  FieldNames extends string = string,
+  Fields = FieldOptions<FieldNames>,
+  Values = Record<keyof Fields, string>
+> = Partial<{
+  title: string | React.ReactNode;
+  contentText: string | React.ReactNode;
+  fields: Fields;
+  validationSchema: Yup.ObjectSchema<YupObjectShape<FieldNames>>;
+  cancelButton: ActionButtonOptions;
+  submitButton: ActionButtonOptions;
+  onSubmit: (values: Values, formikHelpers: FormikHelpers<Values>) => Promise<any>;
+  dialogProps: Omit<DialogProps, 'open'>;
+  slots: {
+    dialogTitleProps?: DialogTitleProps;
+    dialogContentProps?: DialogContentProps;
+    dialogContentTextProps?: DialogContentTextProps;
+    dialogActionsProps?: DialogActionsProps;
+    formikProps?: Partial<FormikProps<Values>>;
+    formikFormProps?: FormikFormProps;
+  };
+  customContent: undefined | React.ReactNode;
+}>;
+
+type OpenDialogAction = {
+  type: 'open';
+  payload: DialogOptions;
+};
+type CloseDialogAction = { type: 'close' };
+type ResetDialogAction = { type: 'reset' };
+type Actions = OpenDialogAction | CloseDialogAction | ResetDialogAction;
+type State = { open: boolean } & DialogOptions;
+
+const reducer = (state: State, action: Actions): State => {
   switch (action.type) {
     case 'open':
       return { ...state, ...action.payload, open: true };
@@ -28,7 +94,7 @@ const reducer = (state, action) => {
   }
 };
 
-const initialState = {
+const initialState: State = {
   open: false,
   title: 'Dialog Title',
   contentText: 'Dialog content text',
@@ -50,13 +116,19 @@ const initialState = {
   },
   customContent: undefined
 };
+export type OpenDialog = <T extends string>(options: DialogOptions<T>) => void;
 
-export const DialogContext = createContext({
+type ContextType = {
+  openDialog: OpenDialog;
+  closeDialog: () => void;
+};
+
+export const DialogContext = createContext<ContextType>({
   openDialog: () => null,
   closeDialog: () => null
 });
 
-export const DialogProvider = ({ children }) => {
+export const DialogProvider = ({ children }: { children: React.ReactNode }) => {
   const [value, dispatch] = useReducer(reducer, initialState);
   const {
     open,
@@ -74,10 +146,10 @@ export const DialogProvider = ({ children }) => {
 
   const initialValues = getInitialValues(fields);
 
-  const openDialog = (options) => dispatch({ type: 'open', payload: options });
+  const openDialog: OpenDialog = (options) => dispatch({ type: 'open', payload: options });
   const closeDialog = () => dispatch({ type: 'close' });
   const handleExited = () => dispatch({ type: 'reset' });
-  const handleSubmit = (values, formikHelpers) => {
+  const handleSubmit = (values: typeof initialValues, formikHelpers: FormikHelpers<typeof initialValues>) => {
     if (!onSubmit) return;
     onSubmit(values, formikHelpers).then(closeDialog);
   };
@@ -159,13 +231,13 @@ export const DialogProvider = ({ children }) => {
   );
 };
 
-const getInitialValues = (fields) => {
+const getInitialValues = (fields: DialogOptions['fields']) => {
   return Object.fromEntries(
     Object.entries(fields ?? {}).map(([name, fieldOptions]) => [name, fieldOptions.initialValue])
   );
 };
 
-function FormField({ options, name }) {
+function FormField({ options, name }: { options: FieldOptions; name: string }) {
   const { gridProps, onChange, ...fieldOptions } = options;
   return (
     <Grid item xs={12} {...gridProps} key={name}>

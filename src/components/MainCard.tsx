@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
 
+import type { CardProps } from '@mui/material/Card';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
@@ -15,16 +15,16 @@ const headerSX = {
 interface MainCardProps {
   border?: boolean;
   boxShadow?: boolean;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   content?: boolean;
   contentSX?: object;
   darkTitle?: boolean;
   elevation?: number;
-  secondary: any;
+  secondary?: React.ReactNode;
   shadow?: string;
   sx?: object;
-  title: string;
-  others: any;
+  title?: string;
+  others?: CardProps;
 }
 
 function MainCard(
@@ -41,8 +41,8 @@ function MainCard(
     sx = {},
     title,
     ...others
-  },
-  ref
+  }: MainCardProps,
+  ref: React.Ref<HTMLDivElement>
 ) {
   const theme = useTheme();
   boxShadow = theme.palette.mode === 'dark' ? boxShadow || true : boxShadow;
@@ -85,22 +85,4 @@ function MainCard(
   );
 }
 
-export default forwardRef<unknown, MainCardProps>(MainCard);
-
-MainCard.propTypes = {
-  border: PropTypes.bool,
-  boxShadow: PropTypes.bool,
-  children: PropTypes.node,
-  subheader: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  content: PropTypes.bool,
-  contentSX: PropTypes.object,
-  darkTitle: PropTypes.bool,
-  divider: PropTypes.bool,
-  elevation: PropTypes.number,
-  secondary: PropTypes.any,
-  shadow: PropTypes.string,
-  sx: PropTypes.object,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  modal: PropTypes.bool,
-  others: PropTypes.any
-};
+export default forwardRef(MainCard);

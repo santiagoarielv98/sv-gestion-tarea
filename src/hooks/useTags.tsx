@@ -11,6 +11,7 @@ import { useDialog } from './useDialog';
 import { useDialogConfirm } from './useDialogConfirm';
 
 import * as Yup from 'yup';
+import type { Tag } from '@/features/labels/types/tag';
 
 const tagValidationSchema = Yup.object().shape({
   title: Yup.string().required('Title is required')
@@ -24,7 +25,7 @@ function useTags() {
   const { openDialog, closeDialog } = useDialog();
   const { openDialogConfirm } = useDialogConfirm();
 
-  const openTag = (tag) => {
+  const openTag = (tag: Tag) => {
     const isEdit = Boolean(tag?._id);
     openDialog({
       title: isEdit ? 'Edit Tag' : 'Add Tag',
@@ -61,7 +62,7 @@ function useTags() {
                         Are you sure you want to delete the task <strong>{tag.title}</strong>?
                       </>
                     ),
-                    onConfirm: () => {
+                    onConfirm: async () => {
                       deleteLabel(tag?._id);
                       closeDialog();
                     }

@@ -8,9 +8,46 @@ import Divider from '@mui/material/Divider';
 
 import { createContext } from 'react';
 
+import type {
+  ButtonProps,
+  DialogActionsProps,
+  DialogContentProps,
+  DialogContentTextProps,
+  DialogProps,
+  DialogTitleProps
+} from '@mui/material';
 import { useReducer } from 'react';
 
-const reducer = (state, action) => {
+type ActionButtonOptions =
+  | false
+  | { children: string | React.ReactNode; props?: ButtonProps }
+  | { component: React.ReactNode };
+
+export type DialogOptions = Partial<{
+  title: string | React.ReactNode;
+  contentText: string | React.ReactNode;
+  cancelButton: ActionButtonOptions;
+  confirmButton: ActionButtonOptions;
+  onConfirm: () => Promise<void>;
+  dialogProps: Omit<DialogProps, 'open'>;
+  slots: {
+    dialogTitleProps?: DialogTitleProps;
+    dialogContentProps?: DialogContentProps;
+    dialogContentTextProps?: DialogContentTextProps;
+    dialogActionsProps?: DialogActionsProps;
+  };
+}>;
+
+type OpenDialogAction = {
+  type: 'open';
+  payload: DialogOptions;
+};
+type CloseDialogAction = { type: 'close' };
+type ResetDialogAction = { type: 'reset' };
+type Actions = OpenDialogAction | CloseDialogAction | ResetDialogAction;
+type State = { open: boolean } & DialogOptions;
+
+const reducer = (state: State, action: Actions): State => {
   switch (action.type) {
     case 'open':
       return { ...state, ...action.payload, open: true };
@@ -23,7 +60,7 @@ const reducer = (state, action) => {
   }
 };
 
-const initialState = {
+const initialState: State = {
   open: false,
   title: 'Dialog Title',
   contentText: 'Dialog content text',
@@ -34,33 +71,30 @@ const initialState = {
     fullWidth: true,
     maxWidth: 'xs'
   },
-  subcomponentProps: {
+  slots: {
     dialogTitleProps: {},
     dialogContentProps: {},
     dialogContentTextProps: {},
     dialogActionsProps: {}
   }
 };
+export type OpenDialog = (options: DialogOptions) => void;
 
-export const DialogConfirmContext = createContext({
+type ContextType = {
+  openDialogConfirm: (options: DialogOptions) => void;
+  closeDialogConfirm: () => void;
+};
+
+export const DialogConfirmContext = createContext<ContextType>({
   openDialogConfirm: () => null,
   closeDialogConfirm: () => null
 });
 
-export const DialogConfirmProvider = ({ children }) => {
+export const DialogConfirmProvider = ({ children }: { children: React.ReactNode }) => {
   const [value, dispatch] = useReducer(reducer, initialState);
-  const {
-    open,
-    title,
-    contentText,
-    cancelButton,
-    confirmButton,
-    dialogProps = {},
-    subcomponentProps: sp,
-    onConfirm
-  } = value;
+  const { open, title, contentText, cancelButton, confirmButton, dialogProps = {}, slots: sp, onConfirm } = value;
 
-  const openDialogConfirm = (options) => dispatch({ type: 'open', payload: options });
+  const openDialogConfirm: OpenDialog = (options) => dispatch({ type: 'open', payload: options });
   const closeDialogConfirm = () => dispatch({ type: 'close' });
   const handleExited = () => dispatch({ type: 'reset' });
 
@@ -78,7 +112,7 @@ export const DialogConfirmProvider = ({ children }) => {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
-            await onConfirm();
+            await onConfirm?.();
             closeDialogConfirm();
           }}
         >

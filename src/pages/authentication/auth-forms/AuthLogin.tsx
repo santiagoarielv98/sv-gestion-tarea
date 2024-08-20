@@ -2,6 +2,7 @@ import React from 'react';
 
 import { credentials } from '@/config';
 import { useLoginMutation } from '@/features/auth/authApi';
+import type { LoginCredentials } from '@/features/auth/types/auth';
 import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
 import EyeOutlined from '@ant-design/icons/EyeOutlined';
 import Alert from '@mui/material/Alert';
@@ -28,7 +29,7 @@ export default function AuthLogin() {
     event.preventDefault();
   };
 
-  const handleSubmit = async (values: LoginValues) => {
+  const handleSubmit = async (values: LoginCredentials) => {
     await login({ email: values.email, password: values.password });
   };
 
@@ -99,7 +100,7 @@ export default function AuthLogin() {
                 </FormHelperText>
               )}
             </Grid>
-            {error?.data && (
+            {error && 'data' in error && (
               <Grid item xs={12}>
                 <FormHelperText error>{error.data.message}</FormHelperText>
                 {error.data.errors &&

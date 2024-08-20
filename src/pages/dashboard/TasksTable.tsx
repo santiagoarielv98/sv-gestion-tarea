@@ -12,6 +12,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Chip from '@mui/material/Chip';
 
 import useTask from '@/hooks/useTask';
+import type { Task } from '@/features/tasks/types/task';
 
 const headCells = [
   {
@@ -37,7 +38,7 @@ const headCells = [
 export default function TasksTable() {
   const { openTask, tasks, toggleTask, isLoadingToggle } = useTask();
 
-  const handleRowClick = (event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, row: Task) => {
+  const handleRowClick = (_event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, row: Task) => {
     openTask(row);
   };
 

@@ -15,16 +15,15 @@ import {
 import isEqual from 'lodash/isEqual';
 import moment from 'moment';
 import * as Yup from 'yup';
+import type { Task } from '@/features/tasks/types/task';
 
 const taskValidationSchema = Yup.object().shape({
   title: Yup.string().max(255).required('Title is required'),
-  desc: Yup.string().optional().default(undefined),
-  dueDate: Yup.date()
-    .required('Due Date is required')
-    .default(() => moment()),
+  desc: Yup.string().optional(),
+  dueDate: Yup.date().required('Due Date is required'),
   tags: Yup.array().of(Yup.object().shape({ _id: Yup.string(), title: Yup.string() })),
-  priority: Yup.string().oneOf(['low', 'medium', 'high', 'urgent']).default('medium'),
-  completed: Yup.boolean().default(false)
+  priority: Yup.string().oneOf(['low', 'medium', 'high', 'urgent']),
+  completed: Yup.boolean()
 });
 
 const priorities = [
@@ -55,7 +54,7 @@ function useTask() {
   const { openDialog, closeDialog } = useDialog();
   const { openDialogConfirm } = useDialogConfirm();
 
-  const openTask = (task) => {
+  const openTask = (task: Task) => {
     openDialog({
       title: task?._id ? 'Edit Task' : 'Add Task',
       contentText: task?.description,

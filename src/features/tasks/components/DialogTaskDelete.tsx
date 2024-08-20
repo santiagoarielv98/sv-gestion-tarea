@@ -7,6 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
 
 import { useDeleteTaskMutation } from '../taskApi';
+import type { Task } from '../types/task';
 
 interface DialogTaskDeleteProps {
   task: Task;

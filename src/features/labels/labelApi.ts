@@ -1,15 +1,16 @@
 import { api } from '@/app/services/api';
+import type { Tag, TagUpdate, TagCreate } from './types/tag';
 
 const labelApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getLabel: builder.query({
+    getLabel: builder.query<Tag, string>({
       query: (id) => `tags/${id}`
     }),
-    getLabels: builder.query({
+    getLabels: builder.query<Tag[], void>({
       query: () => 'tags',
       providesTags: ['Label']
     }),
-    createLabel: builder.mutation({
+    createLabel: builder.mutation<Tag, TagCreate>({
       query: (label) => ({
         url: 'tags',
         method: 'POST',
@@ -17,7 +18,7 @@ const labelApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Label']
     }),
-    updateLabel: builder.mutation({
+    updateLabel: builder.mutation<Tag, TagUpdate>({
       query: ({ _id, ...label }) => ({
         url: `tags/${_id}`,
         method: 'PUT',
@@ -25,7 +26,7 @@ const labelApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Label', 'Task']
     }),
-    deleteLabel: builder.mutation({
+    deleteLabel: builder.mutation<void, string>({
       query: (_id) => ({
         url: `tags/${_id}`,
         method: 'DELETE'

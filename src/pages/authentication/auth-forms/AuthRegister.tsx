@@ -13,6 +13,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Stack from '@mui/material/Stack';
 import { Formik } from 'formik';
 import { registerSchema } from '../schemas/registerSchema';
+import type { RegisterCredentials } from '@/features/auth/types/auth';
 
 export default function AuthRegister() {
   const [register, { error }] = useRegisterMutation();
@@ -25,7 +26,7 @@ export default function AuthRegister() {
     event.preventDefault();
   };
 
-  const handleSubmit = async (values: RegisterValue) => {
+  const handleSubmit = async (values: RegisterCredentials) => {
     await register(values).unwrap();
   };
 
@@ -125,7 +126,7 @@ export default function AuthRegister() {
                   </FormHelperText>
                 )}
               </Grid>
-              {error?.data && (
+              {error && 'data' in error && (
                 <Grid item xs={12}>
                   <FormHelperText error>{error.data.message}</FormHelperText>
                   {error.data.errors &&
