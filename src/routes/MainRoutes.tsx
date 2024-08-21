@@ -5,8 +5,8 @@ import { Navigate } from 'react-router';
 import PrivateRoutes from './PrivateRoutes';
 
 const MainLayout = Loadable(lazy(() => import('@/layout/MainLayout')));
-const Dashboard = Loadable(lazy(() => import('@/pages/dashboard/index')));
-const TagsPage = Loadable(lazy(() => import('@/pages/tags')));
+const TaksPage = Loadable(lazy(() => import('@/features/tasks/pages/Home')));
+const TagsPage = Loadable(lazy(() => import('@/features/labels/pages/Home')));
 
 const MainRoutes = {
   path: '/',
@@ -18,7 +18,7 @@ const MainRoutes = {
   children: [
     {
       path: '/',
-      element: <Dashboard />
+      element: <TaksPage />
     },
     {
       path: '/tags',

@@ -2,29 +2,29 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
+import useTask from '@/features/tasks/hooks/useTask';
+import TasksTable from '../components/TasksTable';
 import MainCard from '@/components/MainCard';
-import useTags from '@/features/labels/hooks/useTags';
-import TagsTable from './TagsTable';
 
-export default function TagsPage() {
-  const { openTag } = useTags();
+export default function DashboardDefault() {
+  const { openTask } = useTask();
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       <Grid item xs={12}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
-            <Typography variant="h5">Tags</Typography>
+            <Typography variant="h5">Tasks</Typography>
           </Grid>
           <Grid item>
-            <Button size="small" variant="contained" sx={{ textTransform: 'capitalize' }} onClick={() => openTag()}>
-              Create Tag
+            <Button size="small" variant="contained" sx={{ textTransform: 'capitalize' }} onClick={() => openTask()}>
+              Create Task
             </Button>
           </Grid>
         </Grid>
       </Grid>
       <Grid item xs={12}>
         <MainCard content={false}>
-          <TagsTable />
+          <TasksTable />
         </MainCard>
       </Grid>
     </Grid>
