@@ -1,9 +1,9 @@
 import { lazy } from 'react';
 
 import Loadable from '@/components/Loadable';
-import AuthLogin from '@/features/auth/pages/Login';
 import MinimalLayout from '@/layout/MinimalLayout';
 
+const AuthLogin = Loadable(lazy(() => import('@/features/auth/pages/Login')));
 const AuthRegister = Loadable(lazy(() => import('@/features/auth/pages/Register')));
 
 const LoginRoutes = {
