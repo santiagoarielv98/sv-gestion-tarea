@@ -5,8 +5,8 @@ const baseUrl = import.meta.env.VITE_API_URL;
 export const api = createApi({
   tagTypes: ['Task', 'Label'],
   baseQuery: fetchBaseQuery({
-    baseUrl,
-    credentials: 'include'
+    credentials: 'include',
+    baseUrl
   }),
   endpoints: () => ({})
 });
