@@ -1,102 +1,86 @@
-# sv-gestion-tarea
+# SV-Gestion-Tarea
 
-## 🌐 Proyecto Gestion Tarea
+Aplicación web para la gestión de tareas y etiquetas, desarrollada con React, Vite y Redux Toolkit.
+Esta aplicación permite a los usuarios registrarse, iniciar sesión, crear, actualizar y eliminar tareas y etiquetas, así como también cambiar el estado de las tareas y asignar etiquetas a las tareas.
+Para la autenticación se utiliza un servidor de backend desarrollado con Node.js, Express y MongoDB.
 
-![Banner del Proyecto](ruta/a/la/imagen/banner.png)
+## Tabla de Contenidos
 
-## 📖 Descripción del Proyecto
+- [Imagenes del Proyecto](#imagenes-del-proyecto)
+- [Instalación](#instalación)
+- [Tecnologías Utilizadas](#tecnologías-utilizadas)
+- [Funcionalidades](#funcionalidades)
+- [Estructura del Proyecto](#estructura-del-proyecto)
+- [Variables de Entorno](#variables-de-entorno)
 
-lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor, nunc nec
+## Imagenes del Proyecto
 
-## 🖼️ Imágenes del Proyecto
-
-![Vista Principal](ruta/a/la/imagen/vista_principal.png)
-![Vista Secundaria](ruta/a/la/imagen/vista_secundaria.png)
+![Vista Principal](src/assets/images/vista_principal.png)
+![Vista Secundaria](src/assets/images/vista_secundaria.png)
 
 ## 🛠️ Tecnologías Utilizadas
 
-- Frontend: `React`
-<!-- - Backend: `Spring Boot` `Java` `Spring Security` `JPA/Hibernate` -->
-<!-- - QA: `Selenium` `JUnit` -->
-<!-- - UX/UI: `Figma` `Adobe XD` -->
-<!-- - Testing: `Jasmine` `Karma` -->
-- Tipo de Proyecto: `Web Application`
+- [React](https://reactjs.org/)
+- [Vite](https://vitejs.dev/)
+- [Ant Design](https://ant.design/)
+- [Material-UI](https://mui.com/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+- [Formik](https://formik.org/)
+- [Yup](https://github.com/jquense/yup/tree/pre-v1)
+- [Lodash](https://lodash.com/)
+- [Moment.js](https://momentjs.com/)
+- [React Router](https://reactrouter.com/)
+- [TypeScript](https://www.typescriptlang.org/)
 
-## 🚀 Levantar la Aplicación en Entorno Local
+## Instalación
 
-### Requisitos
+### Requisitos Previos
 
 - Node.js (https://nodejs.org/)
-<!-- - Angular CLI: `npm install -g @angular/cli` -->
-<!-- - Java JDK -->
-<!-- - Maven -->
+- npm (https://www.npmjs.com/)
 
-<!-- ### Algunos iconos
+### Pasos de Instalación
 
-[![My Skills](https://skillicons.dev/icons?i=spring,angular,figma&theme=dark)](https://skillicons.dev) -->
-
-<!-- ### Instrucciones -->
-
-<!-- 1. Clona este repositorio:
-
+1. Clona el repositorio:
    ```bash
-   git clone https://github.com/No-Country/s15-10-m-java-angular.git
+   git clone https://github.com/santiagoarielv98/sv-gestion-tarea.git
    ```
-
 2. Navega al directorio del proyecto:
-
    ```bash
-   cd s15-10-m-java-angular
+   cd sv-gestion-tarea
    ```
-
-3. Instala las dependencias del frontend:
-
+3. Instala las dependencias:
    ```bash
-   cd frontend
    npm install
    ```
-
-4. Levanta el servidor del frontend con alguno de los siguientes comandos:
-
+4. Crea un archivo `.env` en la raíz del proyecto y copia el contenido del archivo `.env.example`.
+5. Configura las variables de entorno en el archivo `.env`.
+6. Inicia la aplicación:
    ```bash
-   npm start # `npm run start:dev` para entorno de desarrollo
-   # o
-   npm run start:prod # para entorno de producción
-
-   # NOTA:
-   # 1. si se utiliza `npm start`, se debe tener en cuenta
-   #    que el servidor del backend debe estar levantado.
-   #
-   # 2. si se utiliza `npm run start:prod`, se estara
-   #    utilizando el servidor de producción.
+   npm run dev
    ```
+7. La aplicación estará disponible en `http://localhost:5173`.
 
-5. En otra terminal, navega al directorio del backend (si se esta en el directorio del frontend):
+- Nota: Para poder utilizar la aplicación, se debe tener el servidor del backend levantado. Para más información, [ver la documentación del backend.](https://github.com/santiagoarielv98/sv-gestion-tarea-api.git)
 
-   ```bash
-   cd ../s15-10/demo
-   # o
-   cd .. && cd s15-10 && cd demo
-   ```
+## Funcionalidades
 
-6. Compila y levanta el servidor del backend:
-   ```bash
-   mvn clean install
-   # NOTA:
-   # 1. si ocurre un error al compilar, se puede intentar
-   # con el siguiente comando:
-   # mvn clean install -DskipTests
+- Crear, editar y eliminar tareas.
+- Autenticación de usuarios.
+- Crear, editar y eliminar etiquetas.
+- Asignar etiquetas a tareas.
 
-   mvn spring-boot:run
-   ```
+## Estructura del Proyecto
 
-La aplicación estará disponible en [`http://localhost:4200`](http://localhost:4200)
-para el frontend y [`http://localhost:8080`](http://localhost:8080) para el backend.
+```
+sv-gestion-tarea/
 
-<!-- ## 📄 Licencia
 
-Este proyecto está bajo la Licencia [Nombre de la Licencia].
+```
 
----
- -->
-¡Gracias por usar este proyecto! Si tienes alguna pregunta o sugerencia, no dudes en contactarnos.
+## Variables de Entorno
+
+Solo una variable de entorno es necesaria para la aplicación:
+
+- `VITE_API_URL`: URL de la API del backend (obligatorio).
+- `VITE_APP_VERSION`: Versión de la aplicación (opcional).
