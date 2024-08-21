@@ -1,10 +1,8 @@
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 
-import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { DialogProvider } from '@/contexts/dialog';
 import { DialogConfirmProvider } from '@/contexts/dialog/confirm';
-import { selectDrawerOpen, setDrawerOpen, toggleDrawer } from '@/features/layout/layoutSlice';
 import MenuOutlined from '@ant-design/icons/MenuOutlined';
 import CssBaseline from '@mui/material/CssBaseline';
 import IconButton from '@mui/material/IconButton';
@@ -18,23 +16,33 @@ import Drawer from './components/Drawer';
 import Main from './components/Main';
 
 function ResponsiveDrawer() {
-  const dispatch = useAppDispatch();
-  const open = useAppSelector(selectDrawerOpen);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [open, setOpen] = React.useState(() => !isMobile);
+  const [isClosing, setIsClosing] = React.useState(false);
+
+  const handleDrawerClose = () => {
+    setIsClosing(true);
+    setOpen(false);
+  };
+
+  const handleDrawerTransitionEnd = () => {
+    setIsClosing(false);
+  };
 
   const handleDrawerToggle = () => {
-    dispatch(toggleDrawer());
+    if (!isClosing) {
+      setOpen(!open);
+    }
   };
 
   React.useEffect(() => {
     if (isMobile) {
-      dispatch(setDrawerOpen(false));
+      setOpen(false);
     } else {
-      dispatch(setDrawerOpen(true));
-      // setOpen(true);
+      setOpen(true);
     }
-  }, [isMobile, dispatch]);
+  }, [isMobile]);
 
   return (
     <DialogConfirmProvider>
@@ -50,7 +58,11 @@ function ResponsiveDrawer() {
               <AccountMenu />
             </Toolbar>
           </AppBar>
-          <Drawer />
+          <Drawer
+            open={open}
+            handleDrawerClose={handleDrawerClose}
+            handleDrawerTransitionEnd={handleDrawerTransitionEnd}
+          />
           <Main open={open}>
             <Toolbar />
             <Outlet />

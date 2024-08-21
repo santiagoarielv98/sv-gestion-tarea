@@ -5,6 +5,7 @@ import Logo from '@/components/logo/LogoMain';
 import { drawerWidth } from '@/config';
 import Chip from '@mui/material/Chip';
 import Divider from '@mui/material/Divider';
+import MuiDrawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -15,24 +16,16 @@ import Stack from '@mui/material/Stack';
 import { useTheme } from '@mui/material/styles';
 import { Link, useLocation } from 'react-router-dom';
 import { menuItems } from '../menu-items';
-import { useAppDispatch, useAppSelector } from '@/app/hooks';
-import { selectDrawerOpen, drawerCloseTransitionEnd, drawerClose } from '@/features/layout/layoutSlice';
-import MuiDrawer from '@mui/material/Drawer';
 
-function DrawerS() {
-  const dispatch = useAppDispatch();
+interface DrawerProps {
+  open: boolean;
+  handleDrawerClose: () => void;
+  handleDrawerTransitionEnd: () => void;
+}
+
+function Drawer({ open, handleDrawerClose, handleDrawerTransitionEnd }: DrawerProps) {
   const theme = useTheme();
   const { pathname } = useLocation();
-
-  const open = useAppSelector(selectDrawerOpen);
-
-  const handleDrawerClose = () => {
-    dispatch(drawerClose());
-  };
-
-  const handleDrawerTransitionEnd = () => {
-    dispatch(drawerCloseTransitionEnd());
-  };
 
   const drawer = (
     <div>
@@ -95,4 +88,4 @@ function DrawerS() {
   );
 }
 
-export default DrawerS;
+export default Drawer;

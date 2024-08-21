@@ -1,12 +1,10 @@
 import authReducer from '@/features/auth/authSlice';
-import layoutReducer from '@/features/layout/layoutSlice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { api } from './services/api';
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  layout: layoutReducer,
   [api.reducerPath]: api.reducer
 });
 
