@@ -8,12 +8,10 @@ export default function MinimalLayout() {
   const user = useSelector(selectUser);
   const { isLoading } = useCheckQuery();
 
-  if (isLoading) {
-    return <Backdrop open={true} />;
-  }
-  if (user) {
-    return <Navigate to="/" />;
-  }
-
-  return <Outlet />;
+  return (
+    <>
+      {isLoading && <Backdrop open={true} sx={{ zIndex: 9999 }} />}
+      {user ? <Navigate to="/app" /> : <Outlet />}
+    </>
+  );
 }
