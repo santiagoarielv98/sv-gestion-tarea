@@ -1,11 +1,10 @@
-import { Link } from 'react-router-dom';
-
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { Link } from 'react-router-dom';
 
-import AuthWrapper from '../components/AuthWrapper';
 import AuthRegister from '../components/AuthRegister';
+import AuthWrapper from '../components/AuthWrapper';
 
 export default function Register() {
   return (

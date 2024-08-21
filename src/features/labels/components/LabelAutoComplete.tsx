@@ -1,9 +1,11 @@
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { useFormikContext } from 'formik';
+
+import type { Task } from '@/features/tasks/types/task';
+
 import { useCreateLabelMutation, useGetLabelsQuery } from '../labelApi';
 import type { Tag } from '../types/tag';
-import type { Task } from '@/features/tasks/types/task';
 
 const filter = createFilterOptions<Tag>();
 

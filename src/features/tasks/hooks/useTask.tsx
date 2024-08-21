@@ -1,3 +1,13 @@
+import DeleteOutlined from '@ant-design/icons/DeleteOutlined';
+import IconButton from '@mui/material/IconButton';
+import MenuItem from '@mui/material/MenuItem';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import isEqual from 'lodash/isEqual';
+import moment from 'moment';
+import * as Yup from 'yup';
+
+import { useDialog } from '@/features/dialog/hooks/useDialog';
+import { useDialogConfirm } from '@/features/dialog/hooks/useDialogConfirm';
 import LabelAutoComplete from '@/features/labels/components/LabelAutoComplete';
 import {
   useCreateTaskMutation,
@@ -7,15 +17,6 @@ import {
   useUpdateTaskMutation
 } from '@/features/tasks/taskApi';
 import type { Task } from '@/features/tasks/types/task';
-import { useDialog } from '@/features/dialog/hooks/useDialog';
-import { useDialogConfirm } from '@/features/dialog/hooks/useDialogConfirm';
-import DeleteOutlined from '@ant-design/icons/DeleteOutlined';
-import IconButton from '@mui/material/IconButton';
-import MenuItem from '@mui/material/MenuItem';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import isEqual from 'lodash/isEqual';
-import moment from 'moment';
-import * as Yup from 'yup';
 
 const taskValidationSchema = Yup.object().shape({
   title: Yup.string().max(255).required('Title is required'),

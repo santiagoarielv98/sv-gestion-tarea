@@ -1,3 +1,4 @@
+import type { Theme } from '@mui/material/styles';
 import merge from 'lodash/merge';
 
 // import Badge from './Badge';
@@ -13,7 +14,6 @@ import ListItemIcon from './ListItemIcon';
 import OutlinedInput from './OutlinedInput';
 import TableCell from './TableCell';
 import Typography from './Typography';
-import type { Theme } from '@mui/material/styles';
 
 export default function ComponentsOverrides(theme: Theme) {
   return merge(

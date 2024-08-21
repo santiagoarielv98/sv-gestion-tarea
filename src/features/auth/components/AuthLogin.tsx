@@ -1,8 +1,3 @@
-import React from 'react';
-
-import { credentials } from '@/config';
-import { useLoginMutation } from '@/features/auth/authApi';
-import type { LoginCredentials } from '@/features/auth/types/auth';
 import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
 import EyeOutlined from '@ant-design/icons/EyeOutlined';
 import Alert from '@mui/material/Alert';
@@ -15,6 +10,12 @@ import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Stack from '@mui/material/Stack';
 import { Formik } from 'formik';
+import React from 'react';
+
+import { credentials } from '@/config';
+import { useLoginMutation } from '@/features/auth/authApi';
+import type { LoginCredentials } from '@/features/auth/types/auth';
+
 import { loginSchema } from '../schemas/loginSchema';
 import { renderError } from '../utils/errorHandle';
 

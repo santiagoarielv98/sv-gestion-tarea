@@ -1,6 +1,6 @@
-import { drawerWidth } from '@/config';
-
 import { styled } from '@mui/material/styles';
+
+import { drawerWidth } from '@/config';
 
 interface MainProps {
   open?: boolean;

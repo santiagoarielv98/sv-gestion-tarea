@@ -1,8 +1,8 @@
+import type { Theme } from '@mui/material/styles';
 import { alpha } from '@mui/material/styles';
 
 import getColors from '@/utils/getColors';
 import getShadow from '@/utils/getShadow';
-import type { Theme } from '@mui/material/styles';
 
 function getColorStyle({ variant, color, theme }: { variant: string; color: string; theme: Theme }) {
   const colors = getColors(theme, color);

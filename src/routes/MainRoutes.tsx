@@ -1,7 +1,8 @@
 import { lazy } from 'react';
+import { Navigate } from 'react-router';
 
 import Loadable from '@/components/Loadable';
-import { Navigate } from 'react-router';
+
 import PrivateRoutes from './PrivateRoutes';
 
 const MainLayout = Loadable(lazy(() => import('@/layout/MainLayout')));

@@ -1,7 +1,3 @@
-import { useState } from 'react';
-
-import { useRegisterMutation } from '@/features/auth/authApi';
-import type { RegisterCredentials } from '@/features/auth/types/auth';
 import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
 import EyeOutlined from '@ant-design/icons/EyeOutlined';
 import Button from '@mui/material/Button';
@@ -13,6 +9,11 @@ import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Stack from '@mui/material/Stack';
 import { Formik } from 'formik';
+import { useState } from 'react';
+
+import { useRegisterMutation } from '@/features/auth/authApi';
+import type { RegisterCredentials } from '@/features/auth/types/auth';
+
 import { registerSchema } from '../schemas/registerSchema';
 import { renderError } from '../utils/errorHandle';
 

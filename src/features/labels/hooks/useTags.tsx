@@ -1,17 +1,18 @@
+import DeleteOutlined from '@ant-design/icons/DeleteOutlined';
+import IconButton from '@mui/material/IconButton';
+import isEqual from 'lodash/isEqual';
+import * as Yup from 'yup';
+
 import {
   useCreateLabelMutation,
   useDeleteLabelMutation,
   useGetLabelsQuery,
   useUpdateLabelMutation
 } from '@/features/labels/labelApi';
-import DeleteOutlined from '@ant-design/icons/DeleteOutlined';
-import IconButton from '@mui/material/IconButton';
-import isEqual from 'lodash/isEqual';
+import type { Tag } from '@/features/labels/types/tag';
+
 import { useDialog } from '../../dialog/hooks/useDialog';
 import { useDialogConfirm } from '../../dialog/hooks/useDialogConfirm';
-
-import type { Tag } from '@/features/labels/types/tag';
-import * as Yup from 'yup';
 
 const tagValidationSchema = Yup.object().shape({
   title: Yup.string().required('Title is required')

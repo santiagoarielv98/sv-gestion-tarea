@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 
 import MainCard from '@/components/MainCard';
 import useTags from '@/features/labels/hooks/useTags';
+
 import TagsTable from '../components/TagsTable';
 
 export default function TagsPage() {

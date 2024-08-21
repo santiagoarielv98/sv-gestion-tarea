@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 import { authApi } from './authApi';
 import type { User } from './types/auth';
 

@@ -1,8 +1,9 @@
-import { selectUser } from '@/features/auth/authSlice';
+import Backdrop from '@mui/material/Backdrop';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router';
+
 import { useCheckQuery } from '@/features/auth/authApi';
-import Backdrop from '@mui/material/Backdrop';
+import { selectUser } from '@/features/auth/authSlice';
 
 function PrivateRoutes({ children }: { children: React.ReactNode }) {
   const { isLoading } = useCheckQuery();

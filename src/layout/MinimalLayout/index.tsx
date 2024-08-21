@@ -1,8 +1,9 @@
-import { useCheckQuery } from '@/features/auth/authApi';
-import { selectUser } from '@/features/auth/authSlice';
 import Backdrop from '@mui/material/Backdrop';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
+
+import { useCheckQuery } from '@/features/auth/authApi';
+import { selectUser } from '@/features/auth/authSlice';
 
 export default function MinimalLayout() {
   const user = useSelector(selectUser);

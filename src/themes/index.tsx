@@ -1,9 +1,8 @@
-import { useMemo } from 'react';
-
 import CssBaseline from '@mui/material/CssBaseline';
 import StyledEngineProvider from '@mui/material/StyledEngineProvider';
 import type { ThemeOptions } from '@mui/material/styles';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useMemo } from 'react';
 
 import componentsOverride from './overrides';
 import Palette from './palette';

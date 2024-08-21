@@ -1,12 +1,12 @@
-import { Link } from 'react-router-dom';
-
+import type { SxProps } from '@mui/material';
 import ButtonBase from '@mui/material/ButtonBase';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
+import { Link } from 'react-router-dom';
 
 import config from '@/config';
+
 import Logo from './LogoMain';
-import type { SxProps } from '@mui/material';
 
 interface LogoSectionProps {
   sx?: SxProps;

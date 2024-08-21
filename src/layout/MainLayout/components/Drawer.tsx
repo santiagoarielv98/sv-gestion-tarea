@@ -1,8 +1,4 @@
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-
-import Logo from '@/components/logo/LogoMain';
-import { drawerWidth } from '@/config';
 import Chip from '@mui/material/Chip';
 import Divider from '@mui/material/Divider';
 import MuiDrawer from '@mui/material/Drawer';
@@ -14,7 +10,12 @@ import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import Stack from '@mui/material/Stack';
 import { useTheme } from '@mui/material/styles';
+import Toolbar from '@mui/material/Toolbar';
 import { Link, useLocation } from 'react-router-dom';
+
+import Logo from '@/components/logo/LogoMain';
+import { drawerWidth } from '@/config';
+
 import { menuItems } from '../menu-items';
 
 interface DrawerProps {

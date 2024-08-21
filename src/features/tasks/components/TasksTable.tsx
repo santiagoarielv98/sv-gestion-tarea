@@ -1,4 +1,6 @@
 import Box from '@mui/material/Box';
+import Checkbox from '@mui/material/Checkbox';
+import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,9 +9,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
-
-import Checkbox from '@mui/material/Checkbox';
-import Chip from '@mui/material/Chip';
 
 import useTask from '@/features/tasks/hooks/useTask';
 import type { Task } from '@/features/tasks/types/task';

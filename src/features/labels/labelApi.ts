@@ -1,5 +1,6 @@
 import { api } from '@/app/services/api';
-import type { Tag, TagUpdate, TagCreate } from './types/tag';
+
+import type { Tag, TagCreate, TagUpdate } from './types/tag';
 
 const labelApi = api.injectEndpoints({
   endpoints: (builder) => ({

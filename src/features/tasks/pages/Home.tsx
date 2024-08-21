@@ -2,9 +2,10 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import useTask from '@/features/tasks/hooks/useTask';
-import TasksTable from '../components/TasksTable';
 import MainCard from '@/components/MainCard';
+import useTask from '@/features/tasks/hooks/useTask';
+
+import TasksTable from '../components/TasksTable';
 
 export default function DashboardDefault() {
   const { openTask } = useTask();

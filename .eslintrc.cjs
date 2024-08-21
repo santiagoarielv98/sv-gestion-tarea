@@ -10,11 +10,13 @@ module.exports = {
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   settings: { react: { version: '18.2' } },
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh'],
+  plugins: ['react-refresh', 'simple-import-sort'],
   rules: {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     'react/prop-types': 'off',
     '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
-    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }]
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    'simple-import-sort/imports': 'error',
+    'simple-import-sort/exports': 'error'
   }
 };
