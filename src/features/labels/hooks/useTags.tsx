@@ -7,8 +7,8 @@ import {
 import DeleteOutlined from '@ant-design/icons/DeleteOutlined';
 import IconButton from '@mui/material/IconButton';
 import isEqual from 'lodash/isEqual';
-import { useDialog } from './useDialog';
-import { useDialogConfirm } from './useDialogConfirm';
+import { useDialog } from '../../dialog/hooks/useDialog';
+import { useDialogConfirm } from '../../dialog/hooks/useDialogConfirm';
 
 import type { Tag } from '@/features/labels/types/tag';
 import * as Yup from 'yup';

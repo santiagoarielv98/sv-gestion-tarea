@@ -7,8 +7,8 @@ import {
   useUpdateTaskMutation
 } from '@/features/tasks/taskApi';
 import type { Task } from '@/features/tasks/types/task';
-import { useDialog } from '@/hooks/useDialog';
-import { useDialogConfirm } from '@/hooks/useDialogConfirm';
+import { useDialog } from '@/features/dialog/hooks/useDialog';
+import { useDialogConfirm } from '@/features/dialog/hooks/useDialogConfirm';
 import DeleteOutlined from '@ant-design/icons/DeleteOutlined';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';

@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 
 import { selectUser } from '@/features/auth/authSlice';
-import useAuth from '@/hooks/useAuth';
+import useAuth from '@/features/auth/hooks/useAuth';
 import Logout from '@ant-design/icons/LogoutOutlined';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';

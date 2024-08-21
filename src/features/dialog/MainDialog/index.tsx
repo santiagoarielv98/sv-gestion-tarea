@@ -26,7 +26,6 @@ import type { FieldAttributes, FieldProps, FormikFormProps, FormikHelpers, Formi
 import { Field, Form, Formik } from 'formik';
 import { createContext } from 'react';
 
-// import { TextField } from 'formik-material-ui';
 import startCase from 'lodash/startCase';
 import { useReducer } from 'react';
 
@@ -46,12 +45,6 @@ export type FieldOptions<T extends string = string> = Record<
     onChange?: (setFieldValue: FormikProps<any>['setFieldValue']) => (event: React.ChangeEvent<any>) => void;
   }
 >;
-
-/**
- * Turns ObjectShape into a generic.
- * See: https://github.com/jquense/yup/blob/3b67dc0b59c8cf05fb5ee00b1560a2ab68ca3918/src/object.ts#L30
- */
-// type YupObjectShape<T> = T extends Record<string, any> ? { [K in keyof T]: any } : never;
 
 export type DialogOptions<
   FieldNames extends string = string,

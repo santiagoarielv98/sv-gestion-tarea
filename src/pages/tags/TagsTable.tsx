@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 
 import type { Tag } from '@/features/labels/types/tag';
-import useTags from '@/hooks/useTags';
+import useTags from '@/features/labels/hooks/useTags';
 import TagOutlined from '@ant-design/icons/TagOutlined';
 
 const headCells = [

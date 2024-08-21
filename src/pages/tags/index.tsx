@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import MainCard from '@/components/MainCard';
-import useTags from '@/hooks/useTags';
+import useTags from '@/features/labels/hooks/useTags';
 import TagsTable from './TagsTable';
 
 export default function TagsPage() {

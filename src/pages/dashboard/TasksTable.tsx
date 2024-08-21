@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import Checkbox from '@mui/material/Checkbox';
 import Chip from '@mui/material/Chip';
 
-import useTask from '@/hooks/useTask';
+import useTask from '@/features/tasks/hooks/useTask';
 import type { Task } from '@/features/tasks/types/task';
 
 const headCells = [

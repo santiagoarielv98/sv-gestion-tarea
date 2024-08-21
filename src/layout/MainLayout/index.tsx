@@ -1,8 +1,6 @@
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 
-import { DialogProvider } from '@/contexts/dialog';
-import { DialogConfirmProvider } from '@/contexts/dialog/confirm';
 import MenuOutlined from '@ant-design/icons/MenuOutlined';
 import CssBaseline from '@mui/material/CssBaseline';
 import IconButton from '@mui/material/IconButton';
@@ -14,6 +12,8 @@ import AccountMenu from './components/AccountMenu';
 import AppBar from './components/AppBar';
 import Drawer from './components/Drawer';
 import Main from './components/Main';
+import { DialogConfirmProvider } from '@/features/dialog/ConfirmDialog';
+import { DialogProvider } from '@/features/dialog/MainDialog';
 
 function ResponsiveDrawer() {
   const theme = useTheme();

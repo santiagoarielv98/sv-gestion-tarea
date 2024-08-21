@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import useTask from '@/hooks/useTask';
+import useTask from '@/features/tasks/hooks/useTask';
 import TasksTable from './TasksTable';
 import MainCard from '@/components/MainCard';
 
