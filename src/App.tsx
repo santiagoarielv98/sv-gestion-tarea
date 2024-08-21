@@ -1,6 +1,7 @@
+import { RouterProvider } from 'react-router-dom';
+
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { RouterProvider } from 'react-router-dom';
 
 import ScrollTop from '@/components/ScrollTop';
 import router from '@/routes';

@@ -1,5 +1,6 @@
-import type { Theme } from '@mui/material/styles';
 import merge from 'lodash/merge';
+
+import type { Theme } from '@mui/material/styles';
 
 // import Badge from './Badge';
 import Button from './Button';

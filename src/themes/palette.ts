@@ -1,6 +1,7 @@
-import { presetPalettes } from '@ant-design/colors';
 import type { PaletteMode } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
+
+import { presetPalettes } from '@ant-design/colors';
 
 import ThemeOption from './theme';
 

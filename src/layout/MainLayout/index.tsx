@@ -1,15 +1,16 @@
-import MenuOutlined from '@ant-design/icons/MenuOutlined';
+import * as React from 'react';
+import { Outlet } from 'react-router';
+
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import IconButton from '@mui/material/IconButton';
 import { useTheme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import * as React from 'react';
-import { Outlet } from 'react-router';
 
 import { DialogConfirmProvider } from '@/features/dialog/ConfirmDialog';
 import { DialogProvider } from '@/features/dialog/MainDialog';
+import MenuOutlined from '@ant-design/icons/MenuOutlined';
 
 import AccountMenu from './components/AccountMenu';
 import AppBar from './components/AppBar';

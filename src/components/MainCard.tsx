@@ -1,10 +1,11 @@
+import { forwardRef } from 'react';
+
 import type { CardProps } from '@mui/material/Card';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import { forwardRef } from 'react';
 
 const headerSX = {
   p: 2.5,

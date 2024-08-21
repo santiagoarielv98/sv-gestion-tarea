@@ -1,9 +1,9 @@
-import BorderOutlined from '@ant-design/icons/BorderOutlined';
-import CheckSquareFilled from '@ant-design/icons/CheckSquareFilled';
-import MinusSquareFilled from '@ant-design/icons/MinusSquareFilled';
 import type { Theme } from '@mui/material/styles';
 
 import getColors from '@/utils/getColors';
+import BorderOutlined from '@ant-design/icons/BorderOutlined';
+import CheckSquareFilled from '@ant-design/icons/CheckSquareFilled';
+import MinusSquareFilled from '@ant-design/icons/MinusSquareFilled';
 
 function getColorStyle({ color, theme }: { color: string; theme: Theme }) {
   const colors = getColors(theme, color);

@@ -1,4 +1,6 @@
-import Logout from '@ant-design/icons/LogoutOutlined';
+import * as React from 'react';
+import { useSelector } from 'react-redux';
+
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -6,11 +8,10 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
-import * as React from 'react';
-import { useSelector } from 'react-redux';
 
 import { selectUser } from '@/features/auth/authSlice';
 import useAuth from '@/features/auth/hooks/useAuth';
+import Logout from '@ant-design/icons/LogoutOutlined';
 
 function AccountMenu() {
   const user = useSelector(selectUser);

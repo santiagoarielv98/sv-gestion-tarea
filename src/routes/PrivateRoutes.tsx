@@ -1,6 +1,7 @@
-import Backdrop from '@mui/material/Backdrop';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router';
+
+import Backdrop from '@mui/material/Backdrop';
 
 import { useCheckQuery } from '@/features/auth/authApi';
 import { selectUser } from '@/features/auth/authSlice';

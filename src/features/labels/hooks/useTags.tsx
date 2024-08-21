@@ -1,7 +1,7 @@
-import DeleteOutlined from '@ant-design/icons/DeleteOutlined';
-import IconButton from '@mui/material/IconButton';
 import isEqual from 'lodash/isEqual';
 import * as Yup from 'yup';
+
+import IconButton from '@mui/material/IconButton';
 
 import {
   useCreateLabelMutation,
@@ -10,6 +10,7 @@ import {
   useUpdateLabelMutation
 } from '@/features/labels/labelApi';
 import type { Tag } from '@/features/labels/types/tag';
+import DeleteOutlined from '@ant-design/icons/DeleteOutlined';
 
 import { useDialog } from '../../dialog/hooks/useDialog';
 import { useDialogConfirm } from '../../dialog/hooks/useDialogConfirm';

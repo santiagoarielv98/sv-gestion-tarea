@@ -1,4 +1,3 @@
-import TagOutlined from '@ant-design/icons/TagOutlined';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -11,6 +10,7 @@ import Typography from '@mui/material/Typography';
 
 import useTags from '@/features/labels/hooks/useTags';
 import type { Tag } from '@/features/labels/types/tag';
+import TagOutlined from '@ant-design/icons/TagOutlined';
 
 const headCells = [
   {

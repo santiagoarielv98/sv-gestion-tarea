@@ -16,7 +16,28 @@ module.exports = {
     'react/prop-types': 'off',
     '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-    'simple-import-sort/imports': 'error',
+    'simple-import-sort/imports': [
+      'error',
+      {
+        groups: [
+          // `react` first, `next` second, then packages starting with a character
+          ['^react$', '^next', '^[a-z]'],
+
+          // Mui components
+          ['^@mui'],
+          // Packages starting with `@`
+          ['^@'],
+          // Packages starting with `~`
+          ['^~'],
+          // Imports starting with `../`
+          ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
+          // Imports starting with `./`
+          ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
+          // Side effect imports
+          ['^\\u0000']
+        ]
+      }
+    ],
     'simple-import-sort/exports': 'error'
   }
 };
