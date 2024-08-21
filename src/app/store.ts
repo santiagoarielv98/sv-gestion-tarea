@@ -1,10 +1,12 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import authReducer from '@/features/auth/authSlice';
-import { api } from './services/api';
+import layoutReducer from '@/features/layout/layoutSlice';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
+import { api } from './services/api';
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  layout: layoutReducer,
   [api.reducerPath]: api.reducer
 });
 
@@ -14,3 +16,7 @@ export const store = configureStore({
 });
 
 setupListeners(store.dispatch);
+
+export type RootState = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch;
