@@ -11,6 +11,9 @@ import { DataTableRowActions } from "./data-table-row-actions"
 export const columns: ColumnDef<Task>[] = [
   {
     id: "select",
+    meta: {
+      label: "Seleccionar",
+    },
     header: ({ table }) => (
       <Checkbox
         checked={
@@ -35,6 +38,9 @@ export const columns: ColumnDef<Task>[] = [
   },
   {
     accessorKey: "id",
+    meta: {
+      label: "ID",
+    },
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="ID" />
     ),
@@ -44,6 +50,9 @@ export const columns: ColumnDef<Task>[] = [
   },
   {
     accessorKey: "title",
+    meta: {
+      label: "Titulo",
+    },
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Titulo" />
     ),
@@ -118,6 +127,9 @@ export const columns: ColumnDef<Task>[] = [
   // },
   {
     id: "actions",
+    meta: {
+      label: "Acciones",
+    },
     cell: ({ row }) => <DataTableRowActions row={row} />,
   },
 ]
