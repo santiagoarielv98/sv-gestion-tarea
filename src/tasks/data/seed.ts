@@ -1,15 +1,15 @@
 import fs from "fs"
-import path from "path"
-import { faker } from "@faker-js/faker"
+import path, { dirname } from "path"
+import { fakerES as faker } from "@faker-js/faker"
+import { fileURLToPath } from "url";
 
-import { labels, priorities, statuses } from "./data"
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const tasks = Array.from({ length: 100 }, () => ({
-  id: `TASK-${faker.number.int({ min: 1000, max: 9999 })}`,
+  id: faker.number.int({ min: 1, max: 9999 }),
   title: faker.hacker.phrase().replace(/^./, (letter) => letter.toUpperCase()),
-  status: faker.helpers.arrayElement(statuses).value,
-  label: faker.helpers.arrayElement(labels).value,
-  priority: faker.helpers.arrayElement(priorities).value,
+  content: faker.word.words({count:8})
 }))
 
 fs.writeFileSync(
