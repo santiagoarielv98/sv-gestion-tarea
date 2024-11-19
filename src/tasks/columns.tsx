@@ -49,7 +49,6 @@ export const columns: ColumnDef<Task>[] = [
     ),
     cell: ({ row }) => {
       // const label = labels.find((label) => label.value === row.original.label)
-
       return (
         <div className="flex flex-col">
           {/* {label && <Badge variant="outline">{label.label}</Badge>} */}
@@ -57,7 +56,7 @@ export const columns: ColumnDef<Task>[] = [
             {row.getValue("title")}
           </p>
           <p className="text-sm text-muted-foreground">
-            {row.getValue("title")}
+            {row.original.content}
           </p>
         </div>
       )
