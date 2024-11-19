@@ -1,86 +1,50 @@
-# SV-Gestion-Tarea
+# React + TypeScript + Vite
 
-Aplicación web para la gestión de tareas y etiquetas, desarrollada con React, Vite y Redux Toolkit.
-Esta aplicación permite a los usuarios registrarse, iniciar sesión, crear, actualizar y eliminar tareas y etiquetas, así como también cambiar el estado de las tareas y asignar etiquetas a las tareas.
-Para la autenticación se utiliza un servidor de backend desarrollado con Node.js, Express y MongoDB.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Tabla de Contenidos
+Currently, two official plugins are available:
 
-- [Imagenes del Proyecto](#imagenes-del-proyecto)
-- [Instalación](#instalación)
-- [Tecnologías Utilizadas](#tecnologías-utilizadas)
-- [Funcionalidades](#funcionalidades)
-- [Estructura del Proyecto](#estructura-del-proyecto)
-- [Variables de Entorno](#variables-de-entorno)
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Imagenes del Proyecto
+## Expanding the ESLint configuration
 
-![Vista Principal](src/assets/images/vista_principal.png)
-![Vista Secundaria](src/assets/images/vista_secundaria.png)
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-## 🛠️ Tecnologías Utilizadas
+- Configure the top-level `parserOptions` property like this:
 
-- [React](https://reactjs.org/)
-- [Vite](https://vitejs.dev/)
-- [Ant Design](https://ant.design/)
-- [Material-UI](https://mui.com/)
-- [Redux Toolkit](https://redux-toolkit.js.org/)
-- [Formik](https://formik.org/)
-- [Yup](https://github.com/jquense/yup/tree/pre-v1)
-- [Lodash](https://lodash.com/)
-- [Moment.js](https://momentjs.com/)
-- [React Router](https://reactrouter.com/)
-- [TypeScript](https://www.typescriptlang.org/)
-
-## Instalación
-
-### Requisitos Previos
-
-- Node.js (https://nodejs.org/)
-- npm (https://www.npmjs.com/)
-
-### Pasos de Instalación
-
-1. Clona el repositorio:
-   ```bash
-   git clone https://github.com/santiagoarielv98/sv-gestion-tarea.git
-   ```
-2. Navega al directorio del proyecto:
-   ```bash
-   cd sv-gestion-tarea
-   ```
-3. Instala las dependencias:
-   ```bash
-   npm install
-   ```
-4. Crea un archivo `.env` en la raíz del proyecto y copia el contenido del archivo `.env.example`.
-5. Configura las variables de entorno en el archivo `.env`.
-6. Inicia la aplicación:
-   ```bash
-   npm run dev
-   ```
-7. La aplicación estará disponible en `http://localhost:5173`.
-
-- Nota: Para poder utilizar la aplicación, se debe tener el servidor del backend levantado. Para más información, [ver la documentación del backend.](https://github.com/santiagoarielv98/sv-gestion-tarea-api.git)
-
-## Funcionalidades
-
-- Crear, editar y eliminar tareas.
-- Autenticación de usuarios.
-- Crear, editar y eliminar etiquetas.
-- Asignar etiquetas a tareas.
-
-## Estructura del Proyecto
-
-```
-sv-gestion-tarea/
-
-
+```js
+export default tseslint.config({
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
 ```
 
-## Variables de Entorno
+- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
+- Optionally add `...tseslint.configs.stylisticTypeChecked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
 
-Solo una variable de entorno es necesaria para la aplicación:
+```js
+// eslint.config.js
+import react from 'eslint-plugin-react'
 
-- `VITE_API_URL`: URL de la API del backend (obligatorio).
-- `VITE_APP_VERSION`: Versión de la aplicación (opcional).
+export default tseslint.config({
+  // Set the react version
+  settings: { react: { version: '18.3' } },
+  plugins: {
+    // Add the react plugin
+    react,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended rules
+    ...react.configs.recommended.rules,
+    ...react.configs['jsx-runtime'].rules,
+  },
+})
+```
