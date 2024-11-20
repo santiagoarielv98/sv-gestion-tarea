@@ -1,7 +1,7 @@
 import { apiUrl } from "@/common/constants/app";
 import { Task } from "../schema/task-schema";
 
-export const getTask = async (id: string): Promise<Task> => {
+export const getTask = async (id: number): Promise<Task> => {
   const response = await fetch(`${apiUrl}/tasks/${id}`);
   return response.json();
 };
@@ -33,7 +33,7 @@ export const updateTask = async (task: Task): Promise<Task> => {
   return response.json();
 };
 
-export const deleteTask = async (id: string): Promise<void> => {
+export const deleteTask = async (id: number): Promise<void> => {
   await fetch(`${apiUrl}/tasks/${id}`, {
     method: "DELETE",
   });

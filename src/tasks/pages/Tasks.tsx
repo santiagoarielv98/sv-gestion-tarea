@@ -6,18 +6,11 @@ import { getTasks } from "../services/api";
 import { tasksSchema } from "../schema/task-schema";
 
 function Tasks() {
-  const {
-    isPending,
-    error,
-    data: tasks = [],
-    isFetching,
-  } = useQuery({
+  const { data: tasks = [] } = useQuery({
     queryKey: ["tasks"],
     queryFn: async () => getTasks(),
     select: (data) => tasksSchema.parse(data),
   });
-
-  console.log({ isPending, error, tasks, isFetching });
 
   return (
     <div className="h-full flex-1 flex-col space-y-8 p-8 flex">
