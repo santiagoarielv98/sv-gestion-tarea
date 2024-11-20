@@ -7,7 +7,8 @@ export function useLogin() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: login,
-    onSuccess: () => {
+    onSuccess: (data) => {
+      localStorage.setItem("token", data.access_token);
       toast({
         title: "Inicio de sesión exitoso",
         description: "Ahora estás conectado",

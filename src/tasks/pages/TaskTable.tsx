@@ -9,7 +9,7 @@ function TaskTable() {
 
   React.useEffect(() => {
     if (error) {
-      (error as unknown as Response).json().then(({ message }) => {
+      (error as unknown as Response)?.json?.().then(({ message }) => {
         toast({
           title: "Error",
           description: message ?? "No se pudieron cargar las tareas",
