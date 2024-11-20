@@ -1,11 +1,10 @@
-import { columns } from "../table/columns";
-import { DataTable } from "../table/data-table";
+import React from "react";
+
 import { UserNav } from "../table/user-nav";
-import useTasks from "../hooks/useTasks";
+
+const TaskTable = React.lazy(() => import("./TaskTable"));
 
 function Tasks() {
-  const { tasks } = useTasks();
-
   return (
     <div className="h-full flex-1 flex-col space-y-8 p-8 flex">
       <div className="flex items-center justify-between space-y-2">
@@ -21,7 +20,9 @@ function Tasks() {
           <UserNav />
         </div>
       </div>
-      <DataTable data={tasks} columns={columns} />
+      <React.Suspense fallback={null}>
+        <TaskTable />
+      </React.Suspense>
     </div>
   );
 }

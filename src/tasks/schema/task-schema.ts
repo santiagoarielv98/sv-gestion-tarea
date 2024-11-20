@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@/es-zod";
 
 export const taskSchema = z.object({
   id: z.number(),
