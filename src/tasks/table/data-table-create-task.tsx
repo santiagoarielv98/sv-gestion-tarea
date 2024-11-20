@@ -68,11 +68,7 @@ function DataTableCreateTask() {
   return (
     <Dialog open={open} onOpenChange={handleOpenDiscard}>
       <DialogTrigger asChild>
-        <Button
-          size="sm"
-          className="ml-auto hidden h-8 lg:flex"
-          variant="outline"
-        >
+        <Button size="sm" className="ml-auto h-8 lg:flex" variant="outline">
           <Plus />
           Crear tarea
         </Button>
