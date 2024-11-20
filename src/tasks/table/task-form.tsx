@@ -11,7 +11,7 @@ import { UseFormReturn } from "react-hook-form";
 interface TaskFormProps {
   form: UseFormReturn<{
     title: string;
-    content: string;
+    content?: string | null;
   }>;
 }
 
@@ -39,7 +39,11 @@ function TaskForm({ form }: TaskFormProps) {
           <FormItem>
             <FormLabel>Contenido</FormLabel>
             <FormControl>
-              <Input placeholder="Contenido de la tarea" {...field} />
+              <Input
+                placeholder="Contenido de la tarea"
+                {...field}
+                value={field.value!}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>

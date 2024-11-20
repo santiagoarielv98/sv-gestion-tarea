@@ -11,7 +11,13 @@ export const createTaskSchema = z.object({
   content: z.string().nullish(),
 });
 
+export const updateTaskSchema = z.object({
+  title: z.string().min(1),
+  content: z.string().nullish(),
+});
+
 export const tasksSchema = z.array(taskSchema);
 
 export type Task = z.infer<typeof taskSchema>;
 export type CreateTask = z.infer<typeof createTaskSchema>;
+export type UpdateTask = z.infer<typeof updateTaskSchema>;

@@ -22,7 +22,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { Task, taskSchema } from "../schema/task-schema";
+import { Task, UpdateTask, updateTaskSchema } from "../schema/task-schema";
 import useTasks from "../hooks/useTasks";
 import React from "react";
 import TaskForm from "./task-form";
@@ -37,18 +37,18 @@ function DataTableEditTask({ task }: DataTableEditTaskProps) {
   const [openDiscard, setOpenDiscard] = React.useState(false);
   const { updateTaskMutation } = useTasks();
 
-  const form = useForm<Task>({
-    resolver: zodResolver(taskSchema),
+  const form = useForm<UpdateTask>({
+    resolver: zodResolver(updateTaskSchema),
     defaultValues: {
-      id: task.id,
       title: task.title,
       content: task.content!,
     },
   });
 
-  async function onSubmit(values: Task) {
+  async function onSubmit(values: UpdateTask) {
+    if (!task.id) return;
     try {
-      await updateTaskMutation(values);
+      await updateTaskMutation({ ...values, id: task.id });
       setOpen(false);
       form.reset();
     } catch (error) {
@@ -57,7 +57,6 @@ function DataTableEditTask({ task }: DataTableEditTaskProps) {
   }
 
   const handleOpenDiscard = (value: boolean) => {
-    console.log(form.formState.isDirty);
     if (form.formState.isDirty) {
       setOpenDiscard(true);
     } else {

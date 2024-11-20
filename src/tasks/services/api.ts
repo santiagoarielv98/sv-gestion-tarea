@@ -24,7 +24,7 @@ export const createTask = async (task: CreateTask): Promise<Task> => {
 
 export const updateTask = async ({ id, ...task }: Task): Promise<Task> => {
   const response = await fetch(`${apiUrl}/tasks/${id}`, {
-    method: "PUT",
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
