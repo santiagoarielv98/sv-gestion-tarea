@@ -24,14 +24,14 @@ import { useForm } from "react-hook-form";
 
 import { Plus } from "lucide-react";
 import { CreateTask, createTaskSchema } from "../schema/task-schema";
-import useTasks from "../hooks/useTasks";
+import { useCreateTask } from "../hooks/useTasks";
 import React from "react";
 import TaskForm from "./task-form";
 
 function DataTableCreateTask() {
   const [open, setOpen] = React.useState(false);
   const [openDiscard, setOpenDiscard] = React.useState(false);
-  const { createTaskMutation } = useTasks();
+  const { mutate } = useCreateTask();
 
   const form = useForm<CreateTask>({
     resolver: zodResolver(createTaskSchema),
@@ -43,7 +43,7 @@ function DataTableCreateTask() {
 
   async function onSubmit(values: CreateTask) {
     try {
-      await createTaskMutation(values);
+      await mutate(values);
       setOpen(false);
       form.reset();
     } catch (error) {

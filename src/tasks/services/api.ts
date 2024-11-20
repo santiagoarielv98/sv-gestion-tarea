@@ -8,6 +8,9 @@ export const getTask = async (id: number): Promise<Task> => {
 
 export const getTasks = async (): Promise<Task[]> => {
   const response = await fetch(`${apiUrl}/tasks`);
+  if (!response.ok) {
+    throw response;
+  }
   return response.json();
 };
 

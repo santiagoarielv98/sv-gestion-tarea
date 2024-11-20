@@ -22,7 +22,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { Task, UpdateTask, updateTaskSchema } from "../schema/task-schema";
-import useTasks from "../hooks/useTasks";
+import { useUpdateTask } from "../hooks/useTasks";
 import React from "react";
 import TaskForm from "./task-form";
 
@@ -34,7 +34,7 @@ interface DataTableEditTaskProps {
 
 function DataTableEditTask({ task, open, setOpen }: DataTableEditTaskProps) {
   const [openDiscard, setOpenDiscard] = React.useState(false);
-  const { updateTaskMutation } = useTasks();
+  const { mutate } = useUpdateTask();
 
   const form = useForm<UpdateTask>({
     resolver: zodResolver(updateTaskSchema),
@@ -47,7 +47,7 @@ function DataTableEditTask({ task, open, setOpen }: DataTableEditTaskProps) {
   async function onSubmit(values: UpdateTask) {
     if (!task.id) return;
     try {
-      await updateTaskMutation({ ...values, id: task.id });
+      await mutate({ ...values, id: task.id });
       setOpen(false);
       form.reset();
     } catch (error) {

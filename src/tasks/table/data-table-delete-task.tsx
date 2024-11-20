@@ -8,7 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import useTasks from "../hooks/useTasks";
+import { useDeleteTask } from "../hooks/useTasks";
 import { Task } from "../schema/task-schema";
 
 interface DataTableDeleteDialogProps {
@@ -22,7 +22,7 @@ function DataTableDeleteTask({
   open,
   setOpen,
 }: DataTableDeleteDialogProps) {
-  const { isPendingDelete, deleteTaskMutation } = useTasks();
+  const { isPending, mutate } = useDeleteTask();
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
@@ -36,8 +36,8 @@ function DataTableDeleteTask({
         <AlertDialogFooter>
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
           <AlertDialogAction
-            onClick={() => deleteTaskMutation(task.id)}
-            disabled={isPendingDelete}
+            onClick={() => mutate(task.id)}
+            disabled={isPending}
             className="btn-danger"
           >
             Eliminar

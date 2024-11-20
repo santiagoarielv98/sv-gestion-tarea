@@ -4,44 +4,44 @@ import { tasksSchema } from "../schema/task-schema";
 
 const taskQueryKey = ["tasks"];
 
-function useTasks() {
-  const queryClient = useQueryClient();
-
-  const { data: tasks = [] } = useQuery({
+export function useTasks() {
+  return useQuery({
     queryKey: taskQueryKey,
     queryFn: getTasks,
     select: (data) => tasksSchema.parse(data),
+    retry: 0,
   });
+}
 
-  const { mutate: deleteTaskMutation, isPending: isPendingDelete } =
-    useMutation({
-      mutationFn: deleteTask,
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: taskQueryKey });
-      },
-    });
+export function useDeleteTask() {
+  const queryClient = useQueryClient();
 
-  const { mutate: createTaskMutation } = useMutation({
+  return useMutation({
+    mutationFn: deleteTask,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: taskQueryKey });
+    },
+  });
+}
+
+export function useCreateTask() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
     mutationFn: createTask,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: taskQueryKey });
     },
   });
+}
 
-  const { mutate: updateTaskMutation } = useMutation({
+export function useUpdateTask() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
     mutationFn: updateTask,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: taskQueryKey });
     },
   });
-
-  return {
-    tasks,
-    isPendingDelete,
-    deleteTaskMutation,
-    createTaskMutation,
-    updateTaskMutation,
-  };
 }
-
-export default useTasks;
