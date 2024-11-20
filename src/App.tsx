@@ -1,8 +1,8 @@
-import { DataTable } from "./tasks/data-table";
-import { UserNav } from "./tasks/user-nav";
+import { DataTable } from "./tasks/table/data-table";
+import { UserNav } from "./tasks/table/user-nav";
 
 import tasks from "./tasks/data/tasks.json";
-import { columns } from "./tasks/columns";
+import { columns } from "./tasks/table/columns";
 
 function App() {
   
