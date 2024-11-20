@@ -35,7 +35,6 @@ export const columns: ColumnDef<Task>[] = [
     ),
     enableSorting: false,
     enableHiding: false,
-    size: 40,
   },
   {
     accessorKey: "id",
