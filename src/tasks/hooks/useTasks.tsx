@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createTask, deleteTask, getTasks, updateTask } from "../services/api";
 import { tasksSchema } from "../schema/task-schema";
 
-const taskQueryKey = ["tasks"];
+export const taskQueryKey = ["tasks"];
 
 export function useTasks() {
   return useQuery({
