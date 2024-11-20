@@ -63,9 +63,6 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
-    defaultColumn: {
-      size: 50,
-    },
   });
 
   return (

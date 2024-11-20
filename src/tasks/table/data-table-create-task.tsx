@@ -8,14 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,7 +19,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -34,6 +26,7 @@ import { Plus } from "lucide-react";
 import { CreateTask, createTaskSchema } from "../schema/task-schema";
 import useTasks from "../hooks/useTasks";
 import React from "react";
+import TaskForm from "./task-form";
 
 function DataTableCreateTask() {
   const [open, setOpen] = React.useState(false);
@@ -93,33 +86,7 @@ function DataTableCreateTask() {
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Titulo</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Titulo de la tarea" {...field} />
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="content"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Contenido</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Contenido de la tarea" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <TaskForm form={form} />
             <DialogFooter>
               <Button type="submit" disabled={form.formState.isSubmitting}>
                 Guardar cambios
