@@ -6,7 +6,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 import {
@@ -26,14 +25,14 @@ import { Task, UpdateTask, updateTaskSchema } from "../schema/task-schema";
 import useTasks from "../hooks/useTasks";
 import React from "react";
 import TaskForm from "./task-form";
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 
 interface DataTableEditTaskProps {
   task: Task;
+  open: boolean;
+  setOpen: (value: boolean) => void;
 }
 
-function DataTableEditTask({ task }: DataTableEditTaskProps) {
-  const [open, setOpen] = React.useState(false);
+function DataTableEditTask({ task, open, setOpen }: DataTableEditTaskProps) {
   const [openDiscard, setOpenDiscard] = React.useState(false);
   const { updateTaskMutation } = useTasks();
 
@@ -72,11 +71,6 @@ function DataTableEditTask({ task }: DataTableEditTaskProps) {
 
   return (
     <Dialog open={open} onOpenChange={handleOpenDiscard} modal>
-      <DialogTrigger asChild>
-        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-          Editar
-        </DropdownMenuItem>
-      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Editar tarea</DialogTitle>
