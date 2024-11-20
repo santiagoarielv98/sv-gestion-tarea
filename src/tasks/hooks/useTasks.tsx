@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createTask, deleteTask, getTasks } from "../services/api";
+import { createTask, deleteTask, getTasks, updateTask } from "../services/api";
 import { tasksSchema } from "../schema/task-schema";
 
 const taskQueryKey = ["tasks"];
@@ -28,11 +28,19 @@ function useTasks() {
     },
   });
 
+  const { mutate: updateTaskMutation } = useMutation({
+    mutationFn: updateTask,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: taskQueryKey });
+    },
+  });
+
   return {
     tasks,
     isPendingDelete,
     deleteTaskMutation,
     createTaskMutation,
+    updateTaskMutation,
   };
 }
 

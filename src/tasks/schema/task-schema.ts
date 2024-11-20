@@ -8,7 +8,7 @@ export const taskSchema = z.object({
 
 export const createTaskSchema = z.object({
   title: z.string().min(1),
-  content: z.string(),
+  content: z.string().nullish(),
 });
 
 export const tasksSchema = z.array(taskSchema);

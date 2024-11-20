@@ -29,6 +29,7 @@ import {
 import { taskSchema } from "../schema/task-schema";
 import React from "react";
 import useTasks from "../hooks/useTasks";
+import DataTableEditTask from "./data-table-edit-task";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -57,7 +58,7 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem>Editar</DropdownMenuItem>
+        <DataTableEditTask task={task} />
         {/* <DropdownMenuItem>Make a copy</DropdownMenuItem> */}
         {/* <DropdownMenuItem>Favorite</DropdownMenuItem> */}
         {/* <DropdownMenuSeparator /> */}

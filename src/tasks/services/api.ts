@@ -22,8 +22,8 @@ export const createTask = async (task: CreateTask): Promise<Task> => {
   return response.json();
 };
 
-export const updateTask = async (task: Task): Promise<Task> => {
-  const response = await fetch(`${apiUrl}/tasks/${task.id}`, {
+export const updateTask = async ({ id, ...task }: Task): Promise<Task> => {
+  const response = await fetch(`${apiUrl}/tasks/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
