@@ -1,12 +1,12 @@
-import { ColumnDef } from "@tanstack/react-table"
+import { ColumnDef } from "@tanstack/react-table";
 
 // import { Badge } from "@/components/ui/badge"
-import { Checkbox } from "@/components/ui/checkbox"
+import { Checkbox } from "@/components/ui/checkbox";
 
 // import { /*labels,*/ priorities, statuses } from "./data/data"
-import { Task } from "../schema/task-schema"
-import { DataTableColumnHeader } from "./data-table-column-header"
-import { DataTableRowActions } from "./data-table-row-actions"
+import { Task } from "../schema/task-schema";
+import { DataTableColumnHeader } from "./data-table-column-header";
+import { DataTableRowActions } from "./data-table-row-actions";
 
 export const columns: ColumnDef<Task>[] = [
   {
@@ -35,6 +35,7 @@ export const columns: ColumnDef<Task>[] = [
     ),
     enableSorting: false,
     enableHiding: false,
+    size: 40,
   },
   {
     accessorKey: "id",
@@ -68,7 +69,7 @@ export const columns: ColumnDef<Task>[] = [
             {row.original.content}
           </p>
         </div>
-      )
+      );
     },
   },
   // {
@@ -132,4 +133,4 @@ export const columns: ColumnDef<Task>[] = [
     },
     cell: ({ row }) => <DataTableRowActions row={row} />,
   },
-]
+];
