@@ -1,5 +1,5 @@
 import { apiUrl } from "@/common/constants/app";
-import { Task } from "../schema/task-schema";
+import { CreateTask, Task } from "../schema/task-schema";
 
 export const getTask = async (id: number): Promise<Task> => {
   const response = await fetch(`${apiUrl}/tasks/${id}`);
@@ -11,7 +11,7 @@ export const getTasks = async (): Promise<Task[]> => {
   return response.json();
 };
 
-export const createTask = async (task: Omit<Task, "id">): Promise<Task> => {
+export const createTask = async (task: CreateTask): Promise<Task> => {
   const response = await fetch(`${apiUrl}/tasks`, {
     method: "POST",
     headers: {
