@@ -27,9 +27,8 @@ import {
 } from "@/components/ui/alert-dialog";
 // import { labels } from "./data/data"
 import { taskSchema } from "../schema/task-schema";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteTask } from "../services/api";
 import React from "react";
+import useTasks from "../hooks/useTasks";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -38,18 +37,9 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const queryClient = useQueryClient();
-  const [open, setOpen] = React.useState(false);
-
   const task = taskSchema.parse(row.original);
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: deleteTask,
-    onSuccess: () => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["tasks"] });
-    },
-  });
+  const { isPendingDelete, deleteTaskMutation } = useTasks();
+  const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -84,7 +74,7 @@ export function DataTableRowActions<TData>({
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator /> */}
-        <DropdownMenuItem onClick={handleOpen} disabled={isPending}>
+        <DropdownMenuItem onClick={handleOpen} disabled={isPendingDelete}>
           Eliminar
           <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
         </DropdownMenuItem>
@@ -101,8 +91,8 @@ export function DataTableRowActions<TData>({
           <AlertDialogFooter>
             <AlertDialogCancel>Cancelar</AlertDialogCancel>
             <AlertDialogAction
-              onClick={() => mutate(task.id)}
-              disabled={isPending}
+              onClick={() => deleteTaskMutation(task.id)}
+              disabled={isPendingDelete}
               className="btn-danger"
             >
               Eliminar

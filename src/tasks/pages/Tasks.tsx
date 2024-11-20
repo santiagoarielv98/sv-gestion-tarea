@@ -1,16 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
 import { columns } from "../table/columns";
 import { DataTable } from "../table/data-table";
 import { UserNav } from "../table/user-nav";
-import { getTasks } from "../services/api";
-import { tasksSchema } from "../schema/task-schema";
+import useTasks from "../hooks/useTasks";
 
 function Tasks() {
-  const { data: tasks = [] } = useQuery({
-    queryKey: ["tasks"],
-    queryFn: async () => getTasks(),
-    select: (data) => tasksSchema.parse(data),
-  });
+  const { tasks } = useTasks();
 
   return (
     <div className="h-full flex-1 flex-col space-y-8 p-8 flex">
