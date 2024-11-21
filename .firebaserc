@@ -1,5 +1,5 @@
 {
-  "projects": {
-    "default": "sv-gestion-tarea"
-  }
+    "projects": {
+        "default": "sv-gestion-tarea"
+    }
 }
