@@ -5,7 +5,7 @@ import { RouterProvider } from "react-router-dom";
 import "./index.css";
 import { router } from "./routes/index.tsx";
 import { Toaster } from "./components/ui/toaster.tsx";
-import { AuthProvider } from "./context/AuthProvider.tsx";
+import { AuthProvider } from "./context/auth-provider.tsx";
 
 const queryClient = new QueryClient({});
 

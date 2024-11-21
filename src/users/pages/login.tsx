@@ -27,35 +27,39 @@ export function LoginPage() {
   };
 
   return (
-    <Card className="mx-auto max-w-sm my-auto">
-      <CardHeader>
-        <CardTitle className="text-2xl">Login</CardTitle>
-        <CardDescription>
-          Enter your email below to login to your account
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="grid gap-4">
-              <LoginForm form={form} />
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={form.formState.isSubmitting}
-              >
-                Login
-              </Button>
-              <div className="mt-4 text-center text-sm">
-                Don&apos;t have an account?{" "}
-                <Link to="#" className="underline">
-                  Sign up
-                </Link>
+    <div className="flex h-screen w-full items-center justify-center px-4">
+      <Card className="mx-auto max-w-sm my-auto">
+        <CardHeader>
+          <CardTitle className="text-2xl">Iniciar sesión</CardTitle>
+          <CardDescription>
+            Ingresa tu correo electrónico y contraseña para iniciar sesión
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <div className="grid gap-4">
+                <LoginForm form={form} />
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={form.formState.isSubmitting}
+                >
+                  {form.formState.isSubmitting
+                    ? "Iniciando sesión"
+                    : "Iniciar sesión"}
+                </Button>
+                <div className="mt-4 text-center text-sm">
+                  ¿No tienes una cuenta?{" "}
+                  <Link to="#" className="underline">
+                    Regístrate
+                  </Link>
+                </div>
               </div>
-            </div>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
