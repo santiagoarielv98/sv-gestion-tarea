@@ -17,10 +17,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 // import { labels } from "./data/data"
-import { taskSchema } from "../schema/task-schema";
 import React from "react";
-import DataTableEditTask from "./data-table-edit-task";
+import { taskSchema } from "../schema/task-schema";
 import DataTableDeleteTask from "./data-table-delete-task";
+import DataTableEditTask from "./data-table-edit-task";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;

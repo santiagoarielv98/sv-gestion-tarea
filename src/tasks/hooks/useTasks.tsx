@@ -1,6 +1,14 @@
+import { toast } from "@/hooks/use-toast";
+import { ToastAction } from "@radix-ui/react-toast";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createTask, deleteTask, getTasks, updateTask } from "../services/api";
 import { tasksSchema } from "../schema/task-schema";
+import {
+  createTask,
+  deleteTask,
+  getTasks,
+  restoreTask,
+  updateTask,
+} from "../services/api";
 
 export const taskQueryKey = ["tasks"];
 
@@ -15,10 +23,20 @@ export function useTasks() {
 
 export function useDeleteTask() {
   const queryClient = useQueryClient();
+  const { mutate: restoreTask } = useRestoreTask();
 
   return useMutation({
     mutationFn: deleteTask,
-    onSuccess: () => {
+    onSuccess: (data) => {
+      toast({
+        title: "Tarea eliminada",
+        description: `La tarea "${data.title}" ha sido eliminada correctamente.`,
+        action: (
+          <ToastAction altText="Deshacer" onClick={() => restoreTask(data.id)}>
+            Deshacer
+          </ToastAction>
+        ),
+      });
       queryClient.invalidateQueries({ queryKey: taskQueryKey });
     },
   });
@@ -40,6 +58,17 @@ export function useUpdateTask() {
 
   return useMutation({
     mutationFn: updateTask,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: taskQueryKey });
+    },
+  });
+}
+
+export function useRestoreTask() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: restoreTask,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: taskQueryKey });
     },

@@ -21,6 +21,12 @@ export const updateTask = async ({ id, ...task }: Task): Promise<Task> => {
   return response.data;
 };
 
-export const deleteTask = async (id: number): Promise<void> => {
-  await api.delete(`/tasks/${id}`);
+export const deleteTask = async (id: number): Promise<Task> => {
+  const response = await api.delete<Task>(`/tasks/${id}`);
+  return response.data;
+};
+
+export const restoreTask = async (id: number): Promise<Task> => {
+  const response = await api.patch<Task>(`/tasks/${id}/restore`);
+  return response.data;
 };
