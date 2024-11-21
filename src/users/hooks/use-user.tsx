@@ -3,14 +3,23 @@ import { fetchProfile, login } from "../services/api";
 import { taskQueryKey } from "@/tasks/hooks/useTasks";
 import { toast } from "@/hooks/use-toast";
 import { User } from "../schema/user-schema";
+import { AxiosError } from "axios";
 
 export const authQueryKey = ["auth"];
 
 export function useProfile() {
-  return useQuery<User>({
+  return useQuery<User | null>({
     queryKey: authQueryKey,
     queryFn: fetchProfile,
     retry: 0,
+    throwOnError: (error, _query) => {
+      const axiosError = error as AxiosError;
+      if (axiosError.response?.status === 401) {
+        _query.setData(null);
+        return false;
+      }
+      return true;
+    },
   });
 }
 
@@ -24,7 +33,23 @@ export function useLogin() {
         title: "Inicio de sesión exitoso",
         description: "Ahora estás conectado",
       });
+      queryClient.invalidateQueries({ queryKey: authQueryKey });
       queryClient.invalidateQueries({ queryKey: taskQueryKey });
+    },
+  });
+}
+
+export function useLogout() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async () => Promise.resolve(),
+    onSuccess: () => {
+      localStorage.removeItem("token");
+      queryClient.invalidateQueries({ queryKey: authQueryKey });
+      toast({
+        title: "Cierre de sesión exitoso",
+        description: "Ahora estás desconectado",
+      });
     },
   });
 }
