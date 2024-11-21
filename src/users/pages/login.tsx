@@ -16,14 +16,14 @@ import { useLogin } from "../hooks/use-user";
 import { Login, loginSchema } from "../schema/auth-schema";
 
 export function LoginPage() {
-  const { mutate } = useLogin();
+  const { mutate: login, isPending } = useLogin();
   const form = useForm<Login>({
     resolver: zodResolver(loginSchema),
     defaultValues: demoUserCredentials,
   });
 
   const onSubmit = async (data: Login) => {
-    await mutate(data);
+    await login(data);
   };
 
   return (
@@ -43,9 +43,9 @@ export function LoginPage() {
                 <Button
                   type="submit"
                   className="w-full"
-                  disabled={form.formState.isSubmitting}
+                  disabled={form.formState.isSubmitting || isPending}
                 >
-                  {form.formState.isSubmitting
+                  {form.formState.isSubmitting || isPending
                     ? "Iniciando sesión"
                     : "Iniciar sesión"}
                 </Button>

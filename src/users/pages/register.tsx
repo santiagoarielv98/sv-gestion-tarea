@@ -15,7 +15,7 @@ import { useRegister } from "../hooks/use-user";
 import { Register, registerSchema } from "../schema/auth-schema";
 
 export function RegisterPage() {
-  const { mutate: register } = useRegister();
+  const { mutate: register, isPending } = useRegister();
   const form = useForm<Register>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -47,9 +47,11 @@ export function RegisterPage() {
                 <Button
                   type="submit"
                   className="w-full"
-                  disabled={form.formState.isSubmitting}
+                  disabled={form.formState.isSubmitting || isPending}
                 >
-                  {form.formState.isSubmitting ? "Registrando" : "Registrarse"}
+                  {form.formState.isSubmitting || isPending
+                    ? "Registrando"
+                    : "Registrarse"}
                 </Button>
                 <div className="mt-4 text-center text-sm">
                   ¿Ya tienes una cuenta?{" "}

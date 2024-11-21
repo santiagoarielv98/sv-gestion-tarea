@@ -48,6 +48,10 @@ export function useCreateTask() {
   return useMutation({
     mutationFn: createTask,
     onSuccess: () => {
+      toast({
+        title: "Tarea creada",
+        description: "La tarea ha sido creada correctamente.",
+      });
       queryClient.invalidateQueries({ queryKey: taskQueryKey });
     },
   });
@@ -59,6 +63,10 @@ export function useUpdateTask() {
   return useMutation({
     mutationFn: updateTask,
     onSuccess: () => {
+      toast({
+        title: "Tarea actualizada",
+        description: "La tarea ha sido actualizada correctamente.",
+      });
       queryClient.invalidateQueries({ queryKey: taskQueryKey });
     },
   });
@@ -70,6 +78,10 @@ export function useRestoreTask() {
   return useMutation({
     mutationFn: restoreTask,
     onSuccess: () => {
+      toast({
+        title: "Tarea restaurada",
+        description: "La tarea ha sido restaurada correctamente.",
+      });
       queryClient.invalidateQueries({ queryKey: taskQueryKey });
     },
   });
