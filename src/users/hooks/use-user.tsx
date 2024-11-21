@@ -14,11 +14,11 @@ export function useProfile() {
     retry: 0,
     throwOnError: (error, _query) => {
       const axiosError = error as AxiosError;
-      if (axiosError.response?.status === 401) {
+      if (axiosError?.response?.status === 401) {
         _query.setData(null);
         return false;
       }
-      return true;
+      return false;
     },
   });
 }
