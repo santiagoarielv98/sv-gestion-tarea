@@ -31,7 +31,7 @@ import TaskForm from "./task-form";
 function DataTableCreateTask() {
   const [open, setOpen] = React.useState(false);
   const [openDiscard, setOpenDiscard] = React.useState(false);
-  const { mutate } = useCreateTask();
+  const { mutate, isPending } = useCreateTask();
 
   const form = useForm<CreateTask>({
     resolver: zodResolver(createTaskSchema),
@@ -84,7 +84,10 @@ function DataTableCreateTask() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <TaskForm form={form} />
             <DialogFooter>
-              <Button type="submit" disabled={form.formState.isSubmitting}>
+              <Button
+                type="submit"
+                disabled={form.formState.isSubmitting || isPending}
+              >
                 Guardar cambios
               </Button>
             </DialogFooter>

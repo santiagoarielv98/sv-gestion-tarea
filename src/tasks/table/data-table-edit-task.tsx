@@ -34,7 +34,7 @@ interface DataTableEditTaskProps {
 
 function DataTableEditTask({ task, open, setOpen }: DataTableEditTaskProps) {
   const [openDiscard, setOpenDiscard] = React.useState(false);
-  const { mutate } = useUpdateTask();
+  const { mutate, isPending } = useUpdateTask();
 
   const form = useForm<UpdateTask>({
     resolver: zodResolver(updateTaskSchema),
@@ -82,7 +82,10 @@ function DataTableEditTask({ task, open, setOpen }: DataTableEditTaskProps) {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <TaskForm form={form} />
             <DialogFooter>
-              <Button type="submit" disabled={form.formState.isSubmitting}>
+              <Button
+                type="submit"
+                disabled={form.formState.isSubmitting || isPending}
+              >
                 Guardar cambios
               </Button>
             </DialogFooter>
