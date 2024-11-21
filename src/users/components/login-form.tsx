@@ -25,7 +25,12 @@ function LoginForm({ form }: LoginFormProps) {
           <FormItem>
             <FormLabel>Email</FormLabel>
             <FormControl>
-              <Input placeholder="Email" {...field} />
+              <Input
+                placeholder="Email"
+                {...field}
+                autoFocus
+                autoComplete="email"
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -38,7 +43,12 @@ function LoginForm({ form }: LoginFormProps) {
           <FormItem>
             <FormLabel>Contraseña</FormLabel>
             <FormControl>
-              <Input placeholder="Contraseña" {...field} />
+              <Input
+                placeholder="Contraseña"
+                {...field}
+                type="password"
+                autoComplete="current-password"
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
