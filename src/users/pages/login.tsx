@@ -12,7 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import LoginForm from "../components/login-form";
-import { useLogin } from "../hooks/useAuth";
+import { useLogin } from "../hooks/use-user";
 import { Login, loginSchema } from "../schema/auth-schema";
 
 export function LoginPage() {

@@ -2,13 +2,15 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchProfile, login } from "../services/api";
 import { taskQueryKey } from "@/tasks/hooks/useTasks";
 import { toast } from "@/hooks/use-toast";
+import { User } from "../schema/user-schema";
 
 export const authQueryKey = ["auth"];
 
 export function useProfile() {
-  return useQuery({
+  return useQuery<User>({
     queryKey: authQueryKey,
     queryFn: fetchProfile,
+    retry: 0,
   });
 }
 
