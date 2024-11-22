@@ -22,7 +22,7 @@ const data = {
       url: "#",
       items: [
         {
-          title: "Tasks",
+          title: "Tareas",
           url: "/",
         },
       ],
@@ -33,7 +33,7 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { pathname } = useLocation();
   return (
-    <Sidebar {...props}>
+    <Sidebar {...props} sheetTitle="App" sheetDescription="App navigation">
       <SidebarHeader>
         <NavUser />
       </SidebarHeader>
