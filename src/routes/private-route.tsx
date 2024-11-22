@@ -1,4 +1,5 @@
 import { useAuth } from "@/hooks/use-auth";
+import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 const PrivateRoute = () => {
@@ -8,7 +9,7 @@ const PrivateRoute = () => {
     return <Navigate to="/login" />;
   }
 
-  return <Outlet />;
+  return <React.Suspense fallback={null}>{<Outlet />}</React.Suspense>;
 };
 
 export default PrivateRoute;

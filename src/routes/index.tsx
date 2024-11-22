@@ -5,6 +5,7 @@ import AuthRoute from "./auth-route";
 import React from "react";
 import { RegisterPage } from "@/users/pages/register";
 
+const MainLayout = React.lazy(() => import("@/layouts/main-layout"));
 const Tasks = React.lazy(() => import("@/tasks/pages/Tasks"));
 
 export const router = createBrowserRouter(
@@ -14,8 +15,14 @@ export const router = createBrowserRouter(
       element: <PrivateRoute />,
       children: [
         {
-          index: true,
-          element: <Tasks />,
+          path: "/",
+          element: <MainLayout />,
+          children: [
+            {
+              index: true,
+              element: <Tasks />,
+            },
+          ],
         },
       ],
     },
