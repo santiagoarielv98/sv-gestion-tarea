@@ -1,9 +1,11 @@
 import { z } from "@/es-zod";
+import { tagsSchema } from "./tag-schema";
 
 export const taskSchema = z.object({
   id: z.number(),
   title: z.string(),
   content: z.string().nullish(),
+  tags: tagsSchema,
 });
 
 export const createTaskSchema = z.object({

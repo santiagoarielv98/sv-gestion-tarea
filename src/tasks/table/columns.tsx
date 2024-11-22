@@ -1,12 +1,13 @@
 import { ColumnDef } from "@tanstack/react-table";
 
-// import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 
 // import { /*labels,*/ priorities, statuses } from "./data/data"
 import { Task } from "../schema/task-schema";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
+import { Tag } from "../schema/tag-schema";
 
 export const columns: ColumnDef<Task>[] = [
   {
@@ -67,6 +68,27 @@ export const columns: ColumnDef<Task>[] = [
           <p className="text-sm text-muted-foreground">
             {row.original.content}
           </p>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "tags",
+    meta: {
+      label: "Etiquetas",
+    },
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Etiquetas" />
+    ),
+    cell: ({ row }) => {
+      const tags = row.getValue("tags") as Tag[];
+      return (
+        <div className="flex flex-wrap gap-1">
+          {tags.map((tag) => (
+            <Badge key={tag.id} variant="outline">
+              {tag.name}
+            </Badge>
+          ))}
         </div>
       );
     },
