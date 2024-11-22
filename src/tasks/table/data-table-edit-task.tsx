@@ -41,6 +41,7 @@ function DataTableEditTask({ task, open, setOpen }: DataTableEditTaskProps) {
     defaultValues: {
       title: task.title,
       content: task.content!,
+      tags: task.tags ? task.tags.map((tag) => tag.id) : [],
     },
   });
 

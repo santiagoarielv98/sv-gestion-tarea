@@ -1,16 +1,19 @@
 import { toast } from "@/hooks/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Tag, tagsSchema } from "../schema/tag-schema";
 import { tasksSchema } from "../schema/task-schema";
 import {
   createTask,
   deleteTask,
+  getTags,
   getTasks,
   restoreTask,
   updateTask,
 } from "../services/api";
 
 export const taskQueryKey = ["tasks"];
+export const tagQueryKey = ["tags"];
 
 export function useTasks() {
   return useQuery({
@@ -84,5 +87,14 @@ export function useRestoreTask() {
       });
       queryClient.invalidateQueries({ queryKey: taskQueryKey });
     },
+  });
+}
+
+export function useTags() {
+  return useQuery<Tag[]>({
+    queryKey: tagQueryKey,
+    queryFn: getTags,
+    select: (data) => tagsSchema.parse(data),
+    retry: 0,
   });
 }

@@ -1,4 +1,5 @@
-import { CreateTask, Task } from "../schema/task-schema";
+import { Tag } from "../schema/tag-schema";
+import { CreateTask, Task, UpdateTask } from "../schema/task-schema";
 import { api } from "@/common/constants/api";
 
 export const getTask = async (id: number): Promise<Task> => {
@@ -16,7 +17,10 @@ export const createTask = async (task: CreateTask): Promise<Task> => {
   return response.data;
 };
 
-export const updateTask = async ({ id, ...task }: Task): Promise<Task> => {
+export const updateTask = async ({
+  id,
+  ...task
+}: UpdateTask & { id: number }): Promise<Task> => {
   const response = await api.patch<Task>(`/tasks/${id}`, task);
   return response.data;
 };
@@ -28,5 +32,10 @@ export const deleteTask = async (id: number): Promise<Task> => {
 
 export const restoreTask = async (id: number): Promise<Task> => {
   const response = await api.patch<Task>(`/tasks/${id}/restore`);
+  return response.data;
+};
+
+export const getTags = async (): Promise<Tag[]> => {
+  const response = await api.get<Tag[]>("/tags");
   return response.data;
 };

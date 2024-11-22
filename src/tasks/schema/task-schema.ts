@@ -11,11 +11,13 @@ export const taskSchema = z.object({
 export const createTaskSchema = z.object({
   title: z.string().min(1),
   content: z.string().nullish(),
+  tags: z.array(z.number()),
 });
 
 export const updateTaskSchema = z.object({
   title: z.string().min(1),
   content: z.string().nullish(),
+  tags: z.array(z.number()),
 });
 
 export const tasksSchema = z.array(taskSchema);

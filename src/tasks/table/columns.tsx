@@ -7,7 +7,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Task } from "../schema/task-schema";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
-import { Tag } from "../schema/tag-schema";
 
 export const columns: ColumnDef<Task>[] = [
   {
@@ -58,41 +57,48 @@ export const columns: ColumnDef<Task>[] = [
       <DataTableColumnHeader column={column} title="Titulo" />
     ),
     cell: ({ row }) => {
-      // const label = labels.find((label) => label.value === row.original.label)
+      const tags = row.original.tags;
+
       return (
         <div className="flex flex-col">
-          {/* {label && <Badge variant="outline">{label.label}</Badge>} */}
-          <p className="max-w-[500px] truncate font-medium line-clamp-1">
+          <p className="max-w-[500px] truncate font-semibold line-clamp-1 mb-1">
             {row.getValue("title")}
           </p>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground mb-2">
             {row.original.content}
           </p>
+          <div className="flex flex-wrap gap-1 mx-2">
+            {tags?.map((tag) => (
+              <Badge key={tag.id} variant="outline">
+                {tag.name}
+              </Badge>
+            ))}
+          </div>
         </div>
       );
     },
   },
-  {
-    accessorKey: "tags",
-    meta: {
-      label: "Etiquetas",
-    },
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Etiquetas" />
-    ),
-    cell: ({ row }) => {
-      const tags = row.getValue("tags") as Tag[];
-      return (
-        <div className="flex flex-wrap gap-1">
-          {tags.map((tag) => (
-            <Badge key={tag.id} variant="outline">
-              {tag.name}
-            </Badge>
-          ))}
-        </div>
-      );
-    },
-  },
+  // {
+  //   accessorKey: "tags",
+  //   meta: {
+  //     label: "Etiquetas",
+  //   },
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="Etiquetas" />
+  //   ),
+  //   cell: ({ row }) => {
+  //     const tags = row.getValue("tags") as Tag[];
+  //     return (
+  //       <div className="flex flex-wrap gap-1">
+  //         {tags.map((tag) => (
+  //           <Badge key={tag.id} variant="outline">
+  //             {tag.name}
+  //           </Badge>
+  //         ))}
+  //       </div>
+  //     );
+  //   },
+  // },
   // {
   //   accessorKey: "status",
   //   header: ({ column }) => (
