@@ -15,7 +15,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { useTags } from "@/tasks/hooks/useTasks";
+import { useCreateTag, useTags } from "@/tasks/hooks/useTasks";
+import React from "react";
 import { UseFormReturn } from "react-hook-form";
 import {
   FormDescription,
@@ -34,7 +35,17 @@ interface SelectTagsProps {
 }
 
 export function SelectTags({ form }: SelectTagsProps) {
+  const [value, setValue] = React.useState<string>("");
   const { data: tags = [] } = useTags();
+  const { mutateAsync: createTag } = useCreateTag();
+
+  const handleCreateTag = async () => {
+    if (value) {
+      const data = await createTag(value);
+      setValue("");
+      form.setValue("tags", [...form.getValues("tags"), data.id]);
+    }
+  };
 
   return (
     <FormField
@@ -61,17 +72,31 @@ export function SelectTags({ form }: SelectTagsProps) {
             </PopoverTrigger>
             <PopoverContent className="w-[200px] p-0">
               <Command>
-                <CommandInput placeholder="Buscar etiqueta..." />
+                <CommandInput
+                  placeholder="Buscar etiqueta..."
+                  value={value}
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setValue(e.target.value)
+                  }
+                />
                 <CommandList>
-                  <CommandEmpty>Etiqueta no encontrada</CommandEmpty>
+                  <CommandEmpty>
+                    <p>Etiqueta no encontrada</p>
+                    <Button
+                      variant="ghost"
+                      className="mt-2 text-wrap"
+                      onClick={handleCreateTag}
+                    >
+                      Crear etiqueta "{value}"
+                    </Button>
+                  </CommandEmpty>
                   <CommandGroup>
                     {tags.map((tag) => (
                       <CommandItem
                         key={tag.id}
-                        value={String(tag.id)}
-                        onSelect={(currentValue) => {
-                          const value = parseInt(currentValue);
-
+                        value={tag.name}
+                        onSelect={() => {
+                          const value = tag.id;
                           if (field.value.includes(value)) {
                             form.setValue(
                               "tags",

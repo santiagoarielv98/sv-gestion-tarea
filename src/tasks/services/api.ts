@@ -39,3 +39,8 @@ export const getTags = async (): Promise<Tag[]> => {
   const response = await api.get<Tag[]>("/tags");
   return response.data;
 };
+
+export const createTag = async (name: string): Promise<Tag> => {
+  const response = await api.post<Tag>("/tags", { name });
+  return response.data;
+};

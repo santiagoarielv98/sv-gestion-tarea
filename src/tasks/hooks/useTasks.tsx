@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Tag, tagsSchema } from "../schema/tag-schema";
 import { tasksSchema } from "../schema/task-schema";
 import {
+  createTag,
   createTask,
   deleteTask,
   getTags,
@@ -96,5 +97,20 @@ export function useTags() {
     queryFn: getTags,
     select: (data) => tagsSchema.parse(data),
     retry: 0,
+  });
+}
+
+export function useCreateTag() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: createTag,
+    onSuccess: () => {
+      toast({
+        title: "Etiqueta creada",
+        description: "La etiqueta ha sido creada correctamente.",
+      });
+      queryClient.invalidateQueries({ queryKey: tagQueryKey });
+    },
   });
 }
