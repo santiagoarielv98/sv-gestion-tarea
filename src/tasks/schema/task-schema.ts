@@ -1,5 +1,5 @@
 import { z } from "@/es-zod";
-import { tagsSchema } from "./tag-schema";
+import { tagsSchema } from "@/tag/schema/tag-schema";
 
 export const taskSchema = z.object({
   id: z.number(),

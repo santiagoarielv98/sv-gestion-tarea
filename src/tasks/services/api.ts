@@ -1,6 +1,6 @@
-import { Tag } from "../schema/tag-schema";
-import { CreateTask, Task, UpdateTask } from "../schema/task-schema";
 import { api } from "@/common/constants/api";
+import { Tag } from "@/tag/schema/tag-schema";
+import { CreateTask, Task, UpdateTask } from "../schema/task-schema";
 
 export const getTask = async (id: number): Promise<Task> => {
   const response = await api.get<Task>(`/tasks/${id}`);

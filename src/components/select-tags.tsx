@@ -15,7 +15,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { useCreateTag, useTags } from "@/tasks/hooks/useTasks";
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
 import {
@@ -25,6 +24,7 @@ import {
   FormLabel,
   FormMessage,
 } from "./ui/form";
+import { useCreateTag, useTags } from "@/tag/hooks/useTags";
 
 interface SelectTagsProps {
   form: UseFormReturn<{
@@ -41,7 +41,7 @@ export function SelectTags({ form }: SelectTagsProps) {
 
   const handleCreateTag = async () => {
     if (value) {
-      const data = await createTag(value);
+      const data = await createTag({ name: value });
       setValue("");
       form.setValue("tags", [...form.getValues("tags"), data.id]);
     }
