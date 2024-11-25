@@ -1,13 +1,8 @@
-import { createBrowserRouter } from "react-router-dom";
 import { LoginPage } from "@/users/pages/login";
-import PrivateRoute from "./private-route";
-import AuthRoute from "./auth-route";
-import React from "react";
 import { RegisterPage } from "@/users/pages/register";
-
-const MainLayout = React.lazy(() => import("@/layouts/main-layout"));
-const Tasks = React.lazy(() => import("@/tasks/pages/Tasks"));
-const Tags = React.lazy(() => import("@/tags/pages/Tags"));
+import { createBrowserRouter } from "react-router-dom";
+import AuthRoute from "./auth-route";
+import PrivateRoute from "./private-route";
 
 export const router = createBrowserRouter(
   [
@@ -17,12 +12,22 @@ export const router = createBrowserRouter(
       children: [
         {
           path: "/",
-          element: <MainLayout />,
+          // element: <MainLayout />,
+          lazy: async () => ({
+            Component: (await import("@/layouts/main-layout")).default,
+          }),
           children: [
             {
               index: true,
-              element: <Tasks />,
+              lazy: async () => ({
+                Component: (await import("@/tasks/pages/Tasks")).default,
+              }),
             },
+            {
+              path: "tags",
+              lazy: async () => ({
+                Component: (await import("@/tags/pages/Tags")).default,
+              }),
             },
           ],
         },
