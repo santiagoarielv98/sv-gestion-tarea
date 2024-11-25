@@ -7,6 +7,7 @@ import { RegisterPage } from "@/users/pages/register";
 
 const MainLayout = React.lazy(() => import("@/layouts/main-layout"));
 const Tasks = React.lazy(() => import("@/tasks/pages/Tasks"));
+const Tags = React.lazy(() => import("@/tags/pages/Tags"));
 
 export const router = createBrowserRouter(
   [
@@ -21,6 +22,7 @@ export const router = createBrowserRouter(
             {
               index: true,
               element: <Tasks />,
+            },
             },
           ],
         },

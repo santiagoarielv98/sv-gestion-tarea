@@ -25,6 +25,10 @@ const data = {
           title: "Tareas",
           url: "/",
         },
+        {
+          title: "Etiquetas",
+          url: "/tags",
+        },
       ],
     },
   ],

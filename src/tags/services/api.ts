@@ -1,4 +1,4 @@
-import { api } from "@/common/constants/api";
+import { api } from "@/constants/api";
 import { CreateTag, Tag } from "../schema/tag-schema";
 
 export const getTags = async (): Promise<Tag[]> => {

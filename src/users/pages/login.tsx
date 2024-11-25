@@ -1,4 +1,4 @@
-import { demoUserCredentials } from "@/common/constants/app";
+import { demoUserCredentials } from "@/constants/app";
 import { Button } from "@/components/ui/button";
 import {
   Card,

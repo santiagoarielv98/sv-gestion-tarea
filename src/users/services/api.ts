@@ -1,4 +1,4 @@
-import { api } from "@/common/constants/api";
+import { api } from "@/constants/api";
 import { Login, Register } from "../schema/auth-schema";
 
 export const login = async (data: Login) => {
