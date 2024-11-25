@@ -12,7 +12,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { NavUser } from "@/tasks/table/nav-user";
+import { NavUser } from "@/components/nav-user";
 import { Link, useLocation } from "react-router-dom";
 
 const data = {
