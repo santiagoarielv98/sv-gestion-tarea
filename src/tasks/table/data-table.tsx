@@ -8,7 +8,6 @@ import {
   getFacetedRowModel,
   getFacetedUniqueValues,
   getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
@@ -23,19 +22,27 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { useQuery } from "@tanstack/react-query";
 import { DataTablePagination } from "../../components/data-table-pagination";
+import { Task } from "../schema/task-schema";
+import { getTasksPage } from "../services/api";
 import { DataTableToolbar } from "./data-table-toolbar";
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+  columns: ColumnDef<Task, TValue>[];
   data: TData[];
 }
 
 function DataTable<TData, TValue>({
   columns,
-  data,
+  // data,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({});
+  const [pagination, setPagination] = React.useState({
+    pageIndex: 0,
+    pageSize: 10,
+  });
+
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -43,26 +50,40 @@ function DataTable<TData, TValue>({
   );
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
-  const table = useReactTable({
-    data,
+  const tableQuery = useQuery({
+    queryKey: ["tasks", pagination],
+    queryFn: () =>
+      getTasksPage({
+        limit: pagination.pageSize,
+        page: pagination.pageIndex + 1,
+      }),
+    retry: 0,
+  });
+
+  const table = useReactTable<Task>({
+    data: tableQuery.data?.data ?? [],
     columns,
     state: {
       sorting,
       columnVisibility,
       rowSelection,
       columnFilters,
+      pagination,
     },
     enableRowSelection: true,
+    onPaginationChange: setPagination,
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
+    manualPagination: true,
+    rowCount: tableQuery.data?.meta.totalItems ?? 0,
+    pageCount: tableQuery.data?.meta.totalPages ?? 0,
   });
 
   return (
