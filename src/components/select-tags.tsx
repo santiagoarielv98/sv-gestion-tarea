@@ -101,8 +101,8 @@ export function SelectTags({ form }: SelectTagsProps) {
                             form.setValue(
                               "tags",
                               field.value.filter(
-                                (tagId: number) => tagId !== value
-                              )
+                                (tagId: number) => tagId !== value,
+                              ),
                             );
                           } else {
                             form.setValue("tags", [...field.value, value]);
@@ -115,7 +115,7 @@ export function SelectTags({ form }: SelectTagsProps) {
                             field.value.includes(tag.id)
                               ? // value === String(tag.id)
                                 "opacity-100"
-                              : "opacity-0"
+                              : "opacity-0",
                           )}
                         />
                         {tag.name}
