@@ -11,7 +11,7 @@ function TagTable() {
   });
 
   const tableQuery = useQuery({
-    queryKey: ["tasks", pagination],
+    queryKey: ["tags", pagination],
     queryFn: () =>
       getTagsPage({
         limit: pagination.pageSize,
