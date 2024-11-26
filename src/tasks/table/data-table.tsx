@@ -68,7 +68,7 @@ function DataTable<TData, TValue>({
   return (
     <div className="space-y-4">
       <DataTableToolbar table={table} />
-      <div className="rounded-md border overflow-auto md:max-h-[75vh] max-h-[65vh] whitespace-nowrap">
+      <div className="max-h-[65vh] overflow-auto whitespace-nowrap rounded-md border md:max-h-[75vh]">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

@@ -61,13 +61,13 @@ export const columns: ColumnDef<Task>[] = [
 
       return (
         <div className="flex flex-col">
-          <p className="max-w-[500px] truncate font-semibold line-clamp-1 mb-1">
+          <p className="mb-1 line-clamp-1 max-w-[500px] truncate font-semibold">
             {row.getValue("title")}
           </p>
-          <p className="text-sm text-muted-foreground mb-2">
+          <p className="mb-2 text-sm text-muted-foreground">
             {row.original.content}
           </p>
-          <div className="flex flex-wrap gap-1 mx-2">
+          <div className="mx-2 flex flex-wrap gap-1">
             {tags?.map((tag) => (
               <Badge key={tag.id} variant="outline">
                 {tag.name}
