@@ -1,14 +1,11 @@
 import {
   ColumnDef,
-  ColumnFiltersState,
-  SortingState,
+  OnChangeFn,
+  PaginationOptions,
+  PaginationState,
   VisibilityState,
   flexRender,
   getCoreRowModel,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-  getFilteredRowModel,
-  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import * as React from "react";
@@ -22,68 +19,40 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { useQuery } from "@tanstack/react-query";
 import { DataTablePagination } from "../../components/data-table-pagination";
-import { Task } from "../schema/task-schema";
-import { getTasksPage } from "../services/api";
 import { DataTableToolbar } from "./data-table-toolbar";
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<Task, TValue>[];
+  columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  pagination: PaginationState;
+  setPagination: OnChangeFn<PaginationState>;
+  paginationOptions: Pick<PaginationOptions, "rowCount">;
 }
 
 function DataTable<TData, TValue>({
   columns,
-  // data,
+  data,
+  pagination,
+  paginationOptions,
+  setPagination,
 }: DataTableProps<TData, TValue>) {
-  const [rowSelection, setRowSelection] = React.useState({});
-  const [pagination, setPagination] = React.useState({
-    pageIndex: 0,
-    pageSize: 10,
-  });
-
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [],
-  );
-  const [sorting, setSorting] = React.useState<SortingState>([]);
 
-  const tableQuery = useQuery({
-    queryKey: ["tasks", pagination],
-    queryFn: () =>
-      getTasksPage({
-        limit: pagination.pageSize,
-        page: pagination.pageIndex + 1,
-      }),
-    retry: 0,
-  });
-
-  const table = useReactTable<Task>({
-    data: tableQuery.data?.data ?? [],
+  const table = useReactTable({
+    data: data ?? [],
     columns,
     state: {
-      sorting,
       columnVisibility,
-      rowSelection,
-      columnFilters,
       pagination,
     },
     enableRowSelection: true,
     onPaginationChange: setPagination,
-    onRowSelectionChange: setRowSelection,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFacetedRowModel: getFacetedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
     manualPagination: true,
-    rowCount: tableQuery.data?.meta.totalItems ?? 0,
-    pageCount: tableQuery.data?.meta.totalPages ?? 0,
+    ...paginationOptions,
   });
 
   return (

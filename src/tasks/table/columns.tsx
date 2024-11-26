@@ -14,17 +14,6 @@ export const columns: ColumnDef<Task>[] = [
     meta: {
       label: "Seleccionar",
     },
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Seleccionar todo"
-        className="translate-y-[2px]"
-      />
-    ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
@@ -49,6 +38,7 @@ export const columns: ColumnDef<Task>[] = [
     enableHiding: false,
   },
   {
+    enableSorting: false,
     accessorKey: "title",
     meta: {
       label: "Titulo",
