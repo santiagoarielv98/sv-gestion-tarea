@@ -12,17 +12,6 @@ export const columns: ColumnDef<Tag>[] = [
     meta: {
       label: "Seleccionar",
     },
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Seleccionar todo"
-        className="translate-y-[2px]"
-      />
-    ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
@@ -55,6 +44,7 @@ export const columns: ColumnDef<Tag>[] = [
       <DataTableColumnHeader column={column} title="Nombre" />
     ),
     cell: ({ row }) => <div>{row.getValue("name")}</div>,
+    enableSorting: false,
   },
   {
     id: "actions",

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getTasksPage } from "../services/api";
 import { columns } from "../table/columns";
-import DataTable from "../table/data-table";
+import DataTable from "../../components/data-table";
 import React from "react";
 
 function TaskTable() {
