@@ -89,10 +89,10 @@ export function useRestoreTask() {
   });
 }
 
-export function usePaginateTasks({ page, limit }: PaginateOptions) {
+export function usePaginateTasks(options: PaginateOptions) {
   return useQuery({
-    queryKey: ["tasks", page, limit],
-    queryFn: () => getTasksPage({ page, limit }),
+    queryKey: ["tasks", options],
+    queryFn: () => getTasksPage(options),
     select: (paginate) => tasksSchema.parse(paginate.data),
     retry: 0,
   });

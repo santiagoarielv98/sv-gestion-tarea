@@ -2,11 +2,9 @@ import { Table } from "@tanstack/react-table";
 import { X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
-// import { priorities, statuses } from "./data/data"
-// import { DataTableFacetedFilter } from "./data-table-faceted-filter"
 import { DataTableViewOptions } from "@/components/data-table-view-options";
+import { DebouncedInput } from "@/components/debounced-input";
 import DataTableCreateTask from "./data-table-create-tag";
 
 interface DataTableToolbarProps<TData> {
@@ -17,16 +15,13 @@ export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
-
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
-        <Input
+        <DebouncedInput
           placeholder="Filtrar etiquetas..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
+          value={table.getState().globalFilter}
+          onChange={(value) => table.setGlobalFilter(String(value))}
           className="h-8 w-[150px] lg:w-[250px]"
         />
         {isFiltered && (

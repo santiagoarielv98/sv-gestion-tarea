@@ -35,12 +35,11 @@ export const restoreTask = async (id: number): Promise<Task> => {
   return response.data;
 };
 
-export const getTasksPage = async ({
-  page,
-  limit,
-}: PaginateOptions): Promise<Paginate<Task>> => {
+export const getTasksPage = async (
+  pagination: PaginateOptions,
+): Promise<Paginate<Task>> => {
   const response = await api.get<Paginate<Task>>("/tasks/all", {
-    params: { page, limit },
+    params: pagination,
   });
   return response.data;
 };

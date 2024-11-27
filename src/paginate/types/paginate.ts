@@ -1,6 +1,7 @@
 export interface PaginateOptions {
   page: number;
   limit: number;
+  q?: string;
 }
 
 export interface MetaPaginate {

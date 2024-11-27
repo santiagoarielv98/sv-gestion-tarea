@@ -3,6 +3,7 @@ import { X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
+import { DebouncedInput } from "@/components/debounced-input";
 import { DataTableViewOptions } from "../../components/data-table-view-options";
 import DataTableCreateTask from "./data-table-create-task";
 
@@ -18,6 +19,12 @@ export function DataTableToolbar<TData>({
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
+        <DebouncedInput
+          placeholder="Filtrar etiquetas..."
+          value={table.getState().globalFilter}
+          onChange={(value) => table.setGlobalFilter(String(value))}
+          className="h-8 w-[150px] lg:w-[250px]"
+        />
         {isFiltered && (
           <Button
             variant="ghost"

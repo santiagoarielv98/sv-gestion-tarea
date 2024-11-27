@@ -21,12 +21,11 @@ export const deleteTag = async (id: number): Promise<void> => {
   await api.delete(`/tags/${id}`);
 };
 
-export const getTagsPage = async ({
-  page,
-  limit,
-}: PaginateOptions): Promise<Paginate<Tag>> => {
+export const getTagsPage = async (
+  pagination: PaginateOptions,
+): Promise<Paginate<Tag>> => {
   const response = await api.get<Paginate<Tag>>("/tags/all", {
-    params: { page, limit },
+    params: pagination,
   });
   return response.data;
 };

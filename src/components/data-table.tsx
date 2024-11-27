@@ -19,8 +19,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "../tasks/table/data-table-toolbar";
+import { DataTablePagination } from "./data-table-pagination";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -28,6 +28,8 @@ interface DataTableProps<TData, TValue> {
   pagination: PaginationState;
   setPagination: OnChangeFn<PaginationState>;
   paginationOptions: Pick<PaginationOptions, "rowCount">;
+  search: string;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
 }
 
 function DataTable<TData, TValue>({
@@ -36,6 +38,8 @@ function DataTable<TData, TValue>({
   pagination,
   paginationOptions,
   setPagination,
+  search,
+  setSearch,
 }: DataTableProps<TData, TValue>) {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -46,11 +50,14 @@ function DataTable<TData, TValue>({
     state: {
       columnVisibility,
       pagination,
+      globalFilter: search,
     },
     enableRowSelection: true,
     onPaginationChange: setPagination,
     onColumnVisibilityChange: setColumnVisibility,
+    onGlobalFilterChange: setSearch,
     getCoreRowModel: getCoreRowModel(),
+    // manualFiltering: true,
     manualPagination: true,
     ...paginationOptions,
   });
