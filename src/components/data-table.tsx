@@ -3,6 +3,7 @@ import {
   OnChangeFn,
   PaginationOptions,
   PaginationState,
+  SortingState,
   VisibilityState,
   flexRender,
   getCoreRowModel,
@@ -30,6 +31,8 @@ interface DataTableProps<TData, TValue> {
   paginationOptions: Pick<PaginationOptions, "rowCount">;
   search: string;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
+  sorting?: SortingState;
+  setSorting: OnChangeFn<SortingState> | undefined;
 }
 
 function DataTable<TData, TValue>({
@@ -40,6 +43,8 @@ function DataTable<TData, TValue>({
   setPagination,
   search,
   setSearch,
+  sorting,
+  setSorting,
 }: DataTableProps<TData, TValue>) {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -51,14 +56,17 @@ function DataTable<TData, TValue>({
       columnVisibility,
       pagination,
       globalFilter: search,
+      sorting,
     },
     enableRowSelection: true,
     onPaginationChange: setPagination,
     onColumnVisibilityChange: setColumnVisibility,
     onGlobalFilterChange: setSearch,
+    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     // manualFiltering: true,
     manualPagination: true,
+    manualSorting: true,
     ...paginationOptions,
   });
 

@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
+import { SortingState } from "@tanstack/react-table";
+import React from "react";
+import DataTable from "../../components/data-table";
 import { getTasksPage } from "../services/api";
 import { columns } from "../table/columns";
-import DataTable from "../../components/data-table";
-import React from "react";
 
 function TaskTable() {
   const [search, setSearch] = React.useState("");
@@ -10,14 +11,16 @@ function TaskTable() {
     pageIndex: 0,
     pageSize: 10,
   });
+  const [sorting, setSorting] = React.useState<SortingState>([]);
 
   const tableQuery = useQuery({
-    queryKey: ["tasks", pagination, search],
+    queryKey: ["tasks", pagination, search, sorting],
     queryFn: () =>
       getTasksPage({
         limit: pagination.pageSize,
         page: pagination.pageIndex + 1,
         q: search,
+        sorting: sorting,
       }),
     retry: 0,
   });
@@ -31,6 +34,8 @@ function TaskTable() {
       search={search}
       setSearch={setSearch}
       paginationOptions={{ rowCount: tableQuery.data?.meta.totalItems }}
+      sorting={sorting}
+      setSorting={setSorting}
     />
   );
 }

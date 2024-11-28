@@ -34,11 +34,11 @@ export const columns: ColumnDef<Task>[] = [
       <DataTableColumnHeader column={column} title="ID" />
     ),
     cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
-    enableSorting: false,
+    // enableSorting: false,
     enableHiding: false,
   },
   {
-    enableSorting: false,
+    // enableSorting: false,
     accessorKey: "title",
     meta: {
       label: "Titulo",

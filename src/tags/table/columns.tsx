@@ -32,7 +32,7 @@ export const columns: ColumnDef<Tag>[] = [
       <DataTableColumnHeader column={column} title="ID" />
     ),
     cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
-    enableSorting: false,
+    // enableSorting: false,
     enableHiding: false,
   },
   {
@@ -44,7 +44,7 @@ export const columns: ColumnDef<Tag>[] = [
       <DataTableColumnHeader column={column} title="Nombre" />
     ),
     cell: ({ row }) => <div>{row.getValue("name")}</div>,
-    enableSorting: false,
+    // enableSorting: false,
   },
   {
     id: "actions",

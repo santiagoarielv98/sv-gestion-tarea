@@ -1,6 +1,6 @@
 import { api } from "@/constants/api";
-import { CreateTag, Tag } from "../schema/tag-schema";
 import { Paginate, PaginateOptions } from "@/paginate/types/paginate";
+import { CreateTag, Tag } from "../schema/tag-schema";
 
 export const getTags = async (): Promise<Tag[]> => {
   const response = await api.get<Tag[]>("/tags");
@@ -21,11 +21,18 @@ export const deleteTag = async (id: number): Promise<void> => {
   await api.delete(`/tags/${id}`);
 };
 
-export const getTagsPage = async (
-  pagination: PaginateOptions,
-): Promise<Paginate<Tag>> => {
+export const getTagsPage = async ({
+  sorting = [],
+  ...pagination
+}: PaginateOptions): Promise<Paginate<Tag>> => {
   const response = await api.get<Paginate<Tag>>("/tags/all", {
-    params: pagination,
+    params: {
+      ...(sorting.length > 0 && {
+        sort: sorting[0].id,
+        order: sorting[0].desc ? "desc" : "asc",
+      }),
+      ...pagination,
+    },
   });
   return response.data;
 };
