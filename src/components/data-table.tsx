@@ -1,18 +1,15 @@
-import * as React from "react";
 import {
   ColumnDef,
-  ColumnFiltersState,
+  OnChangeFn,
+  PaginationOptions,
+  PaginationState,
   SortingState,
   VisibilityState,
   flexRender,
   getCoreRowModel,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import * as React from "react";
 
 import {
   Table,
@@ -23,52 +20,60 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { DataTableToolbar } from "../tasks/table/data-table-toolbar";
 import { DataTablePagination } from "./data-table-pagination";
-import { DataTableToolbar } from "./data-table-toolbar";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  pagination: PaginationState;
+  setPagination: OnChangeFn<PaginationState>;
+  paginationOptions: Pick<PaginationOptions, "rowCount">;
+  search: string;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  sorting?: SortingState;
+  setSorting: OnChangeFn<SortingState> | undefined;
 }
 
 function DataTable<TData, TValue>({
   columns,
   data,
+  pagination,
+  paginationOptions,
+  setPagination,
+  search,
+  setSearch,
+  sorting,
+  setSorting,
 }: DataTableProps<TData, TValue>) {
-  const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
-  const [sorting, setSorting] = React.useState<SortingState>([]);
 
   const table = useReactTable({
-    data,
+    data: data ?? [],
     columns,
     state: {
-      sorting,
       columnVisibility,
-      rowSelection,
-      columnFilters,
+      pagination,
+      globalFilter: search,
+      sorting,
     },
     enableRowSelection: true,
-    onRowSelectionChange: setRowSelection,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
+    onPaginationChange: setPagination,
     onColumnVisibilityChange: setColumnVisibility,
+    onGlobalFilterChange: setSearch,
+    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFacetedRowModel: getFacetedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
+    // manualFiltering: true,
+    manualPagination: true,
+    manualSorting: true,
+    ...paginationOptions,
   });
 
   return (
     <div className="space-y-4">
       <DataTableToolbar table={table} />
-      <div className="rounded-md border">
+      <div className="max-h-[65vh] overflow-auto whitespace-nowrap rounded-md border md:max-h-[75vh]">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -80,7 +85,7 @@ function DataTable<TData, TValue>({
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
                   );
@@ -99,7 +104,7 @@ function DataTable<TData, TValue>({
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}

@@ -1,12 +1,12 @@
 import { ColumnDef } from "@tanstack/react-table";
 
-// import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 
 // import { /*labels,*/ priorities, statuses } from "./data/data"
 import { Task } from "../schema/task-schema";
-import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
+import { DataTableColumnHeader } from "@/components/data-table-column-header";
 
 export const columns: ColumnDef<Task>[] = [
   {
@@ -14,17 +14,6 @@ export const columns: ColumnDef<Task>[] = [
     meta: {
       label: "Seleccionar",
     },
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Seleccionar todo"
-        className="translate-y-[2px]"
-      />
-    ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
@@ -45,10 +34,11 @@ export const columns: ColumnDef<Task>[] = [
       <DataTableColumnHeader column={column} title="ID" />
     ),
     cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
-    enableSorting: false,
+    // enableSorting: false,
     enableHiding: false,
   },
   {
+    // enableSorting: false,
     accessorKey: "title",
     meta: {
       label: "Titulo",
@@ -57,20 +47,48 @@ export const columns: ColumnDef<Task>[] = [
       <DataTableColumnHeader column={column} title="Titulo" />
     ),
     cell: ({ row }) => {
-      // const label = labels.find((label) => label.value === row.original.label)
+      const tags = row.original.tags;
+
       return (
         <div className="flex flex-col">
-          {/* {label && <Badge variant="outline">{label.label}</Badge>} */}
-          <p className="max-w-[500px] truncate font-medium line-clamp-1">
+          <p className="mb-1 line-clamp-1 max-w-[500px] truncate font-semibold">
             {row.getValue("title")}
           </p>
-          <p className="text-sm text-muted-foreground">
+          <p className="mb-2 text-sm text-muted-foreground">
             {row.original.content}
           </p>
+          <div className="mx-2 flex flex-wrap gap-1">
+            {tags?.map((tag) => (
+              <Badge key={tag.id} variant="outline">
+                {tag.name}
+              </Badge>
+            ))}
+          </div>
         </div>
       );
     },
   },
+  // {
+  //   accessorKey: "tags",
+  //   meta: {
+  //     label: "Etiquetas",
+  //   },
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="Etiquetas" />
+  //   ),
+  //   cell: ({ row }) => {
+  //     const tags = row.getValue("tags") as Tag[];
+  //     return (
+  //       <div className="flex flex-wrap gap-1">
+  //         {tags.map((tag) => (
+  //           <Badge key={tag.id} variant="outline">
+  //             {tag.name}
+  //           </Badge>
+  //         ))}
+  //       </div>
+  //     );
+  //   },
+  // },
   // {
   //   accessorKey: "status",
   //   header: ({ column }) => (

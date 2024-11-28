@@ -1,30 +1,43 @@
+import { useQuery } from "@tanstack/react-query";
+import { SortingState } from "@tanstack/react-table";
 import React from "react";
+import DataTable from "../../components/data-table";
+import { getTasksPage } from "../services/api";
+import { columns } from "../table/columns";
 
-import { UserNav } from "../table/user-nav";
+function TaskTable() {
+  const [search, setSearch] = React.useState("");
+  const [pagination, setPagination] = React.useState({
+    pageIndex: 0,
+    pageSize: 10,
+  });
+  const [sorting, setSorting] = React.useState<SortingState>([]);
 
-const TaskTable = React.lazy(() => import("./TaskTable"));
+  const tableQuery = useQuery({
+    queryKey: ["tasks", pagination, search, sorting],
+    queryFn: () =>
+      getTasksPage({
+        limit: pagination.pageSize,
+        page: pagination.pageIndex + 1,
+        q: search,
+        sorting: sorting,
+      }),
+    retry: 0,
+  });
 
-function Tasks() {
   return (
-    <div className="h-full flex-1 flex-col space-y-8 p-8 flex">
-      <div className="flex items-center justify-between space-y-2">
-        <div>
-          <h2 className="text-2xl font-bold tracking-tight">
-            ¡Bienvenido de nuevo!
-          </h2>
-          <p className="text-muted-foreground">
-            ¡Aquí tienes una lista de tus tareas para este mes!
-          </p>
-        </div>
-        <div className="flex items-center space-x-2">
-          <UserNav />
-        </div>
-      </div>
-      <React.Suspense fallback={null}>
-        <TaskTable />
-      </React.Suspense>
-    </div>
+    <DataTable
+      data={tableQuery.data?.data ?? []}
+      columns={columns}
+      pagination={pagination}
+      setPagination={setPagination}
+      search={search}
+      setSearch={setSearch}
+      paginationOptions={{ rowCount: tableQuery.data?.meta.totalItems }}
+      sorting={sorting}
+      setSorting={setSorting}
+    />
   );
 }
 
-export default Tasks;
+export default TaskTable;

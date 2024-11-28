@@ -38,6 +38,7 @@ function DataTableCreateTask() {
     defaultValues: {
       title: "",
       content: "",
+      tags: [],
     },
   });
 

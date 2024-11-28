@@ -1,4 +1,4 @@
-import { api } from "@/common/constants/api";
+import { api } from "@/constants/api";
 import { Login, Register } from "../schema/auth-schema";
 
 export const login = async (data: Login) => {
@@ -7,7 +7,7 @@ export const login = async (data: Login) => {
 };
 
 export const register = async (
-  data: Omit<Register, "passwordConfirmation">
+  data: Omit<Register, "passwordConfirmation">,
 ) => {
   const response = await api.post("/auth/register", data);
   return response.data;

@@ -1,3 +1,4 @@
+import { SelectTags } from "@/components/select-tags";
 import {
   FormControl,
   FormField,
@@ -12,12 +13,13 @@ interface TaskFormProps {
   form: UseFormReturn<{
     title: string;
     content?: string | null;
+    tags: number[];
   }>;
 }
 
 function TaskForm({ form }: TaskFormProps) {
   return (
-    <div>
+    <div className="space-y-4">
       <FormField
         control={form.control}
         name="title"
@@ -27,7 +29,6 @@ function TaskForm({ form }: TaskFormProps) {
             <FormControl>
               <Input placeholder="Titulo de la tarea" {...field} />
             </FormControl>
-
             <FormMessage />
           </FormItem>
         )}
@@ -49,6 +50,7 @@ function TaskForm({ form }: TaskFormProps) {
           </FormItem>
         )}
       />
+      <SelectTags form={form} />
     </div>
   );
 }

@@ -1,11 +1,8 @@
-import { createBrowserRouter } from "react-router-dom";
 import { LoginPage } from "@/users/pages/login";
-import PrivateRoute from "./private-route";
-import AuthRoute from "./auth-route";
-import React from "react";
 import { RegisterPage } from "@/users/pages/register";
-
-const Tasks = React.lazy(() => import("@/tasks/pages/Tasks"));
+import { createBrowserRouter } from "react-router-dom";
+import AuthRoute from "./auth-route";
+import PrivateRoute from "./private-route";
 
 export const router = createBrowserRouter(
   [
@@ -14,8 +11,25 @@ export const router = createBrowserRouter(
       element: <PrivateRoute />,
       children: [
         {
-          index: true,
-          element: <Tasks />,
+          path: "/",
+          // element: <MainLayout />,
+          lazy: async () => ({
+            Component: (await import("@/layouts/main-layout")).default,
+          }),
+          children: [
+            {
+              index: true,
+              lazy: async () => ({
+                Component: (await import("@/tasks/pages/Tasks")).default,
+              }),
+            },
+            {
+              path: "tags",
+              lazy: async () => ({
+                Component: (await import("@/tags/pages/Tags")).default,
+              }),
+            },
+          ],
         },
       ],
     },
@@ -42,5 +56,5 @@ export const router = createBrowserRouter(
       v7_partialHydration: true,
       v7_skipActionErrorRevalidation: true,
     },
-  }
+  },
 );

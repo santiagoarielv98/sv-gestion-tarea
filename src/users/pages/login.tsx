@@ -1,4 +1,4 @@
-import { demoUserCredentials } from "@/common/constants/app";
+import { demoUserCredentials } from "@/constants/app";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -28,7 +28,7 @@ export function LoginPage() {
 
   return (
     <div className="flex h-screen w-full items-center justify-center px-4">
-      <Card className="mx-auto max-w-sm my-auto">
+      <Card className="mx-auto my-auto max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Iniciar sesión</CardTitle>
           <CardDescription>

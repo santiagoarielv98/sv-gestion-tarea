@@ -1,5 +1,6 @@
-import { CreateTask, Task } from "../schema/task-schema";
-import { api } from "@/common/constants/api";
+import { api } from "@/constants/api";
+import { CreateTask, Task, UpdateTask } from "../schema/task-schema";
+import { Paginate, PaginateOptions } from "@/paginate/types/paginate";
 
 export const getTask = async (id: number): Promise<Task> => {
   const response = await api.get<Task>(`/tasks/${id}`);
@@ -16,7 +17,10 @@ export const createTask = async (task: CreateTask): Promise<Task> => {
   return response.data;
 };
 
-export const updateTask = async ({ id, ...task }: Task): Promise<Task> => {
+export const updateTask = async ({
+  id,
+  ...task
+}: UpdateTask & { id: number }): Promise<Task> => {
   const response = await api.patch<Task>(`/tasks/${id}`, task);
   return response.data;
 };
@@ -28,5 +32,21 @@ export const deleteTask = async (id: number): Promise<Task> => {
 
 export const restoreTask = async (id: number): Promise<Task> => {
   const response = await api.patch<Task>(`/tasks/${id}/restore`);
+  return response.data;
+};
+
+export const getTasksPage = async ({
+  sorting = [],
+  ...pagination
+}: PaginateOptions): Promise<Paginate<Task>> => {
+  const response = await api.get<Paginate<Task>>("/tasks/all", {
+    params: {
+      ...(sorting.length > 0 && {
+        sort: sorting[0].id,
+        order: sorting[0].desc ? "desc" : "asc",
+      }),
+      ...pagination,
+    },
+  });
   return response.data;
 };

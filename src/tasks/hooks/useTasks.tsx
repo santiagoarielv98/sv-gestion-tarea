@@ -6,9 +6,11 @@ import {
   createTask,
   deleteTask,
   getTasks,
+  getTasksPage,
   restoreTask,
   updateTask,
 } from "../services/api";
+import { PaginateOptions } from "@/paginate/types/paginate";
 
 export const taskQueryKey = ["tasks"];
 
@@ -84,5 +86,14 @@ export function useRestoreTask() {
       });
       queryClient.invalidateQueries({ queryKey: taskQueryKey });
     },
+  });
+}
+
+export function usePaginateTasks(options: PaginateOptions) {
+  return useQuery({
+    queryKey: ["tasks", options],
+    queryFn: () => getTasksPage(options),
+    select: (paginate) => tasksSchema.parse(paginate.data),
+    retry: 0,
   });
 }
