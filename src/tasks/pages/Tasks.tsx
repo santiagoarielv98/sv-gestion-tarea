@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { SortingState } from "@tanstack/react-table";
+import type { SortingState } from "@tanstack/react-table";
 import React from "react";
 import DataTable from "../../components/data-table";
 import { getTasksPage } from "../services/api";

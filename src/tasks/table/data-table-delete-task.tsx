@@ -8,8 +8,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useDeleteTask } from "../hooks/useTasks";
-import { Task } from "../schema/task-schema";
+import { useDeleteTask } from "../hooks/use-tasks";
+import type { Task } from "../schema/task-schema";
 
 interface DataTableDeleteDialogProps {
   task: Task;

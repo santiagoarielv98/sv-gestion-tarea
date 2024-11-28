@@ -8,8 +8,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useDeleteTag } from "../hooks/useTags";
-import { Tag } from "../schema/tag-schema";
+import { useDeleteTag } from "../hooks/use-tags";
+import type { Tag } from "../schema/tag-schema";
 
 interface DataTableDeleteDialogProps {
   tag: Tag;

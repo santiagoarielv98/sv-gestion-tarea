@@ -1,8 +1,8 @@
-import { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 
 import { Checkbox } from "@/components/ui/checkbox";
 
-import { Tag } from "../schema/tag-schema";
+import type { Tag } from "../schema/tag-schema";
 import { DataTableColumnHeader } from "../../components/data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
 

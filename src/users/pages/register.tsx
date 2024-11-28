@@ -12,9 +12,10 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import RegisterForm from "../components/register-form";
 import { useRegister } from "../hooks/use-user";
-import { Register, registerSchema } from "../schema/auth-schema";
+import type { Register } from "../schema/auth-schema";
+import { registerSchema } from "../schema/auth-schema";
 
-export function RegisterPage() {
+export default function RegisterPage() {
   const { mutate: register, isPending } = useRegister();
   const form = useForm<Register>({
     resolver: zodResolver(registerSchema),

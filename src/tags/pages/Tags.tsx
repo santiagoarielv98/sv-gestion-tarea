@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { getTagsPage } from "../services/api";
 import { columns } from "../table/columns";
-import { SortingState } from "@tanstack/react-table";
+import type { SortingState } from "@tanstack/react-table";
 
 function TagTable() {
   const [search, setSearch] = React.useState("");

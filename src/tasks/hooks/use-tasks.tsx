@@ -10,9 +10,8 @@ import {
   restoreTask,
   updateTask,
 } from "../services/api";
-import { PaginateOptions } from "@/paginate/types/paginate";
-
-export const taskQueryKey = ["tasks"];
+import type { PaginateOptions } from "@/paginate/types/paginate";
+import { taskQueryKey } from "@/constants/query-key";
 
 export function useTasks() {
   return useQuery({

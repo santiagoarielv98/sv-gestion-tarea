@@ -1,5 +1,5 @@
-import { LoginPage } from "@/users/pages/login";
-import { RegisterPage } from "@/users/pages/register";
+// import { LoginPage } from "@/users/pages/login";
+// import { RegisterPage } from "@/users/pages/register";
 import { createBrowserRouter } from "react-router-dom";
 import AuthRoute from "./auth-route";
 import PrivateRoute from "./private-route";
@@ -39,11 +39,15 @@ export const router = createBrowserRouter(
       children: [
         {
           path: "login",
-          element: <LoginPage />,
+          lazy: async () => ({
+            Component: (await import("@/users/pages/login")).default,
+          }),
         },
         {
           path: "register",
-          element: <RegisterPage />,
+          lazy: async () => ({
+            Component: (await import("@/users/pages/register")).default,
+          }),
         },
       ],
     },

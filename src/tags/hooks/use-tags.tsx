@@ -1,9 +1,9 @@
 import { toast } from "@/hooks/use-toast";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Tag, tagsSchema } from "../schema/tag-schema";
+import type { Tag } from "../schema/tag-schema";
+import { tagsSchema } from "../schema/tag-schema";
 import { createTag, getTags, deleteTag, updateTag } from "../services/api";
-
-export const tagQueryKey = ["tags"];
+import { tagQueryKey } from "@/constants/query-key";
 
 export function useTags() {
   return useQuery<Tag[]>({

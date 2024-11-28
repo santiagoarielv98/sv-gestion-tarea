@@ -13,9 +13,10 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import LoginForm from "../components/login-form";
 import { useLogin } from "../hooks/use-user";
-import { Login, loginSchema } from "../schema/auth-schema";
+import type { Login } from "../schema/auth-schema";
+import { loginSchema } from "../schema/auth-schema";
 
-export function LoginPage() {
+export default function LoginPage() {
   const { mutate: login, isPending } = useLogin();
   const form = useForm<Login>({
     resolver: zodResolver(loginSchema),

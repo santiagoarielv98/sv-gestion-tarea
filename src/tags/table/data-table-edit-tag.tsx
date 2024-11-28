@@ -21,8 +21,9 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { Tag, UpdateTag, updateTagSchema } from "../schema/tag-schema";
-import { useUpdateTag } from "../hooks/useTags";
+import type { Tag, UpdateTag } from "../schema/tag-schema";
+import { updateTagSchema } from "../schema/tag-schema";
+import { useUpdateTag } from "../hooks/use-tags";
 import React from "react";
 import TagForm from "./tag-form";
 

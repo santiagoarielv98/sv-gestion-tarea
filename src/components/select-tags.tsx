@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import React from "react";
-import { UseFormReturn } from "react-hook-form";
+import type { UseFormReturn } from "react-hook-form";
 import {
   FormDescription,
   FormField,
@@ -24,7 +24,7 @@ import {
   FormLabel,
   FormMessage,
 } from "./ui/form";
-import { useCreateTag, useTags } from "@/tags/hooks/useTags";
+import { useCreateTag, useTags } from "@/tags/hooks/use-tags";
 
 interface SelectTagsProps {
   form: UseFormReturn<{
