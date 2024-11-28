@@ -23,7 +23,7 @@ import { useForm } from "react-hook-form";
 
 import type { Task, UpdateTask } from "../schema/task-schema";
 import { updateTaskSchema } from "../schema/task-schema";
-import { useUpdateTask } from "../hooks/useTasks";
+import { useUpdateTask } from "../hooks/use-tasks";
 import React from "react";
 import TaskForm from "./task-form";
 

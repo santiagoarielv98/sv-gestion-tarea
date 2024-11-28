@@ -24,7 +24,7 @@ import {
   FormLabel,
   FormMessage,
 } from "./ui/form";
-import { useCreateTag, useTags } from "@/tags/hooks/useTags";
+import { useCreateTag, useTags } from "@/tags/hooks/use-tags";
 
 interface SelectTagsProps {
   form: UseFormReturn<{
