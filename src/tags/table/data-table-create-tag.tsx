@@ -24,7 +24,8 @@ import { Plus } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useCreateTag } from "../hooks/useTags";
-import { CreateTag, createTagSchema } from "../schema/tag-schema";
+import type { CreateTag } from "../schema/tag-schema";
+import { createTagSchema } from "../schema/tag-schema";
 import TagForm from "./tag-form";
 
 function DataTableCreateTag() {

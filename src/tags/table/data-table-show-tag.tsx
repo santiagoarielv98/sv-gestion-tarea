@@ -4,7 +4,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Tag } from "../schema/tag-schema";
+import type { Tag } from "../schema/tag-schema";
 
 interface DataTableShowTagProps {
   tag: Tag | null;

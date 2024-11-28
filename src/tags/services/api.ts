@@ -1,6 +1,6 @@
 import { api } from "@/constants/api";
-import { Paginate, PaginateOptions } from "@/paginate/types/paginate";
-import { CreateTag, Tag } from "../schema/tag-schema";
+import type { Paginate, PaginateOptions } from "@/paginate/types/paginate";
+import type { CreateTag, Tag } from "../schema/tag-schema";
 
 export const getTags = async (): Promise<Tag[]> => {
   const response = await api.get<Tag[]>("/tags");

@@ -1,4 +1,4 @@
-import { User } from "@/users/schema/user-schema";
+import type { User } from "@/users/schema/user-schema";
 import React from "react";
 
 interface AuthContextType {

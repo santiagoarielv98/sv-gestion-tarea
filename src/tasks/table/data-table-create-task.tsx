@@ -23,7 +23,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { Plus } from "lucide-react";
-import { CreateTask, createTaskSchema } from "../schema/task-schema";
+import type { CreateTask } from "../schema/task-schema";
+import { createTaskSchema } from "../schema/task-schema";
 import { useCreateTask } from "../hooks/useTasks";
 import React from "react";
 import TaskForm from "./task-form";

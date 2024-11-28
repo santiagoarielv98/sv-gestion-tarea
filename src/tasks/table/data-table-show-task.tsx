@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-import { Task } from "../schema/task-schema";
+import type { Task } from "../schema/task-schema";
 
 interface DataTableShowTaskProps {
   task: Task | null;

@@ -2,8 +2,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchProfile, login, register } from "../services/api";
 import { taskQueryKey } from "@/tasks/hooks/useTasks";
 import { toast } from "@/hooks/use-toast";
-import { User } from "../schema/user-schema";
-import { AxiosError } from "axios";
+import type { User } from "../schema/user-schema";
+import type { AxiosError } from "axios";
 
 export const authQueryKey = ["auth"];
 

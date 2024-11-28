@@ -10,7 +10,7 @@ import {
   restoreTask,
   updateTask,
 } from "../services/api";
-import { PaginateOptions } from "@/paginate/types/paginate";
+import type { PaginateOptions } from "@/paginate/types/paginate";
 
 export const taskQueryKey = ["tasks"];
 

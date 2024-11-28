@@ -1,6 +1,6 @@
 import { api } from "@/constants/api";
-import { CreateTask, Task, UpdateTask } from "../schema/task-schema";
-import { Paginate, PaginateOptions } from "@/paginate/types/paginate";
+import type { CreateTask, Task, UpdateTask } from "../schema/task-schema";
+import type { Paginate, PaginateOptions } from "@/paginate/types/paginate";
 
 export const getTask = async (id: number): Promise<Task> => {
   const response = await api.get<Task>(`/tasks/${id}`);

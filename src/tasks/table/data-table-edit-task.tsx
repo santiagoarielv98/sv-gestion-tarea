@@ -21,7 +21,8 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { Task, UpdateTask, updateTaskSchema } from "../schema/task-schema";
+import type { Task, UpdateTask } from "../schema/task-schema";
+import { updateTaskSchema } from "../schema/task-schema";
 import { useUpdateTask } from "../hooks/useTasks";
 import React from "react";
 import TaskForm from "./task-form";

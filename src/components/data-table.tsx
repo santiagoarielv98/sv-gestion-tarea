@@ -1,10 +1,12 @@
-import {
+import type {
   ColumnDef,
   OnChangeFn,
   PaginationOptions,
   PaginationState,
   SortingState,
   VisibilityState,
+} from "@tanstack/react-table";
+import {
   flexRender,
   getCoreRowModel,
   useReactTable,

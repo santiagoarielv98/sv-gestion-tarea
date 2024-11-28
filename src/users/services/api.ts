@@ -1,5 +1,5 @@
 import { api } from "@/constants/api";
-import { Login, Register } from "../schema/auth-schema";
+import type { Login, Register } from "../schema/auth-schema";
 
 export const login = async (data: Login) => {
   const response = await api.post("/auth/login", data);
