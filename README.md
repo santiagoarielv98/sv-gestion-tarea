@@ -1,16 +1,23 @@
 # SV-Gestion-Tarea
 
-Aplicación web para la gestión de tareas y etiquetas, desarrollada con React, Vite y Redux Toolkit.
+Aplicación web para la gestión de tareas y etiquetas, desarrollada con React, Tailwind CSS y TypeScript.
 Esta aplicación permite a los usuarios registrarse, iniciar sesión, crear, actualizar y eliminar tareas y etiquetas, así como también cambiar el estado de las tareas y asignar etiquetas a las tareas.
-Para la autenticación se utiliza un servidor de backend desarrollado con Node.js, Express y MongoDB.
+Para la autenticación se utiliza un servidor de backend desarrollado con NestJS, Prisma y Supabase.
+
+## 🚀 Demo
+
+La aplicación está desplegada en Firebase Hosting y se puede acceder a ella en el siguiente enlace: [SV-Gestion-Tarea](https://sv-gestion-tarea.web.app/)
+Para acceder a la aplicación se puede utilizar las siguientes credenciales:
+
+- Email: `demo@example.com`
+- Contraseña: `password`
 
 ## Tabla de Contenidos
 
 - [Imagenes del Proyecto](#imagenes-del-proyecto)
-- [Instalación](#instalación)
 - [Tecnologías Utilizadas](#tecnologías-utilizadas)
+- [Instalación](#instalación)
 - [Funcionalidades](#funcionalidades)
-- [Estructura del Proyecto](#estructura-del-proyecto)
 - [Variables de Entorno](#variables-de-entorno)
 
 ## Imagenes del Proyecto
@@ -20,17 +27,18 @@ Para la autenticación se utiliza un servidor de backend desarrollado con Node.j
 
 ## 🛠️ Tecnologías Utilizadas
 
+- [Axios](https://axios-http.com/)
 - [React](https://reactjs.org/)
 - [Vite](https://vitejs.dev/)
-- [Ant Design](https://ant.design/)
-- [Material-UI](https://mui.com/)
-- [Redux Toolkit](https://redux-toolkit.js.org/)
-- [Formik](https://formik.org/)
-- [Yup](https://github.com/jquense/yup/tree/pre-v1)
-- [Lodash](https://lodash.com/)
-- [Moment.js](https://momentjs.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [ShadCN](https://shadcn.com/)
+- [Radix](https://www.radix-ui.com/)
+- [React Hook Form](https://react-hook-form.com/)
 - [React Router](https://reactrouter.com/)
 - [TypeScript](https://www.typescriptlang.org/)
+- [TanStack React Query](https://tanstack.com/query/latest)
+- [TanStack React Table](https://tanstack.com/table/latest)
+- [Zod](https://zod.dev/)
 
 ## Instalación
 
@@ -70,17 +78,8 @@ Para la autenticación se utiliza un servidor de backend desarrollado con Node.j
 - Crear, editar y eliminar etiquetas.
 - Asignar etiquetas a tareas.
 
-## Estructura del Proyecto
-
-```
-sv-gestion-tarea/
-
-
-```
-
 ## Variables de Entorno
 
 Solo una variable de entorno es necesaria para la aplicación:
 
 - `VITE_API_URL`: URL de la API del backend (obligatorio).
-- `VITE_APP_VERSION`: Versión de la aplicación (opcional).
