@@ -7,6 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import type { Task } from "../schema/task-schema";
 import { DataTableRowActions } from "./data-table-row-actions";
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
+import { useToggleTask } from "../hooks/use-tasks";
 
 export const columns: ColumnDef<Task>[] = [
   {
@@ -14,14 +15,20 @@ export const columns: ColumnDef<Task>[] = [
     meta: {
       label: "Seleccionar",
     },
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Seleccionar fila"
-        className="translate-y-[2px]"
-      />
-    ),
+    cell: function F({ row }) {
+      const { mutate: toggleTask } = useToggleTask();
+
+      return (
+        <Checkbox
+          checked={row.original.completed}
+          onCheckedChange={() => {
+            toggleTask(row.original.id);
+          }}
+          aria-label="Seleccionar fila"
+          className="translate-y-[2px]"
+        />
+      );
+    },
     enableSorting: false,
     enableHiding: false,
   },

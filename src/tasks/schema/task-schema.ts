@@ -6,18 +6,21 @@ export const taskSchema = z.object({
   title: z.string(),
   content: z.string().nullish(),
   tags: tagsSchema,
+  completed: z.boolean(),
 });
 
 export const createTaskSchema = z.object({
   title: z.string().min(1),
   content: z.string().nullish(),
   tags: z.array(z.number()),
+  completed: z.boolean(),
 });
 
 export const updateTaskSchema = z.object({
   title: z.string().min(1),
   content: z.string().nullish(),
   tags: z.array(z.number()),
+  completed: z.boolean(),
 });
 
 export const tasksSchema = z.array(taskSchema);

@@ -8,6 +8,7 @@ import {
   getTasks,
   getTasksPage,
   restoreTask,
+  toggleTask,
   updateTask,
 } from "../services/api";
 import type { PaginateOptions } from "@/paginate/types/paginate";
@@ -94,5 +95,16 @@ export function usePaginateTasks(options: PaginateOptions) {
     queryFn: () => getTasksPage(options),
     select: (paginate) => tasksSchema.parse(paginate.data),
     retry: 0,
+  });
+}
+
+export function useToggleTask() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: toggleTask,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: taskQueryKey });
+    },
   });
 }

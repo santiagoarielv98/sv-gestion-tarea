@@ -43,6 +43,7 @@ function DataTableEditTask({ task, open, setOpen }: DataTableEditTaskProps) {
       title: task.title,
       content: task.content!,
       tags: task.tags ? task.tags.map((tag) => tag.id) : [],
+      completed: task.completed,
     },
   });
 

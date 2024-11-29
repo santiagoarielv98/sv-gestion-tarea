@@ -14,6 +14,7 @@ interface TaskFormProps {
     title: string;
     content?: string | null;
     tags: number[];
+    completed: boolean;
   }>;
 }
 

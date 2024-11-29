@@ -40,6 +40,7 @@ function DataTableCreateTask() {
       title: "",
       content: "",
       tags: [],
+      completed: false,
     },
   });
 

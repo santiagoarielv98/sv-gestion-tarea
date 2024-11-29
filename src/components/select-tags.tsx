@@ -31,6 +31,7 @@ interface SelectTagsProps {
     title: string;
     content?: string | null;
     tags: number[];
+    completed: boolean;
   }>;
 }
 

@@ -50,3 +50,8 @@ export const getTasksPage = async ({
   });
   return response.data;
 };
+
+export const toggleTask = async (id: number): Promise<Task> => {
+  const response = await api.patch<Task>(`/tasks/${id}/toggle`);
+  return response.data;
+};
