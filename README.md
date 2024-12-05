@@ -39,6 +39,7 @@ Para acceder a la aplicación se puede utilizar las siguientes credenciales:
 - [TanStack React Query](https://tanstack.com/query/latest)
 - [TanStack React Table](https://tanstack.com/table/latest)
 - [Zod](https://zod.dev/)
+- [Docker](https://www.docker.com/)
 
 ## Instalación
 
@@ -68,6 +69,28 @@ Para acceder a la aplicación se puede utilizar las siguientes credenciales:
    npm run dev
    ```
 7. La aplicación estará disponible en `http://localhost:5173`.
+
+### Usando Docker
+
+1. Clona el repositorio:
+   ```bash
+   git clone
+   ```
+2. Navega al directorio del proyecto:
+   ```bash
+   cd sv-gestion-tarea
+   ```
+3. Crea un archivo `.env` en la raíz del proyecto y copia el contenido del archivo `.env.example`.
+4. Configura las variables de entorno en el archivo `.env`.
+5. Construye la imagen de Docker:
+   ```bash
+   docker build -t sv-gestion-tarea .
+   ```
+6. Ejecuta el contenedor de Docker:
+   ```bash
+   docker run -p 3000:80 sv-gestion-tarea
+   ```
+7. La aplicación estará disponible en `http://localhost:3000`.
 
 - Nota: Para poder utilizar la aplicación, se debe tener el servidor del backend levantado. Para más información, [ver la documentación del backend.](https://github.com/santiagoarielv98/sv-gestion-tarea-api.git)
 
