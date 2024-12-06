@@ -88,7 +88,7 @@ Para acceder a la aplicación se puede utilizar las siguientes credenciales:
    ```
 6. Ejecuta el contenedor de Docker:
    ```bash
-   docker run -p 3000:80 sv-gestion-tarea
+   docker run -p 3000:3000 sv-gestion-tarea
    ```
 7. La aplicación estará disponible en `http://localhost:3000`.
 
