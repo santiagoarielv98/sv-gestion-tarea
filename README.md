@@ -92,6 +92,26 @@ Para acceder a la aplicación se puede utilizar las siguientes credenciales:
    ```
 7. La aplicación estará disponible en `http://localhost:3000`.
 
+## Ejecutar la Aplicación Completa
+
+Para ejecutar la aplicación completa (frontend y backend) usando Docker Compose, sigue estos pasos:
+
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/santiagoarielv98/sv-gestion-tarea.git
+   ```
+2. Navega al directorio del proyecto:
+   ```bash
+   cd sv-gestion-tarea
+   ```
+3. Crea un archivo `.env` en la raíz del proyecto y copia el contenido del archivo `.env.example`.
+4. Configura las variables de entorno en el archivo `.env`.
+5. Ejecuta Docker Compose:
+   ```bash
+   docker-compose -f fullapp.compose.yml up --build
+   ```
+6. La aplicación estará disponible en `http://localhost:3000`, y el servidor del backend estará disponible en `http://localhost:8000`.
+
 - Nota: Para poder utilizar la aplicación, se debe tener el servidor del backend levantado. Para más información, [ver la documentación del backend.](https://github.com/santiagoarielv98/sv-gestion-tarea-api.git)
 
 ## Funcionalidades
